@@ -46,7 +46,5 @@ namespace TP1_POO.src
             base.Detenerse();
             Console.WriteLine($"Omnibus {Id} se detuvo con {Pasajeros} pasajeros - ({Pasajeros}/{CapacidadMaxima})");
         }
-
-
     }
 }

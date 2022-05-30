@@ -46,6 +46,5 @@ namespace TP1_POO.src
             base.Detenerse();
             Console.WriteLine($"Taxi {Id} se detuvo con {Pasajeros} pasajeros - ({Pasajeros}/{CapacidadMaxima})");
         }
-
     }
 }

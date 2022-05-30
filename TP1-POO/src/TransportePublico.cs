@@ -38,7 +38,6 @@ namespace TP1_POO.src
         {
             CapacidadMaxima = capacidadMaxima;
             Pasajeros = pasajeros;
-
             SeMueve = false;
         }
 

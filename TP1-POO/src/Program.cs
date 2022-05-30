@@ -12,7 +12,6 @@ namespace TP1_POO.src
         // estados de algunos, luego los muestra en la consola.
         static void Main(string[] args)
         {
-
             var transportes = new List<TransportePublico>
             {
                 new Taxi(1),
