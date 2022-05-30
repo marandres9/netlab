@@ -24,6 +24,7 @@ namespace TP1_POO.src
                 new Omnibus(7),
                 new Omnibus(64),
                 new Omnibus(81),
+                new Omnibus(101)
             };
 
             transportes[1].Avanzar();

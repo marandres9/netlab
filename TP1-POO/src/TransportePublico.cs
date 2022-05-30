@@ -36,6 +36,8 @@ namespace TP1_POO.src
 
         public TransportePublico(int capacidadMaxima, int pasajeros)
         {
+            // Primero se debe inicializar CapacidadMaxima ya que ese valor es utilizado
+            // por el setter del campo Pasajeros
             CapacidadMaxima = capacidadMaxima;
             Pasajeros = pasajeros;
             SeMueve = false;
@@ -49,12 +51,6 @@ namespace TP1_POO.src
         public abstract void Avanzar();
 
         // Cumple la funcion inversa de Avanzar()
-        // Alternativa a un metodo abstracto: la clase derivada puede exponer un metodo publico
-        // que llame a este metodo pasando el tipo de transporte. De esta manera la clase derivada
-        // no necesita actualizar el estado de movimiento del vehiculo.
-        public virtual void Detenerse()
-        {
-            SeMueve = false;
-        }
+        public abstract void Detenerse();
     }
 }

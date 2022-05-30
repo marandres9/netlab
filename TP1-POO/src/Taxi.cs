@@ -39,11 +39,9 @@ namespace TP1_POO.src
             Console.WriteLine($"Taxi {Id} avanza con {Pasajeros} pasajeros - ({Pasajeros}/{CapacidadMaxima})");
         }
 
-        // Se crea un nuevo metodo publico que llama al metodo protegido de la clase base,
-        // no hace falta actualizar el estado
         override public void Detenerse()
         {
-            base.Detenerse();
+            SeMueve = false;
             Console.WriteLine($"Taxi {Id} se detuvo con {Pasajeros} pasajeros - ({Pasajeros}/{CapacidadMaxima})");
         }
     }
