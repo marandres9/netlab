@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP02_Exceptions_ExtMethods_Testing", "TP02_Exceptions_ExtMethods_Testing\TP02_Exceptions_ExtMethods_Testing.csproj", "{D504F5F2-D402-496D-B74E-7FE56A2CCFFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP02_Exceptions_ExtMethods_TestingTests", "TP02_Exceptions_ExtMethods_TestingTests\TP02_Exceptions_ExtMethods_TestingTests.csproj", "{599A285C-F2E3-467A-8E48-8DB313DB85CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D504F5F2-D402-496D-B74E-7FE56A2CCFFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D504F5F2-D402-496D-B74E-7FE56A2CCFFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D504F5F2-D402-496D-B74E-7FE56A2CCFFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{599A285C-F2E3-467A-8E48-8DB313DB85CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{599A285C-F2E3-467A-8E48-8DB313DB85CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{599A285C-F2E3-467A-8E48-8DB313DB85CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{599A285C-F2E3-467A-8E48-8DB313DB85CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
