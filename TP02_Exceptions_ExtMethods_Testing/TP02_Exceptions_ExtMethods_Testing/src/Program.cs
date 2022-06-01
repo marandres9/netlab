@@ -10,6 +10,8 @@ namespace TP02_Exceptions_ExtMethods_Testing
     {
         static void Main(string[] args)
         {
+            var program = new CalculatorConsoleApp();
+            program.Init();
         }
     }
 }
