@@ -43,10 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Calculator.cs" />
-    <Compile Include="src\CalculatorConsoleApp.cs" />
+    <Compile Include="src\Logic.cs" />
     <Compile Include="src\Exceptions\CalculatorExceptions.cs" />
     <Compile Include="src\ExtensionMethods\DoubleExtensions.cs" />
+    <Compile Include="src\Presentacion.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

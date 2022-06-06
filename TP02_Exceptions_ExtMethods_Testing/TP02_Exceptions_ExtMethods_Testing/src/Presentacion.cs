@@ -7,17 +7,14 @@ using TP02_Exceptions_ExtMethods_Testing.Exceptions;
 
 namespace TP02_Exceptions_ExtMethods_Testing
 {
-    public class CalculatorConsoleApp
+    internal class Presentacion
     {
         public void Init()
         {
-            var calc = new Calculator();
-            bool exit = false;
             bool success;
-
-            double num1, num2, result;
-
+            bool exit = false;
             string option;
+            double num1, num2, result;
 
             while(!exit)
             {
@@ -25,27 +22,19 @@ namespace TP02_Exceptions_ExtMethods_Testing
 
                 ShowMessages();
                 option = Console.ReadLine();
+
                 try
                 {
                     switch(option)
                     {
                         case "1":
-                            Console.WriteLine("Operacion: Dividir");
-                            Console.WriteLine("Ingresar dividendo");
-                            num1 = calc.ParseUserInput(Console.ReadLine());
-                            Console.WriteLine("Ingresar divisor");
-                            num2 = calc.ParseUserInput(Console.ReadLine());
-
-                            result = calc.Divide(num1, num2);
-                            WriteColoredMessage("Resultado: " + result, ConsoleColor.DarkGreen);
+                            Ejercicio1();
                             break;
-                        case "2":
-                            Console.WriteLine("Operacion: Raiz cuadrada");
-                            Console.WriteLine("Ingresar radicando");
-                            num1 = calc.ParseUserInput(Console.ReadLine());
-
-                            result = calc.SquareRoot(num1);
-                            WriteColoredMessage($"Resultado: (+/-) {result}", ConsoleColor.DarkGreen);
+                        case "3":
+                            Ejercicio3();
+                            break;
+                        case "4":
+                            Ejercicio4();
                             break;
                         case "0":
                             exit = true;
@@ -72,6 +61,11 @@ namespace TP02_Exceptions_ExtMethods_Testing
                     Console.WriteLine(ex.Message);
                     WriteColoredMessage("Excepcion atrapada: Intento sacar raiz par de un numero negativo", ConsoleColor.Red);
                 }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    WriteColoredMessage("Excepcion simple atrapada", ConsoleColor.Red);
+                }
                 finally
                 {
                     if(success)
@@ -86,12 +80,46 @@ namespace TP02_Exceptions_ExtMethods_Testing
                 }
             }
         }
-
         public void ShowMessages()
         {
-            Console.WriteLine("Opcion 1: Dividir");
-            Console.WriteLine("Opcion 2: Raiz cuadrada");
+            Console.WriteLine("Opcion 1: Ejercicio 1-2");
+            Console.WriteLine("Opcion 3: Ejercicio 3");
+            Console.WriteLine("Opcion 4: Ejercicio 4");
             Console.WriteLine("Opcion 0: Salir");
+        }
+
+        public void Ejercicio1()
+        {
+            double num1, num2, result;
+
+            Console.WriteLine("Operacion: Dividir");
+            Console.WriteLine("Ingresar dividendo");
+            num1 = Logic.ParseUserInput(Console.ReadLine());
+            Console.WriteLine("Ingresar divisor");
+            num2 = Logic.ParseUserInput(Console.ReadLine());
+
+            result = Logic.Divide(num1, num2);
+            WriteColoredMessage("Resultado: " + result, ConsoleColor.DarkGreen);
+        }
+
+        public void Ejercicio3()
+        {
+            Console.WriteLine("Este metodo dispara una excepcion simple");
+            Console.WriteLine("Presione una tecla para lanzar la excepcion");
+            Console.ReadKey();
+            Logic.ThrowException();
+        }
+
+        public void Ejercicio4()
+        {
+            double num1, result;
+            Console.WriteLine("Operacion: Raiz cuadrada");
+            Console.WriteLine("(Puede ingresar un numero negativo para disparar una excepcion personalizada)");
+            Console.WriteLine("Ingresar radicando");
+            num1 = Logic.ParseUserInput(Console.ReadLine());
+
+            result = Logic.SquareRoot(num1);
+            WriteColoredMessage($"Resultado: (+/-) {result}", ConsoleColor.DarkGreen);
         }
 
         public void WriteColoredMessage(string msg, ConsoleColor color)

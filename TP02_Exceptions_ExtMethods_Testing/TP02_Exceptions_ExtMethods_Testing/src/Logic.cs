@@ -8,9 +8,9 @@ using TP02_Exceptions_ExtMethods_Testing.ExtensionMethods;
 
 namespace TP02_Exceptions_ExtMethods_Testing
 {
-    public class Calculator
+    public class Logic
     {
-        public double Divide(double a, double b)
+        public static double Divide(double a, double b)
         {
             // hay que lanzar la excepcion de forma manual ya que la
             // la excepcion DivideByZeroException solo se lanza al dividir 
@@ -24,7 +24,7 @@ namespace TP02_Exceptions_ExtMethods_Testing
             return a / b;
         }
 
-        public double SquareRoot(double num)
+        public static double SquareRoot(double num)
         {
             //if(num < 0)
             // uso metodo extendido de la clase Double
@@ -35,7 +35,7 @@ namespace TP02_Exceptions_ExtMethods_Testing
             return Math.Sqrt(num);
         }
 
-        public double ParseUserInput(string input)
+        public static double ParseUserInput(string input)
         {
             double num;
 
@@ -47,6 +47,11 @@ namespace TP02_Exceptions_ExtMethods_Testing
             {
                 throw new InvalidInputException("Seguro Ingreso una letra o no ingreso nada!");
             }
+        }
+
+        public static void ThrowException()
+        {
+            throw new Exception();
         }
     }
 }
