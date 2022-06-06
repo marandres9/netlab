@@ -14,7 +14,6 @@ namespace TP02_Exceptions_ExtMethods_Testing
             bool success;
             bool exit = false;
             string option;
-            double num1, num2, result;
 
             while(!exit)
             {
