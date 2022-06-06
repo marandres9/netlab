@@ -51,6 +51,7 @@ namespace TP02_Exceptions_ExtMethods_Testing
 
         public static void ThrowException()
         {
+            // lanza una excepcion simple
             throw new Exception();
         }
     }

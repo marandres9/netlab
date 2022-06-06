@@ -10,6 +10,8 @@ namespace TP02_Exceptions_ExtMethods_Testing
     {
         static void Main(string[] args)
         {
+            // la clase presentacion se encarga de manejar la consola
+            // y las interacciones con el usuario
             var program = new Presentacion();
             program.Init();
         }
