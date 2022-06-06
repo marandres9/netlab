@@ -52,7 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseLogic.cs" />
+    <Compile Include="ICRUDLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShippersLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -62,6 +64,10 @@
     <ProjectReference Include="..\TP04_EntityFramework.Data\TP04_EntityFramework.Data.csproj">
       <Project>{7DFD737F-4986-4770-A8C4-9AEE377B9276}</Project>
       <Name>TP04_EntityFramework.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TP04_EntityFramework.Entity\TP04_EntityFramework.Entity.csproj">
+      <Project>{C6B343D8-FA71-496C-9AD8-906E3E2D9E57}</Project>
+      <Name>TP04_EntityFramework.Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
