@@ -45,7 +45,7 @@ namespace TP04_EntityFramework.Logic
             }
             catch(DbUpdateException e)
             {
-                throw new TriedDeletingReferencedForeignKeyException($"Can't delete object {id} of table {_tableName} because it referenced by another table with a foreign key", e);
+                throw new TriedDeletingReferencedForeignKeyException($"Can't delete object with ID {id} of table {_tableName} because it referenced by another table with a foreign key", e);
             }
         }
 
