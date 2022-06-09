@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleApp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -61,6 +62,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TP04_EntityFramework.Common\TP04_EntityFramework.Common.csproj">
+      <Project>{00ada86d-6f84-4115-a5e2-fff3fe8574d4}</Project>
+      <Name>TP04_EntityFramework.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TP04_EntityFramework.Entity\TP04_EntityFramework.Entity.csproj">
       <Project>{C6B343D8-FA71-496C-9AD8-906E3E2D9E57}</Project>
       <Name>TP04_EntityFramework.Entity</Name>

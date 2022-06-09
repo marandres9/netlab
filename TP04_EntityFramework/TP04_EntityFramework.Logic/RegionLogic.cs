@@ -4,34 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TP04_EntityFramework.Entity;
-using TP04_EntityFramework.Data;
-using System.Data.Entity.Infrastructure;
 using TP04_EntityFramework.Common.Exceptions;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 
 namespace TP04_EntityFramework.Logic
 {
-    public class ShippersLogic: BaseLogic, ICRUDLogic<Shippers, int>
+    public class RegionLogic: BaseLogic, ICRUDLogic<Region, int>
     {
-        private readonly string _tableName  = "Shippers";
-
-        public ShippersLogic()
-        { }
-        public ShippersLogic(NorthwindContext context) : base(context)
-        { }
-
-        public void Add(Shippers newEntity)
+        private readonly string _tableName = "Region";
+        public void Add(Region newEntity)
         {
+            // La tabla Region no tiene ID autoincremental, hay que checkear que el nuevo ID no este ocupado
+            if(_context.Region.Any(r => r.RegionID.Equals(newEntity.RegionID)))
+            {
+                throw new IDAlreadyTakenException($"Object with ID {newEntity.RegionID} already exists in table {_tableName}");
+            }
             try
             {
-                _context.Shippers.Add(newEntity);
+                _context.Region.Add(newEntity);
                 _context.SaveChanges();
             }
             catch(DbEntityValidationException e)
             {
-                // si los campos de la entidad no son validos para la base de datos, se concatenan todos los 
-                // mensajes de error en la variable 'msg' y luego se lo lanza en una nuevea  excepcion que 
-                // le indica al usuario los campos que no pasaron la verificacion
                 string msg = "";
                 foreach(var entityValidationErrors in e.EntityValidationErrors)
                 {
@@ -48,7 +43,7 @@ namespace TP04_EntityFramework.Logic
         {
             try
             {
-                _context.Shippers.Remove(GetById(id));
+                _context.Region.Remove(GetById(id));
                 _context.SaveChanges();
             }
             catch(DbUpdateException e)
@@ -57,31 +52,27 @@ namespace TP04_EntityFramework.Logic
             }
         }
 
-        public List<Shippers> GetAll()
+        public List<Region> GetAll()
         {
-            return _context.Shippers.ToList();
+            return _context.Region.ToList();
         }
 
-        public Shippers GetById(int id)
+        public Region GetById(int id)
         {
-            Shippers shipper = _context.Shippers.Find(id);
-            if(shipper == null)
+            Region reg = _context.Region.Find(id);
+            if(reg == null)
             {
                 throw new IDNotFoundException($"Object with ID {id} not found in table {_tableName}");
             }
-            return shipper;
+            return reg;
         }
 
-        public void Update(Shippers newEntity)
+        public void Update(Region newEntity)
         {
-            Shippers entityToUpdate = GetById(newEntity.ShipperID);
-            if(!string.IsNullOrEmpty(newEntity.CompanyName))
+            Region entityToUpdate = GetById(newEntity.RegionID);
+            if(!string.IsNullOrEmpty(newEntity.RegionDescription))
             {
-                entityToUpdate.CompanyName = newEntity.CompanyName;
-            }
-            if(!string.IsNullOrEmpty(newEntity.Phone))
-            {
-                entityToUpdate.Phone = newEntity.Phone;
+                entityToUpdate.RegionDescription = newEntity.RegionDescription;
             }
             _context.SaveChanges();
         }

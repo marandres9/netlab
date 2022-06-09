@@ -1,4 +1,4 @@
-namespace TP04_EntityFramework.Entity
+    namespace TP04_EntityFramework.Entity
 {
     using System;
     using System.Collections.Generic;

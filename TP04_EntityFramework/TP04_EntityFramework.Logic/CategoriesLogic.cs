@@ -1,37 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TP04_EntityFramework.Entity;
-using TP04_EntityFramework.Data;
-using System.Data.Entity.Infrastructure;
 using TP04_EntityFramework.Common.Exceptions;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 
 namespace TP04_EntityFramework.Logic
 {
-    public class ShippersLogic: BaseLogic, ICRUDLogic<Shippers, int>
+    public class CategoriesLogic: BaseLogic, ICRUDLogic<Categories, int>
     {
-        private readonly string _tableName  = "Shippers";
+        private readonly string _tableName  = "Categories";
 
-        public ShippersLogic()
-        { }
-        public ShippersLogic(NorthwindContext context) : base(context)
-        { }
-
-        public void Add(Shippers newEntity)
+        public void Add(Categories newEntity)
         {
             try
             {
-                _context.Shippers.Add(newEntity);
+                _context.Categories.Add(newEntity);
                 _context.SaveChanges();
             }
             catch(DbEntityValidationException e)
             {
-                // si los campos de la entidad no son validos para la base de datos, se concatenan todos los 
-                // mensajes de error en la variable 'msg' y luego se lo lanza en una nuevea  excepcion que 
-                // le indica al usuario los campos que no pasaron la verificacion
                 string msg = "";
                 foreach(var entityValidationErrors in e.EntityValidationErrors)
                 {
@@ -48,7 +40,7 @@ namespace TP04_EntityFramework.Logic
         {
             try
             {
-                _context.Shippers.Remove(GetById(id));
+                _context.Categories.Remove(GetById(id));
                 _context.SaveChanges();
             }
             catch(DbUpdateException e)
@@ -57,31 +49,31 @@ namespace TP04_EntityFramework.Logic
             }
         }
 
-        public List<Shippers> GetAll()
+        public List<Categories> GetAll()
         {
-            return _context.Shippers.ToList();
+            return _context.Categories.ToList();
         }
 
-        public Shippers GetById(int id)
+        public Categories GetById(int id)
         {
-            Shippers shipper = _context.Shippers.Find(id);
-            if(shipper == null)
+            Categories cat = _context.Categories.Find(id);
+            if(cat == null)
             {
                 throw new IDNotFoundException($"Object with ID {id} not found in table {_tableName}");
             }
-            return shipper;
+            return cat;
         }
 
-        public void Update(Shippers newEntity)
+        public void Update(Categories newEntity)
         {
-            Shippers entityToUpdate = GetById(newEntity.ShipperID);
-            if(!string.IsNullOrEmpty(newEntity.CompanyName))
+            Categories entityToUpdate = GetById(newEntity.CategoryID);
+            if(!string.IsNullOrEmpty(newEntity.CategoryName))
             {
-                entityToUpdate.CompanyName = newEntity.CompanyName;
+                entityToUpdate.CategoryName = newEntity.CategoryName;
             }
-            if(!string.IsNullOrEmpty(newEntity.Phone))
+            if(!string.IsNullOrEmpty(newEntity.Description))
             {
-                entityToUpdate.Phone = newEntity.Phone;
+                entityToUpdate.Description = newEntity.Description;
             }
             _context.SaveChanges();
         }

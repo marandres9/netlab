@@ -8,18 +8,24 @@ using TP04_EntityFramework.Logic;
 
 namespace TP04_EntityFramework.UI
 {
+    public class Test
+    {
+        public int A { get; set; }
+    }
     public class Program
     {
         static void Main(string[] args)
         {
-            ShippersLogic shippersLogic = new ShippersLogic();
+            ConsoleApp app = new ConsoleApp();
+            app.Init();
 
-            //shippersLogic.Add(new Shippers { CompanyName = "new Company", Phone = "123-456" });
+            //var ter = new TerritoriesLogic();
+            //foreach(var t in ter.GetAll())
+            //{
+            //    Console.WriteLine($"{t.TerritoryID}");
+            //}
 
-            foreach(var item in shippersLogic.GetAll()) 
-            {
-                Console.WriteLine($"{item.ShipperID} - {item.CompanyName} - {item.Phone}");
-            }
+            //ter.Add(new Territories { TerritoryID = "98104" });
         }
     }
 }

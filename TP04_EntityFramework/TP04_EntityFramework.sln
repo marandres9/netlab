@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP04_EntityFramework.Logic"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP04_EntityFramework.Entity", "TP04_EntityFramework.Entity\TP04_EntityFramework.Entity.csproj", "{C6B343D8-FA71-496C-9AD8-906E3E2D9E57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP04_EntityFramework.Common", "TP04_EntityFramework.Common\TP04_EntityFramework.Common.csproj", "{00ADA86D-6F84-4115-A5E2-FFF3FE8574D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP04_EntityFramework.LogicTests", "TP04_EntityFramework.LogicTests\TP04_EntityFramework.LogicTests.csproj", "{758907EF-D65A-4845-BE3F-FD1636BB8CD2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{C6B343D8-FA71-496C-9AD8-906E3E2D9E57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6B343D8-FA71-496C-9AD8-906E3E2D9E57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6B343D8-FA71-496C-9AD8-906E3E2D9E57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00ADA86D-6F84-4115-A5E2-FFF3FE8574D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00ADA86D-6F84-4115-A5E2-FFF3FE8574D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00ADA86D-6F84-4115-A5E2-FFF3FE8574D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00ADA86D-6F84-4115-A5E2-FFF3FE8574D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{758907EF-D65A-4845-BE3F-FD1636BB8CD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{758907EF-D65A-4845-BE3F-FD1636BB8CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{758907EF-D65A-4845-BE3F-FD1636BB8CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{758907EF-D65A-4845-BE3F-FD1636BB8CD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

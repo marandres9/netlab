@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace TP04_EntityFramework.Logic
 {
-    public interface ICRUDLogic<T>
+    public interface ICRUDLogic<T, IDType>
     {
         void Add(T newEntity);
-        void Delete(int id);
+        void Delete(IDType id);
         List<T> GetAll();
-        T GetById(int id);
+        T GetById(IDType id);
         void Update(T newEntity);
-
     }
 }
