@@ -15,10 +15,5 @@ namespace TP04_EntityFramework.Logic
         {
             _context = new NorthwindContext();
         }
-        // used for mock tests
-        public BaseLogic(NorthwindContext context)
-        {
-            _context = context;
-        }
     }
 }
