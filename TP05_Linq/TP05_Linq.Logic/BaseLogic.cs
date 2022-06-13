@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TP05_Linq.Data;
+using TP05Linq.Data;
 
-namespace TP05_Linq.Logic
+namespace TP05Linq.Logic
 {
     public class BaseLogic
     {

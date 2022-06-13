@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5ADD43FA-892E-4839-9E88-D04AE7648D9F}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TP05_Linq.Entities</RootNamespace>
-    <AssemblyName>TP05_Linq.Entities</AssemblyName>
+    <ProjectGuid>{ACD935D8-9212-46CC-BC79-D0871780802C}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TP05Linq.UI</RootNamespace>
+    <AssemblyName>TP05Linq.UI</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -48,24 +50,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Categories.cs" />
-    <Compile Include="CustomerDemographics.cs" />
-    <Compile Include="Customers.cs" />
-    <Compile Include="DTO\DTOCustomer_Order.cs" />
-    <Compile Include="DTO\DTOProducts_Categories.cs" />
-    <Compile Include="Employees.cs" />
-    <Compile Include="Orders.cs" />
-    <Compile Include="Order_Details.cs" />
-    <Compile Include="Products.cs" />
+    <Compile Include="ConsoleApp.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Region.cs" />
-    <Compile Include="Shippers.cs" />
-    <Compile Include="Suppliers.cs" />
-    <Compile Include="Territories.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\TP05Linq.Common.csproj">
+      <Project>{12940927-0a10-4b36-ac8e-406190301b21}</Project>
+      <Name>TP05Linq.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TP05_Linq.Entities\TP05Linq.Entities.csproj">
+      <Project>{5ADD43FA-892E-4839-9E88-D04AE7648D9F}</Project>
+      <Name>TP05Linq.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TP05_Linq.Logic\TP05Linq.Logic.csproj">
+      <Project>{2e8816e2-ab8a-4f4a-b69c-ff78473dfd87}</Project>
+      <Name>TP05Linq.Logic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

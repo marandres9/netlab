@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Common;
-using TP05_Linq.Logic;
+using TP05Linq.Common;
+using TP05Linq.Logic;
 
-namespace TP05_Linq.UI
+namespace TP05Linq.UI
 {
     public class ConsoleApp
     {

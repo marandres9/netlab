@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ACD935D8-9212-46CC-BC79-D0871780802C}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>TP05_Linq.UI</RootNamespace>
-    <AssemblyName>TP05_Linq.UI</AssemblyName>
+    <ProjectGuid>{2E8816E2-AB8A-4F4A-B69C-FF78473DFD87}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TP05Linq.Logic</RootNamespace>
+    <AssemblyName>TP05Linq.Logic</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -50,27 +48,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsoleApp.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="BaseLogic.cs" />
+    <Compile Include="CustomersLogic.cs" />
+    <Compile Include="OrdersLogic.cs" />
+    <Compile Include="ProductsLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TP05_Linq.Data\TP05_Linq.Data.csproj">
+      <Project>{510fac3f-b3d0-43c0-b338-b4d18089fbd4}</Project>
+      <Name>TP05_Linq.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TP05_Linq.Entities\TP05Linq.Entities.csproj">
+      <Project>{5ADD43FA-892E-4839-9E88-D04AE7648D9F}</Project>
+      <Name>TP05Linq.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{12940927-0a10-4b36-ac8e-406190301b21}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TP05_Linq.Entities\TP05_Linq.Entities.csproj">
-      <Project>{5ADD43FA-892E-4839-9E88-D04AE7648D9F}</Project>
-      <Name>TP05_Linq.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TP05_Linq.Logic\TP05_Linq.Logic.csproj">
-      <Project>{2E8816E2-AB8A-4F4A-B69C-FF78473DFD87}</Project>
-      <Name>TP05_Linq.Logic</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

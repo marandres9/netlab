@@ -1,4 +1,4 @@
-namespace TP05_Linq.Entities
+namespace TP05Linq.Entities
 {
     using System;
     using System.Collections.Generic;

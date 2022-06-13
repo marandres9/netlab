@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TP05_Linq.Data;
-using TP05_Linq.Entities;
-using TP05_Linq.Entities.DTO;
+using TP05Linq.Data;
+using TP05Linq.Entities;
+using TP05Linq.Entities.DTO;
 
-namespace TP05_Linq.Logic
+namespace TP05Linq.Logic
 {
     public class ProductsLogic: BaseLogic
     {

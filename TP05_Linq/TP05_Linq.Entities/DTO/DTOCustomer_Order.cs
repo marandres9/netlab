@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP05_Linq.Entities.DTO
+namespace TP05Linq.Entities.DTO
 {
     public class DTOCustomer_Order
     {
