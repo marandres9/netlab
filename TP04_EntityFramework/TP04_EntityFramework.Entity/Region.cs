@@ -14,8 +14,8 @@ namespace TP04_EntityFramework.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int RegionID { get; set; }
 
-        [Required(ErrorMessage = "Field RegionDescription is required")]
-        [StringLength(50, ErrorMessage = "Field RegionDescription must be a string with a max length of 50")]
+        [Required(ErrorMessage = "Field RegionDescription is required.")]
+        [StringLength(50, ErrorMessage = "Field RegionDescription must be a string with a max length of 50.")]
         public string RegionDescription { get; set; }
 
         public virtual ICollection<Territories> Territories { get; set; }

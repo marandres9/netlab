@@ -32,7 +32,7 @@ namespace TP04_EntityFramework.Logic
                 {
                     foreach(var validationError in entityValidationErrors.ValidationErrors)
                     {
-                        msg += (validationError.ErrorMessage);
+                        msg += ("Error: " + validationError.ErrorMessage + "\n");
                     }
                 }
                 throw new EntityFailedValidationException(msg, e);
