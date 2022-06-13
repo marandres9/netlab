@@ -11,8 +11,8 @@ namespace TP04_EntityFramework.Entity
         [Key]
         public int CategoryID { get; set; }
 
-        [Required]
-        [StringLength(15)]
+        [Required(ErrorMessage = "Field CategroyName is required")]
+        [StringLength(15, ErrorMessage = "Field CategroyName must be a string with a max length of 50")]
         public string CategoryName { get; set; }
 
         [Column(TypeName = "ntext")]
