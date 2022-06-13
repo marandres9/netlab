@@ -50,9 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomersQueries.cs" />
     <Compile Include="NorthwindContext.cs" />
-    <Compile Include="ProductsQueries.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

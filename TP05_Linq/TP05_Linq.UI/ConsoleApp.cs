@@ -14,6 +14,7 @@ namespace TP05_Linq.UI
         {
             var customerLogic = new CustomersLogic();
             var productLogic = new ProductsLogic();
+            var orderLogic = new OrdersLogic();
             bool exit = false;
 
             while(!exit)
@@ -111,7 +112,7 @@ namespace TP05_Linq.UI
                     case "11":
                         ShowAssignment(11);
                         WriteColoredMessage("[ProductName] - [CategoryName]", ConsoleColor.DarkYellow);
-                        foreach(var item in productLogic.GetWithCategories2())
+                        foreach(var item in productLogic.GetWithCategories())
                         {
                             if(item.CategoryName != null)
                                 Console.WriteLine($"{item.ProductName} - {item.CategoryName}");
@@ -133,7 +134,7 @@ namespace TP05_Linq.UI
                         WriteColoredMessage("[ContactName] - [Orders]", ConsoleColor.DarkYellow);
                         foreach(var item in customerLogic.GetAll())
                         {
-                            Console.WriteLine($"{item.ContactName} - {customerLogic.GetCustomerOrders(item)}");
+                            Console.WriteLine($"{item.ContactName} - {orderLogic.GetCustomerOrders(item)}");
                         }
                         break;
                     default:
