@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>User Form</title>
+
+        <link rel="stylesheet" href="./css/bootstrap.min.css" />
+        <link rel="stylesheet" href="./css/styles.css" />
+    </head>
+    <body>
+        <div
+            class="hero d-flex justify-content-evenly align-items-center align-content-center flex-wrap"
+        >
+            <div>
+                <h1 class="hero-title">User Form</h1>
+                <p class="hero-text">This form is empty. Start adding users!</p>
+                <button id="btn-scrollToForm" class="btn btn-primary">
+                    To the form!
+                </button>
+            </div>
+            <div>
+                <table id="table">
+                    <thead>
+                        <tr>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Age</th>
+                            <th>Birth Date</th>
+                            <th>Adress</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablebody">
+                        <tr>
+                            <td>Mariano</td>
+                            <td>Perez</td>
+                            <td>21</td>
+                            <td>07/04/2001</td>
+                            <td>Belgrano 1890</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <form id="form" class="user-form">
+                <div class="form-entry">
+                    <label for="first-" class="form-label">First Name:</label>
+                    <input
+                        type="text"
+                        id="first-name"
+                        name="first-name"
+                        class="form-control"
+                    />
+                </div>
+                <div class="form-entry">
+                    <label for="last-name" class="form-label">
+                        Last Name:
+                    </label>
+                    <input
+                        type="text"
+                        id="last-name"
+                        name="last-name"
+                        class="form-control"
+                    />
+                </div>
+                <div id="invalid-names" class="alert alert-danger">
+                    First and last names are required.
+                </div>
+
+                <div class="form-entry">
+                    <label for="biFrth-date" class="form-label">
+                        Birth Date:
+                    </label>
+                    <input
+                        type="date"
+                        id="birth-date"
+                        name="birth-date"
+                        class="form-control"
+                    />
+                </div>
+                <div id="invalid-date" class="alert alert-danger">
+                    A valid date is required.
+                </div>
+
+                <div class="form-entry">
+                    <label for="adress" class="form-label">Adress:</label>
+                    <input
+                        type="text"
+                        id="adress"
+                        name="adress"
+                        class="form-control"
+                    />
+                </div>
+                <div id="invalid-adress" class="alert alert-danger">
+                    An adress is required
+                </div>
+
+                <div class="form-btns">
+                    <button type="reset" class="btn btn-secondary">
+                        Reset
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <script src="./js/jquery-3.6.0.min.js"></script>
+        <script src="./js/script.js"></script>
+    </body>
+</html>
