@@ -1,0 +1,40 @@
+﻿@model IEnumerable<TP07MVC.Entity.Territories>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Territories</h1>
+<h2>Index</h2>
+
+<div class="my-4">
+    @Html.ActionLink("Add new", "Add", null, new { @class = "btn btn-success" })
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(m => m.TerritoryID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.TerritoryDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.RegionID)
+        </th>
+    </tr>
+
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(m => item.TerritoryID)</td>
+            <td>@Html.DisplayFor(m => item.TerritoryDescription)</td>
+            <td>@Html.DisplayFor(m => item.RegionID)</td>
+
+            <td>
+                @Html.ActionLink("Update", "Update", new { id = item.TerritoryID }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.TerritoryID }, new { @class = "btn btn-primary" })
+            </td>
+        </tr>
+    }
+</table>

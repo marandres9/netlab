@@ -1,0 +1,46 @@
+﻿@model  TP07MVC.Entity.Categories
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool updating = Model != null;
+}
+
+@using(Html.BeginForm(updating ? "Update" : "Add", "Categories"))
+{
+    <div>
+        <h4>
+            @(updating ? "Update Category" : "Add Category")
+        </h4>
+
+
+        <div class="form-group">
+
+            @if(updating)
+            {
+                @Html.LabelFor(model => model.CategoryID, new { @class = "control-label" })
+                @Html.EditorFor(model => model.CategoryID, new { htmlAttributes = new { @type = "number", @class = "form-control", @readonly = true } })
+            }
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label" })
+            <div class="">
+                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+            <div class="">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Cancel changes", "Index", null, new { @class = "btn btn-secondary" })
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+    </div>
+}
