@@ -5,12 +5,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TP07MVC.Entity.ViewModel;
 
 namespace TP07MVC.Entity
 {
     [Table("Region")]
     public partial class Region
     {
+        public Region() { }
+        public Region(RegionViewModel model)
+        {
+            RegionID = model.RegionID;
+            RegionDescription = model.RegionDescription;
+        }
+
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int RegionID { get; set; }
 
