@@ -20,6 +20,7 @@ namespace TP07MVC.Entity
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Required(ErrorMessage = "Field RegionID is required.")]
         public int RegionID { get; set; }
 
         [Required(ErrorMessage = "Field RegionDescription is required.")]

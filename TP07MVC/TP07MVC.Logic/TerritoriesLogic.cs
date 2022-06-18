@@ -63,6 +63,11 @@ namespace TP07MVC.Logic
             return territory;
         }
 
+        public bool Exists(string id)
+        {
+            return _context.Territories.Any(t => t.TerritoryID == id);
+        }
+
         public TerritoryRegion GetDetails(Territories terr)
         {
             string regionDesc = _context.Region.First(r => r.RegionID == terr.RegionID).RegionDescription;

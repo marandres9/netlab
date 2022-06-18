@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Add";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    bool editing = Model != null;
+    bool editing = ViewBag.Editing == null ? false : ViewBag.Editing;
 }
 
 @using(Html.BeginForm(editing ? "Edit" : "Add", "Territories"))
@@ -12,11 +12,10 @@
         <h4>
             @(editing ? "Edit Territory" : "Add Territory")
         </h4>
-
+        <hr />
 
         <div class="form-group">
             @Html.LabelFor(model => model.TerritoryID, new { @class = "control-label" })
-
             @if(editing)
             {
                 @Html.EditorFor(model => model.TerritoryID, new { htmlAttributes = new { @type = "number", @class = "form-control", @readonly = true } })
@@ -24,6 +23,8 @@
             else
             {
                 @Html.EditorFor(model => model.TerritoryID, new { htmlAttributes = new { @type = "number", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TerritoryID, "", new { @class = "text-danger" })
+                @Html.ValidationMessage("id-taken", new { @class = "text-danger" })
             }
         </div>
 
@@ -44,7 +45,7 @@
         </div>
 
         <div class="form-group">
-            @Html.ActionLink("Cancel changes", "Index", null, new {@class = "btn btn-secondary"})
+            @Html.ActionLink("Cancel changes", "Index", null, new { @class = "btn btn-secondary" })
             <input type="submit" value="Save" class="btn btn-success" />
         </div>
     </div>
