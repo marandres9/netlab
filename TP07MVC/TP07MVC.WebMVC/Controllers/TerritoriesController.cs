@@ -16,6 +16,7 @@ namespace TP07MVC.WebMVC.Controllers
         // GET: Territories
         public ActionResult Index(string sortOrder, string searchString)
         {
+            ViewBag.SearchString = searchString;
             ViewBag.IDSortParam = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewBag.DescSortParam = (sortOrder == "description") ? "description_desc" : "description";
             var list = _logic.GetAll();

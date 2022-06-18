@@ -24,11 +24,10 @@
 <table class="table text-center">
     <tr>
         <th>
-            @Html.ActionLink(Html.DisplayNameFor(m => m.TerritoryID).ToString(), "Index", new { sortOrder = ViewBag.IDSortParam })
-
+            @Html.ActionLink(Html.DisplayNameFor(m => m.TerritoryID).ToString(), "Index", new { sortOrder = ViewBag.IDSortParam, searchString = ViewBag.SearchString })
         </th>
         <th>
-            @Html.ActionLink(Html.DisplayNameFor(m => m.TerritoryDescription).ToString(), "Index", new { sortOrder = ViewBag.DescSortParam})
+            @Html.ActionLink(Html.DisplayNameFor(m => m.TerritoryDescription).ToString(), "Index", new { sortOrder = ViewBag.DescSortParam, searchString = ViewBag.SearchString })
         </th>
     </tr>
 
