@@ -35,7 +35,7 @@ namespace TP07MVC.WebMVC.Controllers
             }
             catch(EntityFailedValidationException ex)
             {
-                return View("Index", "Error");
+                return View("~/Views/Shared/Exception.cshtml", ex);
             }
         }
 
@@ -47,7 +47,7 @@ namespace TP07MVC.WebMVC.Controllers
             }
             catch(IDNotFoundException ex)
             {
-                return View("Index", "Error");
+                return View("~/Views/Shared/Exception.cshtml", ex);
             }
         }
 
@@ -61,7 +61,7 @@ namespace TP07MVC.WebMVC.Controllers
             }
             catch(Exception ex)
             {
-                return View("Index", "Error");
+                return View("~/Views/Shared/Exception.cshtml", ex);
             }
         }
 
@@ -74,7 +74,7 @@ namespace TP07MVC.WebMVC.Controllers
             }
             catch(TriedDeletingReferencedForeignKeyException ex)
             {
-                return View("Index", "Error");
+                return View("~/Views/Shared/Exception.cshtml", ex);
             }
         }
 

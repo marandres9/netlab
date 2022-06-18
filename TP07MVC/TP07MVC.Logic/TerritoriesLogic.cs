@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TP07MVC.Entity;
+using TP07MVC.Entity.DTO;
 using TP07MVC.Common.Exceptions;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
@@ -48,7 +49,7 @@ namespace TP07MVC.Logic
             }
             catch(DbUpdateException e)
             {
-                throw new TriedDeletingReferencedForeignKeyException($"Can't delete object with ID {id} of table {_tableName} because it referenced by another table with a foreign key", e);
+                throw new TriedDeletingReferencedForeignKeyException($"Can't delete object with ID {id} of table {_tableName} because it is referenced by another table with a foreign key", e);
             }
         }
 
@@ -60,6 +61,18 @@ namespace TP07MVC.Logic
                 throw new IDNotFoundException($"Object with ID {id} not found in table {_tableName}");
             }
             return territory;
+        }
+
+        public TerritoryRegion GetDetails(Territories terr)
+        {
+            string regionDesc = _context.Region.First(r => r.RegionID == terr.RegionID).RegionDescription;
+
+            return new TerritoryRegion
+            {
+                TerritoryID = terr.TerritoryID,
+                TerritoryDescription = terr.TerritoryDescription,
+                RegionDescription = regionDesc
+            };
         }
 
         public List<Territories> GetAll()

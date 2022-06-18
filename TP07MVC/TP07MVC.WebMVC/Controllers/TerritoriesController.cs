@@ -14,9 +14,45 @@ namespace TP07MVC.WebMVC.Controllers
         private readonly TerritoriesLogic _logic = new TerritoriesLogic();
 
         // GET: Territories
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString)
         {
-            return View(_logic.GetAll());
+            ViewBag.IDSortParam = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+            ViewBag.DescSortParam = (sortOrder == "description") ? "description_desc" : "description";
+            var list = _logic.GetAll();
+
+            if(!string.IsNullOrEmpty(searchString))
+            {
+                list = list.Where(t => t.TerritoryDescription.Contains(searchString)).ToList();
+            }
+
+            switch(sortOrder)
+            {
+                case "id_desc":
+                    list = list.OrderByDescending(t => t.TerritoryID).ToList();
+                    break;
+                case "description_desc":
+                    list = list.OrderByDescending(t => t.TerritoryDescription).ToList();
+                    break;
+                case "description":
+                    list = list.OrderBy(t => t.TerritoryDescription).ToList();
+                    break;
+                default:
+                    break;
+            }
+
+            return View(list);
+        }
+
+        public ActionResult Details(string id)
+        {
+            try
+            {
+                return View(_logic.GetDetails(_logic.GetById(id)));
+            }
+            catch(IDNotFoundException ex)
+            {
+                return View("~/Views/Shared/Exception.cshtml", ex);
+            }
         }
 
         public ActionResult Add()
@@ -34,12 +70,12 @@ namespace TP07MVC.WebMVC.Controllers
             }
             catch(IDAlreadyTakenException ex)
             {
-                return RedirectToAction("Index", "Error");
+                return View("~/Views/Shared/Exception.cshtml", ex);
 
             }
             catch(EntityFailedValidationException ex)
             {
-                return RedirectToAction("Index", "Error");
+                return View("~/Views/Shared/Exception.cshtml", ex);
 
             }
         }
@@ -53,11 +89,11 @@ namespace TP07MVC.WebMVC.Controllers
             }
             catch(TriedDeletingReferencedForeignKeyException ex)
             {
-                return RedirectToAction("Index", "Error");
+                return View("~/Views/Shared/Exception.cshtml", ex);
             }
         }
 
-        public ActionResult Update(string id)
+        public ActionResult Edit(string id)
         {
             try
             {
@@ -66,12 +102,12 @@ namespace TP07MVC.WebMVC.Controllers
             }
             catch(IDNotFoundException ex)
             {
-                return RedirectToAction("Index", "Error");
+                return View("~/Views/Shared/Exception.cshtml", ex);
             }
         }
 
         [HttpPost]
-        public ActionResult Update(Territories territory)
+        public ActionResult Edit(Territories territory)
         {
             try
             {
@@ -80,7 +116,7 @@ namespace TP07MVC.WebMVC.Controllers
             }
             catch(Exception ex)
             {
-                return RedirectToAction("Index", "Error");
+                return View("~/Views/Shared/Exception.cshtml", ex);
             }
         }
 

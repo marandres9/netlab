@@ -7,20 +7,28 @@
 <h1>Territories</h1>
 <h2>Index</h2>
 
-<div class="my-4">
-    @Html.ActionLink("Add new", "Add", null, new { @class = "btn btn-success" })
+<div class="my-4 d-flex justify-content-between">
+    @using(Html.BeginForm())
+    {
+        <div class="d-flex align-items-baseline">
+            @Html.Label("search-form", "Search: ", new { @class = "control-label mr-3" })
+            @Html.TextBox("searchString", null, new { @class = "form-control", @id = "search-form" })
+            <input type="submit" class="btn btn-default" value="Go">
+        </div>
+    }
+    <div>
+        @Html.ActionLink("Add new", "Add", null, new { @class = "btn btn-success" })
+    </div>
 </div>
 
-<table class="table">
+<table class="table text-center">
     <tr>
         <th>
-            @Html.DisplayNameFor(m => m.TerritoryID)
+            @Html.ActionLink(Html.DisplayNameFor(m => m.TerritoryID).ToString(), "Index", new { sortOrder = ViewBag.IDSortParam })
+
         </th>
         <th>
-            @Html.DisplayNameFor(m => m.TerritoryDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(m => m.RegionID)
+            @Html.ActionLink(Html.DisplayNameFor(m => m.TerritoryDescription).ToString(), "Index", new { sortOrder = ViewBag.DescSortParam})
         </th>
     </tr>
 
@@ -29,10 +37,10 @@
         <tr>
             <td>@Html.DisplayFor(m => item.TerritoryID)</td>
             <td>@Html.DisplayFor(m => item.TerritoryDescription)</td>
-            <td>@Html.DisplayFor(m => item.RegionID)</td>
 
             <td>
-                @Html.ActionLink("Update", "Update", new { id = item.TerritoryID }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Details", "Details", new { id = item.TerritoryID }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.TerritoryID }, new { @class = "btn btn-primary" })
                 @Html.ActionLink("Delete", "Delete", new { id = item.TerritoryID }, new { @class = "btn btn-primary" })
             </td>
         </tr>

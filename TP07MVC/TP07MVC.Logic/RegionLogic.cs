@@ -48,7 +48,7 @@ namespace TP07MVC.Logic
             }
             catch(DbUpdateException e)
             {
-                throw new TriedDeletingReferencedForeignKeyException($"Can't delete object with ID {id} of table {_tableName} because it referenced by another table with a foreign key", e);
+                throw new TriedDeletingReferencedForeignKeyException($"Can't delete object with ID {id} of table {_tableName} because it is referenced by another table with a foreign key", e);
             }
         }
 

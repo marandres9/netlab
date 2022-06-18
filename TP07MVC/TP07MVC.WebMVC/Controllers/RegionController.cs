@@ -34,9 +34,9 @@ namespace TP07MVC.WebMVC.Controllers
                 _logic.Add(new Region(regionModel));
                 return RedirectToAction("Index");
             }
-            catch(IDAlreadyTakenException e)
+            catch(IDAlreadyTakenException ex)
             {
-                return RedirectToAction("Index", "Error");
+                return View("~/Views/Shared/Exception.cshtml", ex);
             }
         }
 
@@ -51,7 +51,7 @@ namespace TP07MVC.WebMVC.Controllers
             }
             catch(TriedDeletingReferencedForeignKeyException ex)
             {
-                return RedirectToAction("Index", "Error");
+                return View("~/Views/Shared/Exception.cshtml", ex);
             }
         }
 
@@ -65,7 +65,7 @@ namespace TP07MVC.WebMVC.Controllers
             }
             catch(IDNotFoundException ex)
             {
-                return RedirectToAction("Index", "Error");
+                return View("~/Views/Shared/Exception.cshtml", ex);
             }
         }
 
@@ -79,7 +79,7 @@ namespace TP07MVC.WebMVC.Controllers
             }
             catch(Exception ex)
             {
-                return RedirectToAction("Index", "Error");
+                return View("~/Views/Shared/Exception.cshtml", ex);
             }
         }
     }
