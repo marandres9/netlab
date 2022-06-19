@@ -12,6 +12,7 @@ namespace TP07MVC.Logic
         void Delete(IDType id);
         List<T> GetAll();
         T GetById(IDType id);
+        bool Exists(IDType id);
         void Update(T newEntity);
     }
 }

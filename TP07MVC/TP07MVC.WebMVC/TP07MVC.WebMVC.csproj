@@ -137,6 +137,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoriesModel.cs" />
+    <Compile Include="Models\RegionModel.cs" />
+    <Compile Include="Models\TerritoriesModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +148,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap4.min.css" />
+    <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -183,7 +187,7 @@
     <Content Include="Views\TESTShippers\Edit.cshtml" />
     <Content Include="Views\TESTShippers\Index.cshtml" />
     <Content Include="Views\Region\Index.cshtml" />
-    <Content Include="Views\Region\Create.cshtml" />
+    <Content Include="Views\Region\Add.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Territories\Index.cshtml" />
     <Content Include="Views\Territories\Add.cshtml" />
@@ -191,10 +195,11 @@
     <Content Include="Views\Categories\Add.cshtml" />
     <Content Include="Views\Shared\Exception.cshtml" />
     <Content Include="Views\Territories\Details.cshtml" />
+    <Content Include="Views\Region\Details.cshtml" />
+    <Content Include="Views\Categories\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Shippers\" />
   </ItemGroup>
   <ItemGroup>

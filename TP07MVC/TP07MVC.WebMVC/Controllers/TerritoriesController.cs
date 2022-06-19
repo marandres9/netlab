@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using TP07MVC.Common.Exceptions;
 using TP07MVC.Entity;
 using TP07MVC.Logic;
+using TP07MVC.WebMVC.Models;
 
 namespace TP07MVC.WebMVC.Controllers
 {
@@ -19,7 +20,7 @@ namespace TP07MVC.WebMVC.Controllers
             ViewBag.SearchString = searchString;
             ViewBag.IDSortParam = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewBag.DescSortParam = (sortOrder == "description") ? "description_desc" : "description";
-            var list = _logic.GetAll();
+            var list = _logic.GetAll().Select(t => new TerritoriesModel(t));
 
             if(!string.IsNullOrEmpty(searchString))
             {
@@ -48,7 +49,7 @@ namespace TP07MVC.WebMVC.Controllers
         {
             try
             {
-                return View(_logic.GetDetails(_logic.GetById(id)));
+                return View(_logic.GetDetails(id));
             }
             catch(IDNotFoundException ex)
             {
@@ -62,32 +63,35 @@ namespace TP07MVC.WebMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(Territories territory)
+        public ActionResult Add(TerritoriesModel territoryModel)
         {
             if(!ModelState.IsValid)
             {
-                return View(territory);
+                return View(territoryModel);
             }
-            else if(_logic.Exists(territory.TerritoryID))
+            else if(_logic.Exists(territoryModel.TerritoryID))
             {
                 ModelState.AddModelError("id-taken", "Territory ID already exists");
-                return View(territory);
+                return View(territoryModel);
             }
 
             try
             {
-                _logic.Add(territory);
+                _logic.Add(new Territories
+                {
+                    TerritoryID = territoryModel.TerritoryID,
+                    TerritoryDescription = territoryModel.TerritoryDescription,
+                    RegionID = territoryModel.RegionID
+                });
                 return RedirectToAction("Index");
             }
             catch(IDAlreadyTakenException ex)
             {
                 return View("~/Views/Shared/Exception.cshtml", ex);
-
             }
             catch(EntityFailedValidationException ex)
             {
                 return View("~/Views/Shared/Exception.cshtml", ex);
-
             }
         }
 
@@ -108,7 +112,7 @@ namespace TP07MVC.WebMVC.Controllers
         {
             try
             {
-                var territory = _logic.GetById(id);
+                var territory = new TerritoriesModel(_logic.GetById(id));
                 ViewBag.Editing = true;
                 return View("Add", territory);
             }
@@ -119,16 +123,21 @@ namespace TP07MVC.WebMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Territories territory)
+        public ActionResult Edit(TerritoriesModel territoryModel)
         {
             if(!ModelState.IsValid)
             {
                 ViewBag.Editing = true;
-                return View("Add", territory);
+                return View("Add", territoryModel);
             }
             try
             {
-                _logic.Update(territory);
+                _logic.Update(new Territories
+                {
+                    TerritoryID = territoryModel.TerritoryID,
+                    TerritoryDescription = territoryModel.TerritoryDescription,
+                    RegionID = territoryModel.RegionID
+                });
                 return RedirectToAction("Index");
             }
             catch(Exception ex)

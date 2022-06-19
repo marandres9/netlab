@@ -4,8 +4,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h1>Territories</h1>
+<hr />
+<h2 class="mb-5">Details</h2>
 
-<p>@Html.DisplayNameFor(m => m.TerritoryID): @Model.TerritoryID</p>
-<p>@Html.DisplayNameFor(m => m.TerritoryDescription): @Model.TerritoryDescription</p>
-<p>@Html.DisplayNameFor(m => m.RegionDescription): @Model.RegionDescription</p>
+<div class="d-flex  flex-column">
+    <div class="d-flex align-items-baseline my-2">
+        <h5>@Html.DisplayNameFor(m => m.TerritoryID):</h5>
+        <p class="ml-3">@Model.TerritoryID</p>
+    </div>
+    <div class="d-flex align-items-baseline my-2">
+        <h5>@Html.DisplayNameFor(m => m.TerritoryDescription):</h5>
+        <p class="ml-3">@Model.TerritoryDescription</p>
+    </div>
+    <div class="d-flex align-items-baseline my-2">
+        <h5>@Html.DisplayNameFor(m => m.RegionDescription):</h5>
+        <p class="ml-3">@Model.RegionDescription</p>
+    </div>
+</div>

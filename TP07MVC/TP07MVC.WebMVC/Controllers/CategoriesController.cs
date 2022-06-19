@@ -5,8 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using TP07MVC.Common.Exceptions;
 using TP07MVC.Entity;
-using TP07MVC.Entity.ViewModel;
 using TP07MVC.Logic;
+using TP07MVC.WebMVC.Models;
 
 namespace TP07MVC.WebMVC.Controllers
 {
@@ -15,9 +15,44 @@ namespace TP07MVC.WebMVC.Controllers
         private readonly CategoriesLogic _logic = new CategoriesLogic();
 
         // GET: Categories
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString)
         {
-            return View(_logic.GetAll());
+            ViewBag.SearchString = searchString;
+            ViewBag.IDSortParam = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+            ViewBag.NameSortParam = (sortOrder == "name") ? "name_desc" : "name";
+            var list = _logic.GetAll().Select(r => new CategoriesModel(r));
+
+            if(!string.IsNullOrEmpty(searchString))
+            {
+                list = list.Where(c => c.CategoryName.Contains(searchString)).ToList();
+            }
+            switch(sortOrder)
+            {
+                case "id_desc":
+                    list = list.OrderByDescending(c => c.CategoryID).ToList();
+                    break;
+                case "name_desc":
+                    list = list.OrderByDescending(c => c.CategoryName).ToList();
+                    break;
+                case "name":
+                    list = list.OrderBy(c => c.CategoryName).ToList();
+                    break;
+                default:
+                    break;
+            }
+
+            return View(list);
+        }
+        public ActionResult Details(int id)
+        {
+            try
+            {
+                return View(new CategoriesModel(_logic.GetById(id)));
+            }
+            catch(IDNotFoundException ex)
+            {
+                return View("~/Views/Shared/Exception.cshtml", ex);
+            }
         }
 
         public ActionResult Add()
@@ -26,11 +61,20 @@ namespace TP07MVC.WebMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(Categories category)
+        public ActionResult Add(CategoriesModel categoryModel)
         {
+            if(!ModelState.IsValid)
+            {
+                return View(categoryModel);
+            }
             try
             {
-                _logic.Add(category);
+                _logic.Add(new Categories
+                {
+                    CategoryID = categoryModel.CategoryID,
+                    CategoryName = categoryModel.CategoryName,
+                    Description = categoryModel.Description
+                });
                 return RedirectToAction("Index");
             }
             catch(EntityFailedValidationException ex)
@@ -39,11 +83,13 @@ namespace TP07MVC.WebMVC.Controllers
             }
         }
 
-        public ActionResult Update(int id)
+        public ActionResult Edit(int id)
         {
             try
             {
-                return View("Add", _logic.GetById(id));
+                var categoryModel = new CategoriesModel(_logic.GetById(id));
+                ViewBag.Editing = true;
+                return View("Add", categoryModel);
             }
             catch(IDNotFoundException ex)
             {
@@ -52,12 +98,26 @@ namespace TP07MVC.WebMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update(Categories category)
+        public ActionResult Edit(CategoriesModel categoryModel)
         {
+            if(!ModelState.IsValid)
+            {
+                ViewBag.Editing = true;
+                return View("Add", categoryModel);
+            }   
             try
             {
-                _logic.Update(category);
+                _logic.Update(new Categories
+                {
+                    CategoryID = categoryModel.CategoryID,
+                    CategoryName = categoryModel.CategoryName,
+                    Description = categoryModel.Description
+                });
                 return RedirectToAction("Index");
+            }
+            catch(EntityFailedValidationException ex)
+            {
+                return View("~/Views/Shared/Exception.cshtml", ex);
             }
             catch(Exception ex)
             {

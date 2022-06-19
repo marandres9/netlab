@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TP07MVC.Entity;
+using TP07MVC.Entity.DTO;
 using TP07MVC.Common.Exceptions;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
@@ -67,6 +68,24 @@ namespace TP07MVC.Logic
             return reg;
         }
 
+        public bool Exists(int id)
+        {
+            return _context.Region.Any(r => r.RegionID == id);
+        }
+
+        public RegionTerritories GetDetails(int id)
+        {
+            var region = GetById(id);
+            var territoryDescriptions = _context.Territories.Where(t => t.RegionID == region.RegionID).Select(t => t.TerritoryDescription).ToList();
+
+            return new RegionTerritories
+            {
+                RegionID = region.RegionID,
+                RegionDescription = region.RegionDescription,
+                TerritoryDescriptions = territoryDescriptions
+            };
+        }
+
         public void Update(Region newEntity)
         {
             Region entityToUpdate = GetById(newEntity.RegionID);
@@ -74,7 +93,23 @@ namespace TP07MVC.Logic
             {
                 entityToUpdate.RegionDescription = newEntity.RegionDescription;
             }
-            _context.SaveChanges();
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch(DbEntityValidationException e)
+            {
+                string msg = "";
+                foreach(var entityValidationErrors in e.EntityValidationErrors)
+                {
+                    foreach(var validationError in entityValidationErrors.ValidationErrors)
+                    {
+                        msg += ("Error: " + validationError.ErrorMessage + "\n");
+                    }
+                }
+                throw new EntityFailedValidationException(msg, e);
+            }
         }
     }
 }

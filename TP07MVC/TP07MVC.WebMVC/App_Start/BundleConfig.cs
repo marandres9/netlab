@@ -28,7 +28,8 @@ namespace TP07MVC.WebMVC
 
             bundles.Add(new StyleBundle("~/Content/mycss").Include(
                 "~/Content/bootstrap4.min.css",
-                "~/Content/site.css"));
+                "~/Content/site.css",
+                "~/Content/styles.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap4").Include(
                       "~/Scripts/bootstrap4.bundle.min.js"));

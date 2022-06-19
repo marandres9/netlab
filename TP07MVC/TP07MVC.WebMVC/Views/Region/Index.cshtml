@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TP07MVC.Entity.ViewModel.RegionViewModel>
+﻿@model IEnumerable<TP07MVC.WebMVC.Models.RegionModel>
 
 @{
     ViewBag.Title = "Index";
@@ -6,35 +6,59 @@
 }
 
 <h1>Region</h1>
-<h2>Index</h2>
+<hr />
+<h2 class="mb-5">Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<div class="my-4 d-flex justify-content-between">
+    @using(Html.BeginForm("Index", "Region", FormMethod.Get, new { @id = "searchForm" }))
+    {
+        <div class="d-flex align-items-center">
+            @Html.Label("searchBox", "Search: ", new { @class = "control-label mr-3" })
+            @Html.TextBox("searchString", null, new { @class = "form-control mr-1", @id = "searchBox" })
+            <input type="submit" class="btn btn-primary" value="Go">
+            @if(!string.IsNullOrEmpty(ViewBag.SearchString))
+            {
+                <input type="button" class="btn btn-secondary ml-1" value="Clear" onclick="clearSearchForm()">
+            }
+        </div>
+    }
+    <div>
+        @Html.ActionLink("Add", "Add", null, new { @class = "btn btn-success" })
+    </div>
+</div>
+
+<table class="table text-center">
     <tr>
         <th>
-            @Html.DisplayName("ID")
+            @Html.ActionLink(Html.DisplayNameFor(model => model.RegionID).ToString(), "Index", new { sortOrder = ViewBag.IDSortParam, searchString = ViewBag.SearchString })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RegionDescription)
+            @Html.ActionLink(Html.DisplayNameFor(model => model.RegionDescription).ToString(), "Index", new { sortOrder = ViewBag.DescSortParam, searchString = ViewBag.SearchString })
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegionID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegionDescription)
-        </td>
-        <td>
-            @Html.ActionLink("Update", "Update", new { id=item.RegionID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RegionID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.RegionID })
-        </td>
-    </tr>
-}
-
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegionID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegionDescription)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.RegionID }, new { @class = "btn btn-info" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.RegionID }, new { @class = "btn btn-secondary" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.RegionID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
 </table>
+
+<script>
+    function clearSearchForm() {
+        // clears searchBox input and re-submits form
+        $('#searchBox').val('');
+        $('#searchForm').submit();
+    }
+</script>

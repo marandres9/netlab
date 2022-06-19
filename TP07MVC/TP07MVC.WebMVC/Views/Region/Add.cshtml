@@ -1,24 +1,23 @@
-﻿@model TP07MVC.Entity.ViewModel.RegionViewModel
+﻿@model TP07MVC.WebMVC.Models.RegionModel
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    bool updating = Model != null;
+    bool editing = ViewBag.Editing == null ? false : ViewBag.Editing;
 }
 
-<h2>Create</h2>
+<h1>Region</h1>
+<hr />
+<h2 class="mb-5">
+    @(editing ? "Edit" : "Add")
+</h2>
 
-@using(Html.BeginForm(updating ? "Update" : "Create", "Region"))
+@using(Html.BeginForm(editing ? "Edit" : "Add", "Region"))
 {
     <div>
-        <h4>
-            @(updating ? "Update shipper" : "Add shipper")
-        </h4>
-
-
         <div class="form-group">
             @Html.LabelFor(model => model.RegionID, new { @class = "control-label" })
 
-            @if(updating)
+            @if(editing)
             {
                 @Html.EditorFor(model => model.RegionID, new { htmlAttributes = new { @type = "number", @class = "form-control", @readonly = true } })
             }
@@ -37,8 +36,8 @@
         </div>
 
         <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-default" />
-            @Html.ActionLink("Cancel changes", "Index")
+            @Html.ActionLink("Cancel", "Index", null, new {@class = "btn btn-secondary"})
+            <input type="submit" value="Save" class="btn btn-success" />
         </div>
     </div>
 }

@@ -13,7 +13,7 @@ namespace TP07MVC.Logic
 {
     public class ShippersLogic: BaseLogic, ICRUDLogic<Shippers, int>
     {
-        private readonly string _tableName  = "Shippers";
+        private readonly string _tableName = "Shippers";
 
         public ShippersLogic()
         { }
@@ -72,6 +72,11 @@ namespace TP07MVC.Logic
             return shipper;
         }
 
+        public bool Exists(int id)
+        {
+            return _context.Shippers.Any(t => t.ShipperID == id);
+        }
+
         public void Update(Shippers newEntity)
         {
             Shippers entityToUpdate = GetById(newEntity.ShipperID);
@@ -83,7 +88,22 @@ namespace TP07MVC.Logic
             {
                 entityToUpdate.Phone = newEntity.Phone;
             }
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch(DbEntityValidationException e)
+            {
+                string msg = "";
+                foreach(var entityValidationErrors in e.EntityValidationErrors)
+                {
+                    foreach(var validationError in entityValidationErrors.ValidationErrors)
+                    {
+                        msg += ("Error: " + validationError.ErrorMessage + "\n");
+                    }
+                }
+                throw new EntityFailedValidationException(msg, e);
+            }
         }
     }
 }

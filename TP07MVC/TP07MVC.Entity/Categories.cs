@@ -9,6 +9,8 @@ namespace TP07MVC.Entity
     public partial class Categories
     {
         [Key]
+        [Required(ErrorMessage = "Field CategoryID is required.")]
+        [Display(Name = "ID")]
         public int CategoryID { get; set; }
 
         [Required(ErrorMessage = "Field CategroyName is required.")]

@@ -1,0 +1,31 @@
+﻿@model TP07MVC.Entity.DTO.RegionTerritories
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Region</h1>
+<hr />
+<h2 class="mb-5">Details</h2>
+
+<div class="d-flex flex-column align-items-start">
+    <div class="d-flex align-items-baseline my-2">
+        <h5>@Html.DisplayNameFor(m => m.RegionID):</h5>
+        <p class="ml-3">@Model.RegionID</p>
+    </div>
+
+    <div class="d-flex align-items-baseline my-2">
+        <h5>@Html.DisplayNameFor(m => m.RegionDescription):</h5>
+        <p class="ml-3">@Model.RegionDescription</p>
+    </div>
+
+    <div class="d-flex align-items-baseline my-2">
+        <h5>@Html.DisplayNameFor(m => m.TerritoryDescriptions):</h5>
+        <div class="d-flex flex-column">
+            @foreach(var desc in Model.TerritoryDescriptions)
+            {
+                <p class="ml-3">@desc</p>
+            }
+        </div>
+    </div>
+</div>

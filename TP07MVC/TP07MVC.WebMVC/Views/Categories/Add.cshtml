@@ -1,21 +1,21 @@
-﻿@model  TP07MVC.Entity.Categories
+﻿@model  TP07MVC.WebMVC.Models.CategoriesModel
 @{
     ViewBag.Title = "Add";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    bool updating = Model != null;
+    bool editing = ViewBag.Editing == null ? false : ViewBag.Editing;
 }
 
-@using(Html.BeginForm(updating ? "Update" : "Add", "Categories"))
+<h1>Categories</h1>
+<hr />
+<h2 class="mb-5">
+    @(editing ? "Edit" : "Add")
+</h2>
+
+@using(Html.BeginForm(editing ? "Edit" : "Add", "Categories"))
 {
     <div>
-        <h4>
-            @(updating ? "Update Category" : "Add Category")
-        </h4>
-
-
         <div class="form-group">
-
-            @if(updating)
+            @if(editing)
             {
                 @Html.LabelFor(model => model.CategoryID, new { @class = "control-label" })
                 @Html.EditorFor(model => model.CategoryID, new { htmlAttributes = new { @type = "number", @class = "form-control", @readonly = true } })
@@ -39,7 +39,7 @@
         </div>
 
         <div class="form-group">
-            @Html.ActionLink("Cancel changes", "Index", null, new { @class = "btn btn-secondary" })
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary" })
             <input type="submit" value="Save" class="btn btn-success" />
         </div>
     </div>

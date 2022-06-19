@@ -64,6 +64,11 @@ namespace TP07MVC.Logic
             return cat;
         }
 
+        public bool Exists(int id)
+        {
+            return _context.Categories.Any(t => t.CategoryID == id);
+        }
+
         public void Update(Categories newEntity)
         {
             Categories entityToUpdate = GetById(newEntity.CategoryID);
@@ -75,7 +80,23 @@ namespace TP07MVC.Logic
             {
                 entityToUpdate.Description = newEntity.Description;
             }
-            _context.SaveChanges();
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch(DbEntityValidationException e)
+            {
+                string msg = "";
+                foreach(var entityValidationErrors in e.EntityValidationErrors)
+                {
+                    foreach(var validationError in entityValidationErrors.ValidationErrors)
+                    {
+                        msg += ("Error: " + validationError.ErrorMessage + "\n");
+                    }
+                }
+                throw new EntityFailedValidationException(msg, e);
+            }
         }
     }
 }

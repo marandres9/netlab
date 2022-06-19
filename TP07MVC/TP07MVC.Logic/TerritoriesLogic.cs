@@ -68,8 +68,9 @@ namespace TP07MVC.Logic
             return _context.Territories.Any(t => t.TerritoryID == id);
         }
 
-        public TerritoryRegion GetDetails(Territories terr)
+        public TerritoryRegion GetDetails(string id)
         {
+            var terr = GetById(id);
             string regionDesc = _context.Region.First(r => r.RegionID == terr.RegionID).RegionDescription;
 
             return new TerritoryRegion
@@ -111,7 +112,22 @@ namespace TP07MVC.Logic
             {
                 entityToUpdate.RegionID = (int) regionID;
             }
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch(DbEntityValidationException e)
+            {
+                string msg = "";
+                foreach(var entityValidationErrors in e.EntityValidationErrors)
+                {
+                    foreach(var validationError in entityValidationErrors.ValidationErrors)
+                    {
+                        msg += ("Error: " + validationError.ErrorMessage + "\n");
+                    }
+                }
+                throw new EntityFailedValidationException(msg, e);
+            }
         }
     }
 }
