@@ -8,12 +8,16 @@
 <h2>Index</h2>
 
 <div class="my-4 d-flex justify-content-between">
-    @using(Html.BeginForm())
+    @using(Html.BeginForm("Index", "Territories", FormMethod.Get, new { @id = "searchForm" }))
     {
         <div class="d-flex align-items-baseline">
-            @Html.Label("search-form", "Search: ", new { @class = "control-label mr-3" })
-            @Html.TextBox("searchString", null, new { @class = "form-control", @id = "search-form" })
-            <input type="submit" class="btn btn-default" value="Go">
+            @Html.Label("searchBox", "Search: ", new { @class = "control-label mr-3" })
+            @Html.TextBox("searchString", null, new { @class = "form-control mr-1", @id = "searchBox" })
+            <input type="submit" class="btn btn-primary" value="Go">
+            @if(!string.IsNullOrEmpty(ViewBag.SearchString))
+            {
+                <input type="button" class="btn btn-secondary ml-1" value="Clear" onclick="clearSearchForm()">
+            }
         </div>
     }
     <div>
@@ -38,10 +42,18 @@
             <td>@Html.DisplayFor(m => item.TerritoryDescription)</td>
 
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.TerritoryID }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Edit", "Edit", new { id = item.TerritoryID }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.TerritoryID }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Details", "Details", new { id = item.TerritoryID }, new { @class = "btn btn-info" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.TerritoryID }, new { @class = "btn btn-secondary" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.TerritoryID }, new { @class = "btn btn-danger" })
             </td>
         </tr>
     }
 </table>
+
+<script>
+    function clearSearchForm() {
+        // clears searchBox input and re-submits form
+        $('#searchBox').val('');
+        $('#searchForm').submit();
+    }
+</script>
