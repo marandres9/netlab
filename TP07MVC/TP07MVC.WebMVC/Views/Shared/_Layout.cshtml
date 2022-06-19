@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - TP07: MVC</title>
     @Styles.Render("~/Content/mycss")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body class="min-vh-100 d-flex flex-column">
     <div class="mb-5">
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <a class="navbar-brand" href="#">My application</a>
@@ -36,10 +36,10 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
+    <footer class="text-center mt-auto">
+        <p>&copy; @DateTime.Now.Year - TP07: ASP.NET MVC CRUD</p>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap4")
