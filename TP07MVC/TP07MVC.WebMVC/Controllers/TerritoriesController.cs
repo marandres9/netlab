@@ -140,6 +140,10 @@ namespace TP07MVC.WebMVC.Controllers
                 });
                 return RedirectToAction("Index");
             }
+            catch(EntityFailedValidationException ex)
+            {
+                return View("~/Views/Shared/Exception.cshtml", ex);
+            }
             catch(Exception ex)
             {
                 return View("~/Views/Shared/Exception.cshtml", ex);

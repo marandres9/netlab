@@ -128,12 +128,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
-    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RegionController.cs" />
     <Compile Include="Controllers\ShippersController.cs" />
     <Compile Include="Controllers\TerritoriesController.cs" />
-    <Compile Include="Controllers\TESTShippersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -182,14 +180,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\TESTShippers\Create.cshtml" />
-    <Content Include="Views\TESTShippers\Delete.cshtml" />
-    <Content Include="Views\TESTShippers\Details.cshtml" />
-    <Content Include="Views\TESTShippers\Edit.cshtml" />
-    <Content Include="Views\TESTShippers\Index.cshtml" />
     <Content Include="Views\Region\Index.cshtml" />
     <Content Include="Views\Region\Add.cshtml" />
-    <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Territories\Index.cshtml" />
     <Content Include="Views\Territories\Add.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
