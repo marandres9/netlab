@@ -139,6 +139,7 @@
     </Compile>
     <Compile Include="Models\CategoriesModel.cs" />
     <Compile Include="Models\RegionModel.cs" />
+    <Compile Include="Models\ShippersModel.cs" />
     <Compile Include="Models\TerritoriesModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -197,10 +198,12 @@
     <Content Include="Views\Territories\Details.cshtml" />
     <Content Include="Views\Region\Details.cshtml" />
     <Content Include="Views\Categories\Details.cshtml" />
+    <Content Include="Views\Shippers\Add.cshtml" />
+    <Content Include="Views\Shippers\Details.cshtml" />
+    <Content Include="Views\Shippers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Shippers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

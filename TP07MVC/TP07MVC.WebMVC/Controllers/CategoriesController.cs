@@ -137,6 +137,5 @@ namespace TP07MVC.WebMVC.Controllers
                 return View("~/Views/Shared/Exception.cshtml", ex);
             }
         }
-
     }
 }

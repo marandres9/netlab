@@ -1,15 +1,16 @@
-﻿@model IEnumerable<TP07MVC.WebMVC.Models.CategoriesModel>
+﻿@model IEnumerable<TP07MVC.WebMVC.Models.ShippersModel>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Categories</h1>
+<h1>Shippers</h1>
 <hr />
 <h2 class="mb-5">Index</h2>
 
 <div class="my-4 d-flex justify-content-between">
-    @using(Html.BeginForm("Index", "Categories", FormMethod.Get, new { @id = "searchForm" }))
+    @using(Html.BeginForm("Index", "Shippers", FormMethod.Get, new { @id = "searchForm" }))
     {
         <div class="d-flex align-items-center">
             @Html.Label("searchBox", "Search: ", new { @class = "control-label mr-3" })
@@ -29,10 +30,10 @@
 <table class="table text-center">
     <tr>
         <th>
-            @Html.ActionLink(Html.DisplayNameFor(model => model.CategoryID).ToString(), "Index", new { sortOrder = ViewBag.IDSortParam, searchString = ViewBag.SearchString })
+            @Html.ActionLink(Html.DisplayNameFor(model => model.ShipperID).ToString(), "Index", new { sortOrder = ViewBag.IDSortParam, searchString = ViewBag.SearchString })
         </th>
         <th>
-            @Html.ActionLink(Html.DisplayNameFor(model => model.CategoryName).ToString(), "Index", new { sortOrder = ViewBag.NameSortParam, searchString = ViewBag.SearchString })
+            @Html.ActionLink(Html.DisplayNameFor(model => model.CompanyName).ToString(), "Index", new { sortOrder = ViewBag.NameSortParam, searchString = ViewBag.SearchString })
         </th>
         <th>Action</th>
     </tr>
@@ -40,13 +41,16 @@
     @foreach(var item in Model)
     {
         <tr>
-            <td>@Html.DisplayFor(m => item.CategoryID)</td>
-            <td>@Html.DisplayFor(m => item.CategoryName)</td>
-
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipperID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
             <td class="d-flex flex-column flex-sm-row justify-content-center">
-                @Html.ActionLink("Details", "Details", new { id = item.CategoryID }, new { @class = "btn btn-info m-1" })
-                @Html.ActionLink("Edit", "Edit", new { id = item.CategoryID }, new { @class = "btn btn-secondary m-1" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.CategoryID }, new { @class = "btn btn-danger m-1" })
+                @Html.ActionLink("Details", "Details", new { id = item.ShipperID }, new { @class = "btn btn-info m-1" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.ShipperID }, new { @class = "btn btn-secondary m-1" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.ShipperID }, new { @class = "btn btn-danger m-1" })
             </td>
         </tr>
     }

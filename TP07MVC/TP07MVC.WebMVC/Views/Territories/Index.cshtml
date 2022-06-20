@@ -33,6 +33,7 @@
         <th>
             @Html.ActionLink(Html.DisplayNameFor(m => m.TerritoryDescription).ToString(), "Index", new { sortOrder = ViewBag.DescSortParam, searchString = ViewBag.SearchString })
         </th>
+        <th>Action</th>
     </tr>
 
     @foreach(var item in Model)
@@ -40,11 +41,10 @@
         <tr>
             <td>@Html.DisplayFor(m => item.TerritoryID)</td>
             <td>@Html.DisplayFor(m => item.TerritoryDescription)</td>
-
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.TerritoryID }, new { @class = "btn btn-info" })
-                @Html.ActionLink("Edit", "Edit", new { id = item.TerritoryID }, new { @class = "btn btn-secondary" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.TerritoryID }, new { @class = "btn btn-danger" })
+            <td class="d-flex flex-column flex-sm-row justify-content-center">
+                @Html.ActionLink("Details", "Details", new { id = item.TerritoryID }, new { @class = "btn btn-info m-1" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.TerritoryID }, new { @class = "btn btn-secondary m-1" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.TerritoryID }, new { @class = "btn btn-danger m-1" })
             </td>
         </tr>
     }

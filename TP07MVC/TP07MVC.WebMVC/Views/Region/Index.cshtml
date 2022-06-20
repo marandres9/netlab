@@ -23,7 +23,7 @@
         </div>
     }
     <div>
-        @Html.ActionLink("Add", "Add", null, new { @class = "btn btn-success" })
+        @Html.ActionLink("Add", "Add", null, new { @class = "btn btn-success ml-3" })
     </div>
 </div>
 
@@ -35,21 +35,22 @@
         <th>
             @Html.ActionLink(Html.DisplayNameFor(model => model.RegionDescription).ToString(), "Index", new { sortOrder = ViewBag.DescSortParam, searchString = ViewBag.SearchString })
         </th>
+        <th>Action</th>
     </tr>
 
     @foreach(var item in Model)
     {
-        <tr>
+        <tr >
             <td>
                 @Html.DisplayFor(modelItem => item.RegionID)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RegionDescription)
             </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.RegionID }, new { @class = "btn btn-info" })
-                @Html.ActionLink("Edit", "Edit", new { id = item.RegionID }, new { @class = "btn btn-secondary" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.RegionID }, new { @class = "btn btn-danger" })
+            <td class="d-flex flex-column flex-sm-row justify-content-center">
+                @Html.ActionLink("Details", "Details", new { id = item.RegionID }, new { @class = "btn btn-info m-1" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.RegionID }, new { @class = "btn btn-secondary m-1" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.RegionID }, new { @class = "btn btn-danger m-1" })
             </td>
         </tr>
     }
