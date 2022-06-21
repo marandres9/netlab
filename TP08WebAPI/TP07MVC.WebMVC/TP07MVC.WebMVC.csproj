@@ -131,6 +131,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RegionController.cs" />
     <Compile Include="Controllers\ShippersController.cs" />
+    <Compile Include="Controllers\SpacecraftDataController.cs" />
     <Compile Include="Controllers\TerritoriesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -147,6 +148,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap4.min.css" />
+    <Content Include="Content\SpaceData\leaflet.css" />
+    <Content Include="Content\SpaceData\SpaceData.css" />
     <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -166,6 +169,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\SpaceData\leaflet.js" />
+    <Content Include="Scripts\SpaceData\SpaceData.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -193,6 +198,7 @@
     <Content Include="Views\Shippers\Add.cshtml" />
     <Content Include="Views\Shippers\Details.cshtml" />
     <Content Include="Views\Shippers\Index.cshtml" />
+    <Content Include="Views\SpacecraftData\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

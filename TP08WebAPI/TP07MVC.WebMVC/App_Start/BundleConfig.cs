@@ -26,14 +26,24 @@ namespace TP07MVC.WebMVC
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
+            // includes bootstrap v4
             bundles.Add(new StyleBundle("~/Content/mycss").Include(
                 "~/Content/bootstrap4.min.css",
                 "~/Content/site.css",
-                "~/Content/styles.css"));
-
+                "~/Content/styles.css"
+            ));
             bundles.Add(new ScriptBundle("~/bundles/bootstrap4").Include(
-                      "~/Scripts/bootstrap4.bundle.min.js"));
-
+                      "~/Scripts/bootstrap4.bundle.min.js"
+            ));
+            // bundles for consuming API with SpaceData
+            bundles.Add(new StyleBundle("~/Content/SpaceData").Include(
+                "~/Content/SpaceData/leaflet.css",
+                "~/Content/SpaceData/SpaceData.css"
+            ));
+            bundles.Add(new ScriptBundle("~/bundles/SpaceData").Include(
+                "~/Scripts/SpaceData/leaflet.js",
+                "~/Scripts/SpaceData/SpaceData.js"
+            ));
         }
     }
 }
