@@ -47,6 +47,10 @@ namespace TP07MVC.Logic
             }
         }
 
+        public CategoryDto Get(int id)
+        {
+            return new CategoryDto(GetEntity(id));
+        }
         public List<CategoryDto> GetAll()
         {
             return _context.Categories.Select(c => new CategoryDto

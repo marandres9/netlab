@@ -59,6 +59,10 @@ namespace TP07MVC.Logic
             }
         }
 
+        public ShipperDto Get(int id)
+        {
+            return new ShipperDto(GetEntity(id));
+        }
         public List<ShipperDto> GetAll()
         {
             return _context.Shippers.Select(s => new ShipperDto

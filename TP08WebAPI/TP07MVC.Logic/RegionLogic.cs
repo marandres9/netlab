@@ -54,6 +54,10 @@ namespace TP07MVC.Logic
             }
         }
 
+        public RegionDto Get(int id)
+        {
+            return new RegionDto(GetEntity(id));
+        }
         public List<RegionDto> GetAll()
         {
             return _context.Region.Select(r => new RegionDto
