@@ -101,15 +101,22 @@ namespace TP07MVC.Logic
                 RegionID = t.RegionID
             }).ToList();
         }
-        public List<TerritoryDto> GetAll(string filterString)
+
+        public List<TerritoryDto> GetAll(Func<Territories, bool> filter)
         {
-            return _context.Territories.Where(t => t.TerritoryDescription.ToLower().Contains(filterString.ToLower())).Select(t => new TerritoryDto
+            return _context.Territories.Where(filter).Select(t => new TerritoryDto
             {
                 TerritoryID = t.TerritoryID,
                 TerritoryDescription = t.TerritoryDescription,
                 RegionID = t.RegionID
             }).ToList();
         }
+
+        public List<TerritoryDto> GetAll(string filterString)
+        {
+            return GetAll(t => t.TerritoryDescription.ToLower().Contains(filterString.ToLower()));
+        }
+
         public TerritoryDto Update(TerritoryDto newEntity)
         {
             Territories entityToUpdate = GetEntity(newEntity.TerritoryID);

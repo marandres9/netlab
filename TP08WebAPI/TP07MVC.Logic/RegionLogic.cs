@@ -66,13 +66,19 @@ namespace TP07MVC.Logic
                 RegionDescription = r.RegionDescription
             }).ToList();
         }
-        public List<RegionDto> GetAll(string filterString)
+
+        public List<RegionDto> GetAll(Func<Region, bool> filter)
         {
-            return _context.Region.Where(r => r.RegionDescription.ToLower().Contains(filterString.ToLower())).Select(r => new RegionDto
+            return _context.Region.Where(filter).Select(r => new RegionDto
             {
                 RegionID = r.RegionID,
                 RegionDescription = r.RegionDescription,
             }).ToList();
+        }
+
+        public List<RegionDto> GetAll(string filterString)
+        {
+            return GetAll(r => r.RegionDescription.ToLower().Contains(filterString.ToLower()));
         }
         private Region GetEntity(int id)
         {

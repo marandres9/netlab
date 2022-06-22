@@ -5,6 +5,7 @@ using TP07MVC.Common.Exceptions;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using TP07MVC.Entity.DTO;
+using System;
 
 namespace TP07MVC.Logic
 {
@@ -60,14 +61,19 @@ namespace TP07MVC.Logic
                 Description = c.Description
             }).ToList();
         }
-        public List<CategoryDto> GetAll(string filterString)
+        public List<CategoryDto> GetAll(Func<Categories, bool> filter)
         {
-            return _context.Categories.Where(c => c.CategoryName.ToLower().Contains(filterString.ToLower())).Select(c => new CategoryDto
+            return _context.Categories.Where(filter).Select(c => new CategoryDto
             {
                 CategoryID = c.CategoryID,
                 CategoryName = c.CategoryName,
                 Description = c.Description
             }).ToList();
+        }
+
+        public List<CategoryDto> GetAll(string filterString)
+        {
+            return GetAll(c => c.CategoryName.ToLower().Contains(filterString.ToLower()));
         }
 
         private Categories GetEntity(int id)
