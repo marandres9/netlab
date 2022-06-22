@@ -19,11 +19,16 @@ namespace TP07MVC.WebMVC.Controllers
             ViewBag.SearchString = searchString;
             ViewBag.IDSortParam = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewBag.NameSortParam = (sortOrder == "name") ? "name_desc" : "name";
-            var list = _logic.GetAll().Select(r => new ShippersModel(r));
 
-            if(!string.IsNullOrEmpty(searchString))
+            IEnumerable<ShippersModel> list;
+            if(string.IsNullOrEmpty(searchString))
             {
-                list = list.Where(s => s.CompanyName.Contains(searchString)).ToList();
+                list = _logic.GetAll().Select(s => new ShippersModel(s));
+
+            }
+            else
+            {
+                list = _logic.GetAll(searchString).Select(s => new ShippersModel(s));
             }
             switch(sortOrder)
             {
@@ -86,7 +91,7 @@ namespace TP07MVC.WebMVC.Controllers
         {
             try
             {
-                var shippersModel = _logic.GetById(id);
+                var shippersModel = new ShippersModel(_logic.GetById(id));
                 ViewBag.Editing = true;
                 return View("Add", shippersModel);
             }

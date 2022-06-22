@@ -62,6 +62,11 @@ namespace TP07MVC.Logic
             return _context.Shippers.ToList();
         }
 
+        public List<Shippers> GetAll(string companyName)
+        {
+            return _context.Shippers.Where(s => s.CompanyName.ToLower().Contains(companyName.ToLower())).ToList();
+        }
+
         public Shippers GetById(int id)
         {
             Shippers shipper = _context.Shippers.Find(id);
