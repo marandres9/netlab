@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TP07MVC.Common.Exceptions;
 using TP07MVC.Entity;
+using TP07MVC.Entity.DTO;
 using TP07MVC.Logic;
 using TP07MVC.WebMVC.Models;
 
@@ -79,7 +80,7 @@ namespace TP07MVC.WebMVC.Controllers
             // add and save object
             try
             {
-                _logic.Add(new Region { RegionID = regionModel.RegionID, RegionDescription = regionModel.RegionDescription });
+                _logic.Add(new RegionDto { RegionID = regionModel.RegionID, RegionDescription = regionModel.RegionDescription });
                 return RedirectToAction("Index");
             }
             catch(IDAlreadyTakenException ex)
@@ -115,7 +116,7 @@ namespace TP07MVC.WebMVC.Controllers
             }
             try
             {
-                _logic.Update(new Region
+                _logic.Update(new RegionDto
                 {
                     RegionID = regionModel.RegionID,
                     RegionDescription = regionModel.RegionDescription

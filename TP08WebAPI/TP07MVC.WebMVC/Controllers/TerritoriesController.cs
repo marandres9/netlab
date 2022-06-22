@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TP07MVC.Common.Exceptions;
 using TP07MVC.Entity;
+using TP07MVC.Entity.DTO;
 using TP07MVC.Logic;
 using TP07MVC.WebMVC.Models;
 
@@ -77,7 +78,7 @@ namespace TP07MVC.WebMVC.Controllers
 
             try
             {
-                _logic.Add(new Territories
+                _logic.Add(new TerritoryDto
                 {
                     TerritoryID = territoryModel.TerritoryID,
                     TerritoryDescription = territoryModel.TerritoryDescription,
@@ -132,7 +133,7 @@ namespace TP07MVC.WebMVC.Controllers
             }
             try
             {
-                _logic.Update(new Territories
+                _logic.Update(new TerritoryDto
                 {
                     TerritoryID = territoryModel.TerritoryID,
                     TerritoryDescription = territoryModel.TerritoryDescription,

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TP07MVC.Common.Exceptions;
 using TP07MVC.Entity;
+using TP07MVC.Entity.DTO;
 using TP07MVC.Logic;
 using TP07MVC.WebMVC.Models;
 
@@ -69,7 +70,7 @@ namespace TP07MVC.WebMVC.Controllers
             }
             try
             {
-                _logic.Add(new Categories
+                _logic.Add(new CategoryDto
                 {
                     CategoryID = categoryModel.CategoryID,
                     CategoryName = categoryModel.CategoryName,
@@ -107,7 +108,7 @@ namespace TP07MVC.WebMVC.Controllers
             }   
             try
             {
-                _logic.Update(new Categories
+                _logic.Update(new CategoryDto
                 {
                     CategoryID = categoryModel.CategoryID,
                     CategoryName = categoryModel.CategoryName,

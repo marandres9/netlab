@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 using TP07MVC.Entity;
+using TP07MVC.Entity.DTO;
 
 namespace TP07MVC.WebMVC.Models
 {
@@ -25,6 +22,12 @@ namespace TP07MVC.WebMVC.Models
 
         public TerritoriesModel() { }
         public TerritoriesModel(Territories territory)
+        {
+            TerritoryID = territory.TerritoryID;
+            TerritoryDescription = territory.TerritoryDescription;
+            RegionID = territory.RegionID;
+        }
+        public TerritoriesModel(TerritoryDto territory)
         {
             TerritoryID = territory.TerritoryID;
             TerritoryDescription = territory.TerritoryDescription;

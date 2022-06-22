@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 using TP07MVC.Entity;
+using TP07MVC.Entity.DTO;
 
 namespace TP07MVC.WebMVC.Models
 {
@@ -23,6 +20,12 @@ namespace TP07MVC.WebMVC.Models
 
         public ShippersModel() { }
         public ShippersModel(Shippers shipper)
+        {
+            ShipperID = shipper.ShipperID;
+            CompanyName = shipper.CompanyName;
+            Phone = shipper.Phone;
+        }
+        public ShippersModel(ShipperDto shipper)
         {
             ShipperID = shipper.ShipperID;
             CompanyName = shipper.CompanyName;

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TP07MVC.Common.Exceptions;
 using TP07MVC.Entity;
+using TP07MVC.Entity.DTO;
 using TP07MVC.Logic;
 using TP07MVC.WebMVC.Models;
 
@@ -19,11 +20,15 @@ namespace TP07MVC.WebMVC.Controllers
             ViewBag.SearchString = searchString;
             ViewBag.IDSortParam = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             ViewBag.NameSortParam = (sortOrder == "name") ? "name_desc" : "name";
-            var list = _logic.GetAll().Select(r => new ShippersModel(r));
+            IEnumerable<ShippersModel> list;
 
-            if(!string.IsNullOrEmpty(searchString))
+            if(string.IsNullOrEmpty(searchString))
             {
-                list = list.Where(s => s.CompanyName.Contains(searchString)).ToList();
+                list = _logic.GetAll().Select(r => new ShippersModel(r));
+            }
+            else
+            {
+                list = _logic.GetAll(searchString).Select(s => new ShippersModel(s));
             }
             switch(sortOrder)
             {
@@ -68,7 +73,7 @@ namespace TP07MVC.WebMVC.Controllers
             }
             try
             {
-                _logic.Add(new Shippers
+                _logic.Add(new ShipperDto
                 {
                     ShipperID = shippersModel.ShipperID,
                     CompanyName = shippersModel.CompanyName,
@@ -106,7 +111,7 @@ namespace TP07MVC.WebMVC.Controllers
             }
             try
             {
-                _logic.Update(new Shippers
+                _logic.Update(new ShipperDto
                 {
                     ShipperID = shippersModel.ShipperID,
                     CompanyName = shippersModel.CompanyName,

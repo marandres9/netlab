@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using TP07MVC.Entity;
+using TP07MVC.Entity.DTO;
 
 namespace TP07MVC.WebMVC.Models
 {
@@ -20,6 +21,12 @@ namespace TP07MVC.WebMVC.Models
 
         public CategoriesModel() { }
         public CategoriesModel(Categories cat)
+        {
+            CategoryID = cat.CategoryID;
+            CategoryName = cat.CategoryName;
+            Description = cat.Description;
+        }
+        public CategoriesModel(CategoryDto cat)
         {
             CategoryID = cat.CategoryID;
             CategoryName = cat.CategoryName;
