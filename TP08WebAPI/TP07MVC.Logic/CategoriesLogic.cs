@@ -56,6 +56,15 @@ namespace TP07MVC.Logic
                 Description = c.Description
             }).ToList();
         }
+        public List<CategoryDto> GetAll(string filterString)
+        {
+            return _context.Categories.Where(c => c.CategoryName.ToLower().Contains(filterString.ToLower())).Select(c => new CategoryDto
+            {
+                CategoryID = c.CategoryID,
+                CategoryName = c.CategoryName,
+                Description = c.Description
+            }).ToList();
+        }
 
         private Categories GetEntity(int id)
         {

@@ -11,6 +11,7 @@ namespace TP07MVC.Logic
         TDto Add(TDto newEntity);
         void Delete(TId id);
         List<TDto> GetAll();
+        List<TDto> GetAll(string filterString);
         bool Exists(TId id);
         TDto Update(TDto newEntity);
     }

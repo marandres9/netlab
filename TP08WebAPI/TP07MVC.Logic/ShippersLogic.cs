@@ -69,6 +69,26 @@ namespace TP07MVC.Logic
             }).ToList();
         }
 
+        public List<ShipperDto> GetAll(string filterString)
+        {
+            return _context.Shippers.Where(s => s.CompanyName.ToLower().Contains(filterString.ToLower())).Select(s => new ShipperDto
+            {
+                ShipperID = s.ShipperID,
+                CompanyName = s.CompanyName,
+                Phone = s.Phone
+            }).ToList();
+        }
+
+        public List<ShipperDto> GetAll(Func<Shippers, bool> filter)
+        {
+            return _context.Shippers.Where(filter).Select(s => new ShipperDto
+            {
+                ShipperID = s.ShipperID,
+                CompanyName = s.CompanyName,
+                Phone = s.Phone
+            }).ToList();
+        }
+
         private Shippers GetEntity(int id)
         {
             Shippers shipper = _context.Shippers.Find(id);

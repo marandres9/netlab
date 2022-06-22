@@ -24,6 +24,14 @@ namespace TP08WebAPI.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("filter/{name}")]
+        public IHttpActionResult GetFiltered(string name)
+        {
+            var shippers = _logic.GetAll(s => s.CompanyName.ToLower().Contains(name.ToLower()));
+            return Ok(shippers);
+        }
+
+        [HttpGet]
         [Route("{id:int}")]
         public IHttpActionResult GetDetails(int id)
         {
