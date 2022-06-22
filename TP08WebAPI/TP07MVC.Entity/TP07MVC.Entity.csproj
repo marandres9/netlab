@@ -52,7 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Categories.cs" />
-    <Compile Include="DTO\RegionTerritories.cs" />
+    <Compile Include="DTO\CategoryDto.cs" />
+    <Compile Include="DTO\RegionDto.cs" />
+    <Compile Include="DTO\RegionDetailsDto.cs" />
+    <Compile Include="DTO\ShipperDto.cs" />
     <Compile Include="DTO\TerritoryDto.cs" />
     <Compile Include="DTO\TerritoryDetailsDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

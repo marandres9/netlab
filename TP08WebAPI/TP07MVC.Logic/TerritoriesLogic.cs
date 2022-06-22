@@ -14,17 +14,18 @@ namespace TP07MVC.Logic
     public class TerritoriesLogic: BaseLogic, ICRUDLogic<TerritoryDto, string>
     {
         private readonly string _tableName = "Territories";
-        public void Add(TerritoryDto newEntity)
+        public TerritoryDto Add(TerritoryDto newEntity)
         {
             // La tabla Territories no tiene ID autoincremental, hay que checkear que el nuevo ID no este ocupado
-            if(_context.Territories.Any(t => t.TerritoryID.Equals(newEntity.TerritoryID)))
+            if(Exists(newEntity.TerritoryID))
             {
                 throw new IDAlreadyTakenException($"Object with ID {newEntity.TerritoryID} already exists in table {_tableName}");
             }
             try
             {
-                _context.Territories.Add(new Territories(newEntity));
+                var newTerr = _context.Territories.Add(new Territories(newEntity));
                 _context.SaveChanges();
+                return new TerritoryDto(newTerr);
             }
             catch(DbEntityValidationException e)
             {
@@ -37,6 +38,11 @@ namespace TP07MVC.Logic
                     }
                 }
                 throw new EntityFailedValidationException(msg, e);
+            }
+            // RegionID property is a foreign key to the Region table, if left empty or invalid, a DbUpdateException is thrown
+            catch(DbUpdateException)
+            {
+                throw new InvalidForeignKeyException($"Missing or invalid foreign key for field {nameof(newEntity.RegionID)}");
             }
         }
 
@@ -65,12 +71,7 @@ namespace TP07MVC.Logic
 
         public TerritoryDto Get(string id)
         {
-            var territory = _context.Territories.Find(id);
-            if(territory == null)
-            {
-                throw new IDNotFoundException($"Object with ID {id} not found in table {_tableName}");
-            }
-            return new TerritoryDto(territory);
+            return new TerritoryDto(GetEntity(id));
         }
 
         public bool Exists(string id)
@@ -80,14 +81,14 @@ namespace TP07MVC.Logic
 
         public TerritoryDetailsDto GetDetails(string id)
         {
-            var terr = Get(id);
+            var terr = GetEntity(id);
             string regionDesc = _context.Region.First(r => r.RegionID == terr.RegionID).RegionDescription;
 
             return new TerritoryDetailsDto
             {
                 TerritoryID = terr.TerritoryID,
                 TerritoryDescription = terr.TerritoryDescription,
-                RegionDescription = regionDesc
+                Region = regionDesc
             };
         }
 
@@ -101,13 +102,32 @@ namespace TP07MVC.Logic
             }).ToList();
         }
 
-        public void Update(TerritoryDto newEntity)
+        public TerritoryDto Update(TerritoryDto newEntity)
         {
             Territories entityToUpdate = GetEntity(newEntity.TerritoryID);
             entityToUpdate.TerritoryDescription = newEntity.TerritoryDescription;
             entityToUpdate.RegionID = newEntity.RegionID;
-
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
+                return newEntity;
+            }
+            catch(DbEntityValidationException e)
+            {
+                string msg = "";
+                foreach(var entityValidationErrors in e.EntityValidationErrors)
+                {
+                    foreach(var validationError in entityValidationErrors.ValidationErrors)
+                    {
+                        msg += ("Error: " + validationError.ErrorMessage + "\n");
+                    }
+                }
+                throw new EntityFailedValidationException(msg, e);
+            }
+            catch(DbUpdateException)
+            {
+                throw new InvalidForeignKeyException($"Missing or invalid foreign key for field {nameof(newEntity.RegionID)}");
+            }
         }
 
         // Debo sobrecargar este metodo ya que deberia poder actualizar el campo RegionID opcionalmente,
@@ -141,6 +161,7 @@ namespace TP07MVC.Logic
                         msg += ("Error: " + validationError.ErrorMessage + "\n");
                     }
                 }
+
                 throw new EntityFailedValidationException(msg, e);
             }
         }

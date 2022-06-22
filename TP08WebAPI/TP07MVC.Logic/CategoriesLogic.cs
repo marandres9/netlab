@@ -1,26 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TP07MVC.Entity;
 using TP07MVC.Common.Exceptions;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using TP07MVC.Entity.DTO;
 
 namespace TP07MVC.Logic
 {
-    public class CategoriesLogic: BaseLogic, ICRUDLogic<Categories, int>
+    public class CategoriesLogic: BaseLogic, ICRUDLogic<CategoryDto, int>
     {
-        private readonly string _tableName  = "Categories";
+        private readonly string _tableName = "Categories";
 
-        public void Add(Categories newEntity)
+        public CategoryDto Add(CategoryDto newEntity)
         {
             try
             {
-                _context.Categories.Add(newEntity);
+                var newCategory = _context.Categories.Add(new Categories(newEntity));
                 _context.SaveChanges();
+                return new CategoryDto(newCategory);
             }
             catch(DbEntityValidationException e)
             {
@@ -31,8 +29,8 @@ namespace TP07MVC.Logic
                     {
                         msg += ("Error: " + validationError.ErrorMessage + "\n");
                     }
-                    throw new EntityFailedValidationException(msg, e);
                 }
+                throw new EntityFailedValidationException(msg, e);
             }
         }
 
@@ -40,7 +38,7 @@ namespace TP07MVC.Logic
         {
             try
             {
-                _context.Categories.Remove(Get(id));
+                _context.Categories.Remove(GetEntity(id));
                 _context.SaveChanges();
             }
             catch(DbUpdateException e)
@@ -49,12 +47,17 @@ namespace TP07MVC.Logic
             }
         }
 
-        public List<Categories> GetAll()
+        public List<CategoryDto> GetAll()
         {
-            return _context.Categories.ToList();
+            return _context.Categories.Select(c => new CategoryDto
+            {
+                CategoryID = c.CategoryID,
+                CategoryName = c.CategoryName,
+                Description = c.Description
+            }).ToList();
         }
 
-        public Categories Get(int id)
+        private Categories GetEntity(int id)
         {
             Categories cat = _context.Categories.Find(id);
             if(cat == null)
@@ -69,21 +72,22 @@ namespace TP07MVC.Logic
             return _context.Categories.Any(t => t.CategoryID == id);
         }
 
-        public void Update(Categories newEntity)
+        public CategoryDto GetDetails(int id)
         {
-            Categories entityToUpdate = Get(newEntity.CategoryID);
-            if(!string.IsNullOrEmpty(newEntity.CategoryName))
-            {
-                entityToUpdate.CategoryName = newEntity.CategoryName;
-            }
-            if(!string.IsNullOrEmpty(newEntity.Description))
-            {
-                entityToUpdate.Description = newEntity.Description;
-            }
+            var cat = GetEntity(id);
 
+            return new CategoryDto(cat);
+        }
+
+        public CategoryDto Update(CategoryDto newEntity)
+        {
+            Categories entityToUpdate = GetEntity(newEntity.CategoryID);
+            entityToUpdate.CategoryName = newEntity.CategoryName;
+            entityToUpdate.Description = newEntity.Description;
             try
             {
                 _context.SaveChanges();
+                return newEntity;
             }
             catch(DbEntityValidationException e)
             {

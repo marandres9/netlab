@@ -1,13 +1,13 @@
-namespace TP07MVC.Entity
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-    using TP07MVC.Entity.DTO;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-    public partial class Shippers
+namespace TP07MVC.Entity.DTO
+{
+    public class ShipperDto
     {
         [Key]
         [Display(Name = "ID")]
@@ -19,11 +19,11 @@ namespace TP07MVC.Entity
         public string CompanyName { get; set; }
 
         [StringLength(24, ErrorMessage = "Field Phone must be a string with a max length of 24.")]
-        [Display(Name ="Phone")]
+        [Display(Name = "Phone")]
         public string Phone { get; set; }
 
-        public Shippers() { }
-        public Shippers(ShipperDto shipper)
+        public ShipperDto() { }
+        public ShipperDto(Shippers shipper)
         {
             ShipperID = shipper.ShipperID;
             CompanyName = shipper.CompanyName;

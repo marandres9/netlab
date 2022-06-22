@@ -1,13 +1,9 @@
-namespace TP07MVC.Entity
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-    using TP07MVC.Entity.DTO;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-    public partial class Categories
+namespace TP07MVC.Entity.DTO
+{
+    public class CategoryDto
     {
         [Key]
         [Display(Name = "ID")]
@@ -20,11 +16,8 @@ namespace TP07MVC.Entity
         [Column(TypeName = "ntext")]
         public string Description { get; set; }
 
-        [Column(TypeName = "image")]
-        public byte[] Picture { get; set; }
-
-        public Categories() { }
-        public Categories(CategoryDto cat)
+        public CategoryDto() { }
+        public CategoryDto(Categories cat)
         {
             CategoryID = cat.CategoryID;
             CategoryName = cat.CategoryName;

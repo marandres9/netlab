@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using TP07MVC.Common.Exceptions;
 using TP07MVC.Entity.DTO;
@@ -9,27 +10,27 @@ using TP07MVC.Logic;
 
 namespace TP08WebAPI.WebAPI.Controllers
 {
-    [RoutePrefix("api/territories")]
-    public class TerritoriesController: ApiController
+    [RoutePrefix("api/region")]
+    public class RegionController: ApiController
     {
-        private readonly TerritoriesLogic _logic = new TerritoriesLogic();
+        private readonly RegionLogic _logic = new RegionLogic();
 
         [HttpGet]
         [Route("")]
         public IHttpActionResult GetAll()
         {
-            var territories = _logic.GetAll();
-            return Ok(territories);
+            var regions = _logic.GetAll();
+            return Ok(regions);
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public IHttpActionResult GetDetails(string id)
+        [Route("{id:int}")]
+        public IHttpActionResult GetDetails(int id)
         {
             try
             {
-                var terr = _logic.GetDetails(id);
-                return Ok(terr);
+                var region = _logic.GetDetails(id);
+                return Ok(region);
             }
             catch(IDNotFoundException)
             {
@@ -38,8 +39,8 @@ namespace TP08WebAPI.WebAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("delete/{id}")]
-        public IHttpActionResult Delete(string id)
+        [Route("delete/{id:int}")]
+        public IHttpActionResult Delete(int id)
         {
             try
             {
@@ -58,12 +59,12 @@ namespace TP08WebAPI.WebAPI.Controllers
 
         [HttpPost]
         [Route("add")]
-        public IHttpActionResult Add([FromBody] TerritoryDto terr)
+        public IHttpActionResult Add([FromBody] RegionDto region)
         {
             try
             {
-                var newTerritory = _logic.Add(terr);
-                return Created($"/api/territories/{newTerritory.TerritoryID}", newTerritory);
+                var newRegion = _logic.Add(region);
+                return Created($"/api/region/{newRegion.RegionID}", newRegion);
             }
             catch(IDAlreadyTakenException ex)
             {
@@ -73,20 +74,16 @@ namespace TP08WebAPI.WebAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch(InvalidForeignKeyException ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
 
         [HttpPut]
         [Route("edit")]
-        public IHttpActionResult Edit([FromBody] TerritoryDto terr)
+        public IHttpActionResult Edit([FromBody] RegionDto region)
         {
             try
             {
-                var updatedTerritory = _logic.Update(terr);
-                return Ok(updatedTerritory);
+                var updatedRegion = _logic.Update(region);
+                return Ok(updatedRegion);
             }
             catch(IDNotFoundException)
             {

@@ -8,112 +8,101 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using TP07MVC.Common.Exceptions;
 using TP07MVC.Data;
 using TP07MVC.Entity;
+using TP07MVC.Entity.DTO;
+using TP07MVC.Logic;
 
 namespace TP08WebAPI.WebAPI.Controllers
 {
-    public class CategoriesController : ApiController
+    [RoutePrefix("api/categories")]
+    public class CategoriesController: ApiController
     {
-        private NorthwindContext db = new NorthwindContext();
+        private readonly CategoriesLogic _logic = new CategoriesLogic();
 
-        // GET: api/Categories
-        public IQueryable<Categories> GetCategories()
+        [HttpGet]
+        [Route("")]
+        public IHttpActionResult GetAll()
         {
-            return db.Categories;
-        }
-
-        // GET: api/Categories/5
-        [ResponseType(typeof(Categories))]
-        public IHttpActionResult GetCategories(int id)
-        {
-            Categories categories = db.Categories.Find(id);
-            if (categories == null)
-            {
-                return NotFound();
-            }
-
+            var categories = _logic.GetAll();
             return Ok(categories);
         }
 
-        // PUT: api/Categories/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutCategories(int id, Categories categories)
+        [HttpGet]
+        [Route("{id:int}")]
+        public IHttpActionResult GetDetails(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != categories.CategoryID)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(categories).State = EntityState.Modified;
-
             try
             {
-                db.SaveChanges();
+                var category = _logic.GetDetails(id);
+                return Ok(category);
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoriesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/Categories
-        [ResponseType(typeof(Categories))]
-        public IHttpActionResult PostCategories(Categories categories)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Categories.Add(categories);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = categories.CategoryID }, categories);
-        }
-
-        // DELETE: api/Categories/5
-        [ResponseType(typeof(Categories))]
-        public IHttpActionResult DeleteCategories(int id)
-        {
-            Categories categories = db.Categories.Find(id);
-            if (categories == null)
+            catch(IDNotFoundException)
             {
                 return NotFound();
             }
-
-            db.Categories.Remove(categories);
-            db.SaveChanges();
-
-            return Ok(categories);
         }
 
-        protected override void Dispose(bool disposing)
+        [HttpDelete]
+        [Route("delete/{id:int}")]
+        public IHttpActionResult Delete(int id)
         {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                _logic.Delete(id);
+                return Ok(id);
             }
-            base.Dispose(disposing);
+            catch(IDNotFoundException)
+            {
+                return NotFound();
+            }
+            catch(TriedDeletingReferencedForeignKeyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        private bool CategoriesExists(int id)
+        [HttpPost]
+        [Route("add")]
+        public IHttpActionResult Add([FromBody] CategoryDto category)
         {
-            return db.Categories.Count(e => e.CategoryID == id) > 0;
+            try
+            {
+                var newCategory = _logic.Add(category);
+                return Created($"/api/categories/{newCategory.CategoryID}", newCategory);
+            }
+            catch(IDAlreadyTakenException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch(EntityFailedValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("edit")]
+        public IHttpActionResult Edit([FromBody] CategoryDto category)
+        {
+            try
+            {
+                var updatedCategory = _logic.Update(category);
+                return Ok(updatedCategory);
+            }
+            catch(IDNotFoundException)
+            {
+                return NotFound();
+            }
+            catch(EntityFailedValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch(InvalidForeignKeyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

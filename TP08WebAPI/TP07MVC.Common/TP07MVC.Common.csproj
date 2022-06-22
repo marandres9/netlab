@@ -44,6 +44,7 @@
     <Compile Include="Exceptions\EntityFailedValidationException.cs" />
     <Compile Include="Exceptions\IDNotFoundException.cs" />
     <Compile Include="Exceptions\IDAlreadyTakenException.cs" />
+    <Compile Include="Exceptions\InvalidForeignKeyException.cs" />
     <Compile Include="Exceptions\TriedDeletingReferencedForeignKeyException.cs" />
     <Compile Include="ExtensionMethods\StringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

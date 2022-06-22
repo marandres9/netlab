@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TP07MVC.Entity.DTO;
 
-namespace TP07MVC.Entity
+namespace TP07MVC.Entity.DTO
 {
-    [Table("Region")]
-    public partial class Region
+    public class RegionDto
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+
         [Required(ErrorMessage = "Field RegionID is required.")]
         [Display(Name = "ID")]
         public int RegionID { get; set; }
@@ -22,10 +19,8 @@ namespace TP07MVC.Entity
         [Display(Name = "Description")]
         public string RegionDescription { get; set; }
 
-        public virtual ICollection<Territories> Territories { get; set; }
-
-        public Region() { }
-        public Region(RegionDto reg)
+        public RegionDto() { }
+        public RegionDto(Region reg)
         {
             RegionID = reg.RegionID;
             RegionDescription = reg.RegionDescription;

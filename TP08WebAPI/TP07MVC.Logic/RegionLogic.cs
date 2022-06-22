@@ -11,20 +11,21 @@ using System.Data.Entity.Validation;
 
 namespace TP07MVC.Logic
 {
-    public class RegionLogic: BaseLogic, ICRUDLogic<Region, int>
+    public class RegionLogic: BaseLogic, ICRUDLogic<RegionDto, int>
     {
         private readonly string _tableName = "Region";
-        public void Add(Region newEntity)
+        public RegionDto Add(RegionDto newEntity)
         {
             // La tabla Region no tiene ID autoincremental, hay que checkear que el nuevo ID no este ocupado
-            if(_context.Region.Any(r => r.RegionID.Equals(newEntity.RegionID)))
+            if(Exists(newEntity.RegionID))
             {
                 throw new IDAlreadyTakenException($"Object with ID {newEntity.RegionID} already exists in table {_tableName}");
             }
             try
             {
-                _context.Region.Add(newEntity);
+                var newRegion = _context.Region.Add(new Region(newEntity));
                 _context.SaveChanges();
+                return new RegionDto(newRegion);
             }
             catch(DbEntityValidationException e)
             {
@@ -44,7 +45,7 @@ namespace TP07MVC.Logic
         {
             try
             {
-                _context.Region.Remove(Get(id));
+                _context.Region.Remove(GetEntity(id));
                 _context.SaveChanges();
             }
             catch(DbUpdateException e)
@@ -53,12 +54,16 @@ namespace TP07MVC.Logic
             }
         }
 
-        public List<Region> GetAll()
+        public List<RegionDto> GetAll()
         {
-            return _context.Region.ToList();
+            return _context.Region.Select(r => new RegionDto
+            {
+                RegionID = r.RegionID,
+                RegionDescription = r.RegionDescription
+            }).ToList();
         }
 
-        public Region Get(int id)
+        private Region GetEntity(int id)
         {
             Region reg = _context.Region.Find(id);
             if(reg == null)
@@ -73,30 +78,27 @@ namespace TP07MVC.Logic
             return _context.Region.Any(r => r.RegionID == id);
         }
 
-        public RegionTerritories GetDetails(int id)
+        public RegionDetailsDto GetDetails(int id)
         {
-            var region = Get(id);
+            var region = GetEntity(id);
             var territoryDescriptions = _context.Territories.Where(t => t.RegionID == region.RegionID).Select(t => t.TerritoryDescription).ToList();
 
-            return new RegionTerritories
+            return new RegionDetailsDto
             {
                 RegionID = region.RegionID,
                 RegionDescription = region.RegionDescription,
-                TerritoryDescriptions = territoryDescriptions
+                Territories = territoryDescriptions
             };
         }
 
-        public void Update(Region newEntity)
+        public RegionDto Update(RegionDto newEntity)
         {
-            Region entityToUpdate = Get(newEntity.RegionID);
-            if(!string.IsNullOrEmpty(newEntity.RegionDescription))
-            {
-                entityToUpdate.RegionDescription = newEntity.RegionDescription;
-            }
-
+            Region entityToUpdate = GetEntity(newEntity.RegionID);
+            entityToUpdate.RegionDescription = newEntity.RegionDescription;
             try
             {
                 _context.SaveChanges();
+                return newEntity;
             }
             catch(DbEntityValidationException e)
             {

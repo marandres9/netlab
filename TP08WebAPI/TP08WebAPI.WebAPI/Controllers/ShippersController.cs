@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using TP07MVC.Common.Exceptions;
 using TP07MVC.Entity.DTO;
@@ -9,27 +10,27 @@ using TP07MVC.Logic;
 
 namespace TP08WebAPI.WebAPI.Controllers
 {
-    [RoutePrefix("api/territories")]
-    public class TerritoriesController: ApiController
+    [RoutePrefix("api/shippers")]
+    public class ShippersController: ApiController
     {
-        private readonly TerritoriesLogic _logic = new TerritoriesLogic();
+        private readonly ShippersLogic _logic = new ShippersLogic();
 
         [HttpGet]
         [Route("")]
         public IHttpActionResult GetAll()
         {
-            var territories = _logic.GetAll();
-            return Ok(territories);
+            var shippers = _logic.GetAll();
+            return Ok(shippers);
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public IHttpActionResult GetDetails(string id)
+        [Route("{id:int}")]
+        public IHttpActionResult GetDetails(int id)
         {
             try
             {
-                var terr = _logic.GetDetails(id);
-                return Ok(terr);
+                var shipper = _logic.GetDetails(id);
+                return Ok(shipper);
             }
             catch(IDNotFoundException)
             {
@@ -38,8 +39,8 @@ namespace TP08WebAPI.WebAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("delete/{id}")]
-        public IHttpActionResult Delete(string id)
+        [Route("delete/{id:int}")]
+        public IHttpActionResult Delete(int id)
         {
             try
             {
@@ -58,12 +59,12 @@ namespace TP08WebAPI.WebAPI.Controllers
 
         [HttpPost]
         [Route("add")]
-        public IHttpActionResult Add([FromBody] TerritoryDto terr)
+        public IHttpActionResult Add([FromBody] ShipperDto shipper)
         {
             try
             {
-                var newTerritory = _logic.Add(terr);
-                return Created($"/api/territories/{newTerritory.TerritoryID}", newTerritory);
+                var newShipper = _logic.Add(shipper);
+                return Created($"/api/shippers/{newShipper.ShipperID}", newShipper);
             }
             catch(IDAlreadyTakenException ex)
             {
@@ -73,20 +74,16 @@ namespace TP08WebAPI.WebAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch(InvalidForeignKeyException ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
 
         [HttpPut]
         [Route("edit")]
-        public IHttpActionResult Edit([FromBody] TerritoryDto terr)
+        public IHttpActionResult Edit([FromBody] ShipperDto shipper)
         {
             try
             {
-                var updatedTerritory = _logic.Update(terr);
-                return Ok(updatedTerritory);
+                var updatedShipper =  _logic.Update(shipper);
+                return Ok(updatedShipper);
             }
             catch(IDNotFoundException)
             {

@@ -14,7 +14,7 @@ namespace TP07MVC.Entity.DTO
         [Display(Name = "Description")]
         public string TerritoryDescription { get; set; }
         [Display(Name = "Region")]
-        public string RegionDescription { get; set; }
+        public string Region{ get; set; }
 
     }
 }
