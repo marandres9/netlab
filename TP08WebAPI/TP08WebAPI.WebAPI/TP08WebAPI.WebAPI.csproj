@@ -162,9 +162,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TerritoriesController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -257,6 +257,10 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TP07MVC.Common\TP07MVC.Common.csproj">
+      <Project>{00ADA86D-6F84-4115-A5E2-FFF3FE8574D4}</Project>
+      <Name>TP07MVC.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TP07MVC.Data\TP07MVC.Data.csproj">
       <Project>{7dfd737f-4986-4770-a8c4-9aee377b9276}</Project>
       <Name>TP07MVC.Data</Name>

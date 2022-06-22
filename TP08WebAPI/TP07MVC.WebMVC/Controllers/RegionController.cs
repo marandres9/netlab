@@ -93,7 +93,7 @@ namespace TP07MVC.WebMVC.Controllers
         {
             try
             {
-                var regionModel = new RegionModel(_logic.GetById(id));
+                var regionModel = new RegionModel(_logic.Get(id));
                 ViewBag.Editing = true;
                 // uses Add view for editing, the displayed content depends on the ViewBag.Editing property
                 return View("Add", regionModel);

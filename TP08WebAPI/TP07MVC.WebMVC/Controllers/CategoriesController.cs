@@ -47,7 +47,7 @@ namespace TP07MVC.WebMVC.Controllers
         {
             try
             {
-                return View(new CategoriesModel(_logic.GetById(id)));
+                return View(new CategoriesModel(_logic.Get(id)));
             }
             catch(IDNotFoundException ex)
             {
@@ -87,7 +87,7 @@ namespace TP07MVC.WebMVC.Controllers
         {
             try
             {
-                var categoryModel = new CategoriesModel(_logic.GetById(id));
+                var categoryModel = new CategoriesModel(_logic.Get(id));
                 ViewBag.Editing = true;
                 return View("Add", categoryModel);
             }

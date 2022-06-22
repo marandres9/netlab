@@ -40,7 +40,7 @@ namespace TP07MVC.Logic
         {
             try
             {
-                _context.Categories.Remove(GetById(id));
+                _context.Categories.Remove(Get(id));
                 _context.SaveChanges();
             }
             catch(DbUpdateException e)
@@ -54,7 +54,7 @@ namespace TP07MVC.Logic
             return _context.Categories.ToList();
         }
 
-        public Categories GetById(int id)
+        public Categories Get(int id)
         {
             Categories cat = _context.Categories.Find(id);
             if(cat == null)
@@ -71,7 +71,7 @@ namespace TP07MVC.Logic
 
         public void Update(Categories newEntity)
         {
-            Categories entityToUpdate = GetById(newEntity.CategoryID);
+            Categories entityToUpdate = Get(newEntity.CategoryID);
             if(!string.IsNullOrEmpty(newEntity.CategoryName))
             {
                 entityToUpdate.CategoryName = newEntity.CategoryName;

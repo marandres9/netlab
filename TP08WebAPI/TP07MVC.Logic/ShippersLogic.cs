@@ -48,7 +48,7 @@ namespace TP07MVC.Logic
         {
             try
             {
-                _context.Shippers.Remove(GetById(id));
+                _context.Shippers.Remove(Get(id));
                 _context.SaveChanges();
             }
             catch(DbUpdateException e)
@@ -62,7 +62,7 @@ namespace TP07MVC.Logic
             return _context.Shippers.ToList();
         }
 
-        public Shippers GetById(int id)
+        public Shippers Get(int id)
         {
             Shippers shipper = _context.Shippers.Find(id);
             if(shipper == null)
@@ -79,7 +79,7 @@ namespace TP07MVC.Logic
 
         public void Update(Shippers newEntity)
         {
-            Shippers entityToUpdate = GetById(newEntity.ShipperID);
+            Shippers entityToUpdate = Get(newEntity.ShipperID);
             if(!string.IsNullOrEmpty(newEntity.CompanyName))
             {
                 entityToUpdate.CompanyName = newEntity.CompanyName;

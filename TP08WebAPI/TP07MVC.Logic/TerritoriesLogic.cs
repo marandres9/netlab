@@ -11,10 +11,10 @@ using System.Data.Entity.Validation;
 
 namespace TP07MVC.Logic
 {
-    public class TerritoriesLogic: BaseLogic, ICRUDLogic<Territories, string>
+    public class TerritoriesLogic: BaseLogic, ICRUDLogic<TerritoryDto, string>
     {
         private readonly string _tableName = "Territories";
-        public void Add(Territories newEntity)
+        public void Add(TerritoryDto newEntity)
         {
             // La tabla Territories no tiene ID autoincremental, hay que checkear que el nuevo ID no este ocupado
             if(_context.Territories.Any(t => t.TerritoryID.Equals(newEntity.TerritoryID)))
@@ -23,7 +23,7 @@ namespace TP07MVC.Logic
             }
             try
             {
-                _context.Territories.Add(newEntity);
+                _context.Territories.Add(new Territories(newEntity));
                 _context.SaveChanges();
             }
             catch(DbEntityValidationException e)
@@ -44,7 +44,7 @@ namespace TP07MVC.Logic
         {
             try
             {
-                _context.Territories.Remove(GetById(id));
+                _context.Territories.Remove(GetEntity(id));
                 _context.SaveChanges();
             }
             catch(DbUpdateException e)
@@ -53,7 +53,7 @@ namespace TP07MVC.Logic
             }
         }
 
-        public Territories GetById(string id)
+        private Territories GetEntity(string id)
         {
             var territory = _context.Territories.Find(id);
             if(territory == null)
@@ -63,17 +63,27 @@ namespace TP07MVC.Logic
             return territory;
         }
 
+        public TerritoryDto Get(string id)
+        {
+            var territory = _context.Territories.Find(id);
+            if(territory == null)
+            {
+                throw new IDNotFoundException($"Object with ID {id} not found in table {_tableName}");
+            }
+            return new TerritoryDto(territory);
+        }
+
         public bool Exists(string id)
         {
             return _context.Territories.Any(t => t.TerritoryID == id);
         }
 
-        public TerritoryRegion GetDetails(string id)
+        public TerritoryDetailsDto GetDetails(string id)
         {
-            var terr = GetById(id);
+            var terr = Get(id);
             string regionDesc = _context.Region.First(r => r.RegionID == terr.RegionID).RegionDescription;
 
-            return new TerritoryRegion
+            return new TerritoryDetailsDto
             {
                 TerritoryID = terr.TerritoryID,
                 TerritoryDescription = terr.TerritoryDescription,
@@ -81,14 +91,19 @@ namespace TP07MVC.Logic
             };
         }
 
-        public List<Territories> GetAll()
+        public List<TerritoryDto> GetAll()
         {
-            return _context.Territories.ToList();
+            return _context.Territories.Select(t => new TerritoryDto
+            {
+                TerritoryID = t.TerritoryID,
+                TerritoryDescription = t.TerritoryDescription,
+                RegionID = t.RegionID
+            }).ToList();
         }
 
-        public void Update(Territories newEntity)
+        public void Update(TerritoryDto newEntity)
         {
-            Territories entityToUpdate = GetById(newEntity.TerritoryID);
+            Territories entityToUpdate = GetEntity(newEntity.TerritoryID);
             entityToUpdate.TerritoryDescription = newEntity.TerritoryDescription;
             entityToUpdate.RegionID = newEntity.RegionID;
 
@@ -102,7 +117,7 @@ namespace TP07MVC.Logic
         // este metodo recibe un null y dicho campo no se actualiza en la base de datos
         public void Update(string territoryID, string territoryDesciption, int? regionID)
         {
-            Territories entityToUpdate = GetById(territoryID);
+            Territories entityToUpdate = GetEntity(territoryID);
             bool isnull = string.IsNullOrEmpty(territoryDesciption);
             if(!isnull)
             {

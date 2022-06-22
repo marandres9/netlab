@@ -112,7 +112,7 @@ namespace TP07MVC.WebMVC.Controllers
         {
             try
             {
-                var territory = new TerritoriesModel(_logic.GetById(id));
+                var territory = new TerritoriesModel(_logic.Get(id));
                 ViewBag.Editing = true;
                 return View("Add", territory);
             }

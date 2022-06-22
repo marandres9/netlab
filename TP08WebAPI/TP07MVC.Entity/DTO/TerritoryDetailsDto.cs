@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TP07MVC.Entity.DTO
 {
-    public class TerritoryRegion
+    public class TerritoryDetailsDto
     {
         [Display(Name = "ID")]
         public string TerritoryID { get; set; }

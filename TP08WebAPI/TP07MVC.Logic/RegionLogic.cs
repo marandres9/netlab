@@ -44,7 +44,7 @@ namespace TP07MVC.Logic
         {
             try
             {
-                _context.Region.Remove(GetById(id));
+                _context.Region.Remove(Get(id));
                 _context.SaveChanges();
             }
             catch(DbUpdateException e)
@@ -58,7 +58,7 @@ namespace TP07MVC.Logic
             return _context.Region.ToList();
         }
 
-        public Region GetById(int id)
+        public Region Get(int id)
         {
             Region reg = _context.Region.Find(id);
             if(reg == null)
@@ -75,7 +75,7 @@ namespace TP07MVC.Logic
 
         public RegionTerritories GetDetails(int id)
         {
-            var region = GetById(id);
+            var region = Get(id);
             var territoryDescriptions = _context.Territories.Where(t => t.RegionID == region.RegionID).Select(t => t.TerritoryDescription).ToList();
 
             return new RegionTerritories
@@ -88,7 +88,7 @@ namespace TP07MVC.Logic
 
         public void Update(Region newEntity)
         {
-            Region entityToUpdate = GetById(newEntity.RegionID);
+            Region entityToUpdate = Get(newEntity.RegionID);
             if(!string.IsNullOrEmpty(newEntity.RegionDescription))
             {
                 entityToUpdate.RegionDescription = newEntity.RegionDescription;

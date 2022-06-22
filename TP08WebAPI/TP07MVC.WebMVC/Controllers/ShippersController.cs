@@ -46,7 +46,7 @@ namespace TP07MVC.WebMVC.Controllers
         {
             try
             {
-                return View(new ShippersModel(_logic.GetById(id)));
+                return View(new ShippersModel(_logic.Get(id)));
             }
             catch(IDNotFoundException ex)
             {
@@ -86,7 +86,7 @@ namespace TP07MVC.WebMVC.Controllers
         {
             try
             {
-                var shippersModel = _logic.GetById(id);
+                var shippersModel = _logic.Get(id);
                 ViewBag.Editing = true;
                 return View("Add", shippersModel);
             }
