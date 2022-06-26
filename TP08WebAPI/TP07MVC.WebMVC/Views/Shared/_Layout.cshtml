@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - TP08: API</title>
+    @Styles.Render("~/Content/mycss")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/SpaceData")
+</head>
+<body class="min-vh-100 d-flex flex-column ">
+    <div class="mb-5">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <a class="navbar-brand" href="#">TP07 MVC</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto mr-5">
+                    <li class="nav-item">
+                        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Region", "Index", "Region", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Territories", "Index", "Territories", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Categories", "Index", "Categories", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Shippers", "Index", "Shippers", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("SpacecraftData API", "Index", "SpacecraftData", null, new { @class = "nav-link" })
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="container-sm body-content">
+        @RenderBody()
+    </div>
+    <footer class="text-center mt-auto">
+        <hr />
+        <p>&copy; @DateTime.Now.Year - TP08: ASP.NET CRUD WebAPI & MVC</p>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap4")
+    @Scripts.Render("~/bundles/SpaceData")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

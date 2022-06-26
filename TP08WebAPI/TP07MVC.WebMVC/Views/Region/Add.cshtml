@@ -1,0 +1,43 @@
+﻿@model TP07MVC.WebMVC.Models.RegionModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool editing = ViewBag.Editing == null ? false : ViewBag.Editing;
+}
+
+<h1>Region</h1>
+<hr />
+<h2 class="mb-5">
+    @(editing ? "Edit" : "Add")
+</h2>
+
+@using(Html.BeginForm(editing ? "Edit" : "Add", "Region"))
+{
+    <div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.RegionID, new { @class = "control-label" })
+
+            @if(editing)
+            {
+                @Html.EditorFor(model => model.RegionID, new { htmlAttributes = new { @type = "number", @class = "form-control", @readonly = true } })
+            }
+            else
+            {
+                @Html.EditorFor(model => model.RegionID, new { htmlAttributes = new { @type = "number", @class = "form-control" } })
+            }
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RegionDescription, htmlAttributes: new { @class = "control-label" })
+            <div class="">
+                @Html.EditorFor(model => model.RegionDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.RegionDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Cancel", "Index", null, new {@class = "btn btn-secondary"})
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+    </div>
+}

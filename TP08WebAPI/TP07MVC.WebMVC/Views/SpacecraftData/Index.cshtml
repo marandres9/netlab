@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Spacecraft Data</h1>
+<hr />
+<h2 class="mb-5">Index</h2>
+
+<div class="jumbotron">
+    <h1>Important</h1>
+    <p>
+        The consulted API
+        (<a href="http://open-notify.org/Open-Notify-API/People-In-Space/">
+            Open-Notify-API
+        </a>)
+        is served using HTTP. Since this app uses HTTPS, most browsers won't
+        allow the AJAX requests to the API endpoints, throwing 'Mixed Content' Errors. The user needs to manually configure the browser
+        to allow 'insecure' content, as shown <a href="https://superuser.com/questions/487748/how-to-allow-chrome-browser-to-load-insecure-content">here</a>.
+    </p>
+</div>
+
+<div class="container-md">
+    <p>
+        This page lists the names of people currently in space and shows
+        the current and recent positions of the ISS on a map.
+    </p>
+    <div>
+        <h1>
+            There are currently <span id="humans_in_space" style="color:#ff0000;"></span> humans in
+            space
+        </h1>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h3>International Space Station crew:</h3>
+            <ul id="iss_crew"></ul>
+        </div>
+
+        <div class="col-md-6">
+            <h3>Tiangong Space Station crew:</h3>
+            <ul id="tiangong_crew"></ul>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h3>International Space Station coordinates:</h3>
+        <p id="iss_lat"></p>
+        <p id="iss_lon"></p>
+    </div>
+
+    <div id="map"></div>
+
+    <div class="info">
+        <p>
+            Made using
+            <a href="http://open-notify.org/Open-Notify-API/People-In-Space/">
+                Open-Notify-API
+            </a>
+            and <a href="https://leafletjs.com/">Leaflet Maps</a>
+        </p>
+    </div>
+</div>

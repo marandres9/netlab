@@ -1,0 +1,17 @@
+﻿@model Exception
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Exception Caught</title>
+</head>
+<body>
+    <hgroup class="mb-4">
+        <h1>Exception caught</h1>
+        <h3>The following exception was caught while processing your request:</h3>
+    </hgroup>
+
+    <h4>@Model.GetType()</h4>
+    <p style="color: #ff0000">@Model.Message</p>
+</body>
+</html>

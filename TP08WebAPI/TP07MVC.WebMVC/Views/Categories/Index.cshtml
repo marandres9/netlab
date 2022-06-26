@@ -1,0 +1,61 @@
+﻿@model IEnumerable<TP07MVC.WebMVC.Models.CategoriesModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Categories</h1>
+<hr />
+<h2 class="mb-5">Index</h2>
+
+<div class="my-4 d-flex justify-content-between">
+    @using(Html.BeginForm("Index", "Categories", FormMethod.Get, new { @id = "searchForm" }))
+    {
+        <div class="d-flex align-items-center">
+            @Html.Label("searchBox", "Search: ", new { @class = "control-label mr-3" })
+            @Html.TextBox("searchString", null, new { @class = "form-control mr-1", @id = "searchBox" })
+            <input type="submit" class="btn btn-primary" value="Go">
+            @if(!string.IsNullOrEmpty(ViewBag.SearchString))
+            {
+                <input type="button" class="btn btn-secondary ml-1" value="Clear" onclick="clearSearchForm()">
+            }
+        </div>
+    }
+    <div>
+        @Html.ActionLink("Add", "Add", null, new { @class = "btn btn-success" })
+    </div>
+</div>
+
+<table class="table text-center">
+    <tr>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => model.CategoryID).ToString(), "Index", new { sortOrder = ViewBag.IDSortParam, searchString = ViewBag.SearchString })
+        </th>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => model.CategoryName).ToString(), "Index", new { sortOrder = ViewBag.NameSortParam, searchString = ViewBag.SearchString })
+        </th>
+        <th>Action</th>
+    </tr>
+
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(m => item.CategoryID)</td>
+            <td>@Html.DisplayFor(m => item.CategoryName)</td>
+
+            <td class="d-flex flex-column flex-sm-row justify-content-center">
+                @Html.ActionLink("Details", "Details", new { id = item.CategoryID }, new { @class = "btn btn-info m-1" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.CategoryID }, new { @class = "btn btn-secondary m-1" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.CategoryID }, new { @class = "btn btn-danger m-1" })
+            </td>
+        </tr>
+    }
+</table>
+
+<script>
+    function clearSearchForm() {
+        // clears searchBox input and re-submits form
+        $('#searchBox').val('');
+        $('#searchForm').submit();
+    }
+</script>

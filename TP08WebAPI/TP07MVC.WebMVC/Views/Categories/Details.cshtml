@@ -1,0 +1,28 @@
+﻿@model  TP07MVC.WebMVC.Models.CategoriesModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Categories</h1>
+<hr />
+<h2 class="mb-5">Details</h2>
+
+@Html.ActionLink("Back to list", "Index", null, new { @class = "btn btn-secondary mb-3" })
+
+<div class="d-flex flex-column align-items-start">
+    <div class="d-flex align-items-baseline my-2">
+        <h5>@Html.DisplayNameFor(m => m.CategoryID):</h5>
+        <p class="ml-3">@Model.CategoryID</p>
+    </div>
+
+    <div class="d-flex align-items-baseline my-2">
+        <h5>@Html.DisplayNameFor(m => m.CategoryName):</h5>
+        <p class="ml-3">@Model.CategoryName</p>
+    </div>
+
+    <div class="d-flex align-items-baseline my-2">
+        <h5>@Html.DisplayNameFor(m => m.Description):</h5>
+        <p class="ml-3">@Model.Description</p>
+    </div>
+</div>
