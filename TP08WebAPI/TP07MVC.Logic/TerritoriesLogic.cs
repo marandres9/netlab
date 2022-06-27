@@ -92,7 +92,7 @@ namespace TP07MVC.Logic
             };
         }
 
-        public IEnumerable<TerritoryDto> GetList()
+        public IEnumerable<TerritoryDto> GetAll()
         {
             return _context.Territories.Select(t => new TerritoryDto
             {

@@ -52,6 +52,16 @@ namespace TP07MVC.Logic
         {
             return new CategoryDto(GetEntity(id));
         }
+
+        public IEnumerable<CategoryDto> GetAll()
+        {
+            return _context.Categories.Select(c => new CategoryDto
+            {
+                CategoryID = c.CategoryID,
+                CategoryName = c.CategoryName,
+                Description = c.Description
+            });
+        }
         public List<CategoryDto> GetList()
         {
             return _context.Categories.Select(c => new CategoryDto
@@ -60,16 +70,6 @@ namespace TP07MVC.Logic
                 CategoryName = c.CategoryName,
                 Description = c.Description
             }).ToList();
-        }
-
-        public IEnumerable<CategoryDto> GetList(Func<Categories, bool> filter)
-        {
-            return _context.Categories.Where(filter).Select(c => new CategoryDto
-            {
-                CategoryID = c.CategoryID,
-                CategoryName = c.CategoryName,
-                Description = c.Description
-            });
         }
 
         public List<CategoryDto> GetList(Func<Categories, bool> filter)

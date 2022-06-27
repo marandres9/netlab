@@ -58,6 +58,16 @@ namespace TP07MVC.Logic
         {
             return new RegionDto(GetEntity(id));
         }
+
+        public IEnumerable<RegionDto> GetAll()
+        {
+            return _context.Region.Select(r => new RegionDto
+            {
+                RegionID = r.RegionID,
+                RegionDescription = r.RegionDescription
+            });
+        }
+
         public List<RegionDto> GetList()
         {
             return _context.Region.Select(r => new RegionDto
@@ -65,15 +75,6 @@ namespace TP07MVC.Logic
                 RegionID = r.RegionID,
                 RegionDescription = r.RegionDescription
             }).ToList();
-        }
-
-        public IEnumerable<RegionDto> GetList(Func<Region, bool> filter)
-        {
-            return _context.Region.Where(filter).Select(r => new RegionDto
-            {
-                RegionID = r.RegionID,
-                RegionDescription = r.RegionDescription,
-            });
         }
 
         public List<RegionDto> GetList(Func<Region, bool> filter)
