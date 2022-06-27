@@ -7,7 +7,7 @@ import {
     ViewChild,
 } from '@angular/core'
 import { MatExpansionPanel } from '@angular/material/expansion'
-import { ShipperDetails } from '../../../../shared/models/Shipper'
+import { ShipperDetails } from '../models/Shipper'
 
 @Component({
     selector: 'app-shipper-details',

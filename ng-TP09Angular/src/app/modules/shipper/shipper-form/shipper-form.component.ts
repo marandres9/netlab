@@ -18,17 +18,21 @@ export class ShipperFormComponent implements OnInit {
         Phone: new FormControl('', Validators.maxLength(24)),
     })
 
-    constructor(private http: HttpService, private router: Router, private formError: FormErrorService) {}
+    constructor(
+        private http: HttpService,
+        private router: Router,
+        private formError: FormErrorService
+    ) {}
 
     ngOnInit(): void {}
 
     cancel() {
-      this.router.navigate(['/crud/shippers'])
+        this.router.navigate(['/shippers'])
     }
     onSubmit() {
         this.http
             .postShipper(this.shipperForm.value)
-            .subscribe(() => this.router.navigate(['/crud/shippers']))
+            .subscribe(() => this.router.navigate(['/shippers']))
     }
 
     get CompanyName() {
@@ -48,12 +52,10 @@ export class ShipperFormComponent implements OnInit {
         }
     }
     get PhoneErrors() {
-      if(this.Phone.errors?.['maxlength']) {
-        return this.formError.MaxLengthMsg(24)
-      }
-      else {
-        return ''
-      }
+        if (this.Phone.errors?.['maxlength']) {
+            return this.formError.MaxLengthMsg(24)
+        } else {
+            return ''
+        }
     }
-
 }

@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
-import { Shipper, ShipperDetails } from 'src/app/features/crud/shipper/shipper-form/models/Shipper'
+import { Component, OnInit } from '@angular/core'
+import { Shipper, ShipperDetails } from '../models/Shipper'
 import { HttpService } from 'src/app/core/http/http.service'
-import { MatExpansionPanel } from '@angular/material/expansion'
 
 @Component({
     selector: 'app-shipper-list',
@@ -29,7 +28,7 @@ export class ShipperListComponent implements OnInit {
 
     onDetails(id: number) {
         this.http.getDetailsShippers(id).subscribe((shipper) => {
-            this.detailedShipper = shipper            
+            this.detailedShipper = shipper
         })
         // if(!this.isExpanded()){
         //     this.toggleExpansionPanel()
