@@ -19,14 +19,14 @@ namespace TP08WebAPI.WebAPI.Controllers
         [Route("")]
         public IHttpActionResult GetAll()
         {
-            var regions = _logic.GetAll();
+            var regions = _logic.GetList();
             return Ok(regions);
         }
         [HttpGet]
         [Route("filter/{name}")]
         public IHttpActionResult GetFiltered(string name)
         {
-            var regions = _logic.GetAll(name);
+            var regions = _logic.GetList(name);
             return Ok(regions);
         }
 

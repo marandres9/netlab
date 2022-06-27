@@ -18,7 +18,7 @@ namespace TP08WebAPI.WebAPI.Controllers
         [Route("")]
         public IHttpActionResult GetAll()
         {
-            var territories = _logic.GetAll();
+            var territories = _logic.GetList();
             return Ok(territories);
         }
 
@@ -26,7 +26,7 @@ namespace TP08WebAPI.WebAPI.Controllers
         [Route("filter/{name}")]
         public IHttpActionResult GetFiltered(string name)
         {
-            var territories = _logic.GetAll(name);
+            var territories = _logic.GetList(name);
             return Ok(territories);
         }
 

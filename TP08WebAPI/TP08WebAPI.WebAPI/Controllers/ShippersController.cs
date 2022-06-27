@@ -4,12 +4,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using TP07MVC.Common.Exceptions;
 using TP07MVC.Entity.DTO;
 using TP07MVC.Logic;
+using TP08WebAPI.WebAPI.Models;
 
 namespace TP08WebAPI.WebAPI.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/shippers")]
     public class ShippersController: ApiController
     {
@@ -20,14 +23,15 @@ namespace TP08WebAPI.WebAPI.Controllers
         public IHttpActionResult GetAll()
         {
             var shippers = _logic.GetAll();
-            return Ok(shippers);
+            var shippersList = shippers.Select(s => new ShipperModel { ShipperID = s.ShipperID, CompanyName = s.CompanyName }).ToList();
+            return Ok(shippersList);
         }
 
         [HttpGet]
         [Route("filter/{name}")]
         public IHttpActionResult GetFiltered(string name)
         {
-            var shippers = _logic.GetAll(s => s.CompanyName.ToLower().Contains(name.ToLower()));
+            var shippers = _logic.GetList(s => s.CompanyName.ToLower().Contains(name.ToLower()));
             return Ok(shippers);
         }
 
@@ -90,7 +94,7 @@ namespace TP08WebAPI.WebAPI.Controllers
         {
             try
             {
-                var updatedShipper =  _logic.Update(shipper);
+                var updatedShipper = _logic.Update(shipper);
                 return Ok(updatedShipper);
             }
             catch(IDNotFoundException)
