@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core'
-import { FormControl, FormGroup } from '@angular/forms'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
-import { HttpService } from 'src/app/core/service/http.service'
+import { HttpService } from 'src/app/core/http/http.service'
+import { FormErrorService } from 'src/app/shared/services/form-error.service'
 
 @Component({
     selector: 'app-shipper-form',
@@ -10,16 +11,49 @@ import { HttpService } from 'src/app/core/service/http.service'
 })
 export class ShipperFormComponent implements OnInit {
     shipperForm: FormGroup = new FormGroup({
-      'ShipperID': new FormControl(),
-      'CompanyName': new FormControl(),
-      'Phone': new FormControl()
+        CompanyName: new FormControl('', [
+            Validators.required,
+            Validators.maxLength(40),
+        ]),
+        Phone: new FormControl('', Validators.maxLength(24)),
     })
 
-    constructor(private http: HttpService, private router: Router) {}
+    constructor(private http: HttpService, private router: Router, private formError: FormErrorService) {}
 
     ngOnInit(): void {}
 
-    onSubmit() {
-      this.http.postShipper(this.shipperForm.value).subscribe(() => this.router.navigate(['/crud/shippers']))
+    cancel() {
+      this.router.navigate(['/crud/shippers'])
     }
+    onSubmit() {
+        this.http
+            .postShipper(this.shipperForm.value)
+            .subscribe(() => this.router.navigate(['/crud/shippers']))
+    }
+
+    get CompanyName() {
+        return this.shipperForm.get('CompanyName') as FormControl
+    }
+    get Phone() {
+        return this.shipperForm.get('Phone') as FormControl
+    }
+
+    get CompanyNameErrors() {
+        if (this.CompanyName.errors?.['required']) {
+            return this.formError.requiredMsg()
+        } else if (this.CompanyName.errors?.['maxlength']) {
+            return this.formError.MaxLengthMsg(40)
+        } else {
+            return ''
+        }
+    }
+    get PhoneErrors() {
+      if(this.Phone.errors?.['maxlength']) {
+        return this.formError.MaxLengthMsg(24)
+      }
+      else {
+        return ''
+      }
+    }
+
 }

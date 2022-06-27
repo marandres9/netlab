@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core'
-import { Shipper } from 'src/app/shared/models/Shipper'
-import { HttpService } from 'src/app/core/service/http.service'
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { Shipper, ShipperDetails } from 'src/app/features/crud/shipper/shipper-form/models/Shipper'
+import { HttpService } from 'src/app/core/http/http.service'
+import { MatExpansionPanel } from '@angular/material/expansion'
 
 @Component({
     selector: 'app-shipper-list',
@@ -9,6 +10,8 @@ import { HttpService } from 'src/app/core/service/http.service'
 })
 export class ShipperListComponent implements OnInit {
     shippers: Shipper[] = []
+    displayedColumns = ['CompanyName', 'Actions']
+    detailedShipper!: ShipperDetails
 
     constructor(private http: HttpService) {}
 
@@ -22,11 +25,14 @@ export class ShipperListComponent implements OnInit {
             .subscribe((shippers) => (this.shippers = shippers))
     }
 
-    getDetails(id: number) {
+    onDelete(id: number) {}
 
-    }
-
-    delete(id: number) {
-        
+    onDetails(id: number) {
+        this.http.getDetailsShippers(id).subscribe((shipper) => {
+            this.detailedShipper = shipper            
+        })
+        // if(!this.isExpanded()){
+        //     this.toggleExpansionPanel()
+        // }
     }
 }

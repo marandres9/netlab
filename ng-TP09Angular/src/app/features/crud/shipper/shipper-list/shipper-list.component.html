@@ -1,29 +1,37 @@
 <div class="container">
+    
+    
     <a routerLink="add" class="btn btn-success">Add+</a>
-    <table>
-        <thead>
-            <th>Company Name</th>
-        </thead>
-        <tbody>
-            <tr *ngFor="let shipper of this.shippers">
-                <td>
-                    {{ shipper.CompanyName }}
-                </td>
-                <td>
-                    <button
-                        class="btn btn-primary"
-                        (click)="this.getDetails(shipper.ShipperID)"
-                    >
-                        Details
-                    </button>
-                    <button
-                        class="btn btn-danger"
-                        (click)="this.delete(shipper.ShipperID)"
-                    >
-                        Delete
-                    </button>
-                </td>
-            </tr>
-        </tbody>
+
+    <table mat-table [dataSource]="this.shippers" multiTemplateDataRows>
+        <ng-container matColumnDef="CompanyName">
+            <th mat-header-cell *matHeaderCellDef>Company Name</th>
+            <td mat-cell *matCellDef="let shipper">
+                {{ shipper.CompanyName }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let shipper">
+                <button
+                    (click)="onDetails(shipper.ShipperID)"
+                    class="btn btn-secondary"
+                >
+                    Details
+                </button>
+                <button class="btn btn-primary">Edit</button>
+                <button class="btn btn-danger">Delete</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="this.displayedColumns"></tr>
+        <tr
+            mat-row
+            *matRowDef="let shipper; columns: this.displayedColumns"
+        ></tr>
     </table>
+
+    <app-shipper-details [object]="this.detailedShipper"></app-shipper-details>
+
 </div>

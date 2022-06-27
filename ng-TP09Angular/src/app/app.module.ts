@@ -8,6 +8,7 @@ import { HomeModule } from './features/home/home.module'
 import { SharedModule } from './shared/shared.module'
 import { NotFoundModule } from './features/not-found/not-found.module'
 import { CrudModule } from './features/crud/crud.module';
+import { CoreModule } from './core/core.module'
 
 @NgModule({
     declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { CrudModule } from './features/crud/crud.module';
         BrowserAnimationsModule,
         HomeModule,
         NotFoundModule,
+        CoreModule,
         SharedModule,
         CrudModule,
     ],

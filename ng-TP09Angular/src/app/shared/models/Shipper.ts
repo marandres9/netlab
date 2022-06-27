@@ -1,7 +1,7 @@
 export class Shipper {
     private shipperID: number = 0
     private companyName: string = ''
-    // private phone: string = ''
+    private phone: string = ''
 
     public get ShipperID() {
         return this.shipperID
@@ -9,9 +9,9 @@ export class Shipper {
     public get CompanyName() {
         return this.companyName
     }
-    // public get Phone() {
-    //     return this.phone
-    // }
+    public get Phone() {
+        return this.phone
+    }
 
     public set ShipperID(shipperID: number) {
         this.shipperID = shipperID
@@ -19,7 +19,41 @@ export class Shipper {
     public set CompanyName(companyName: string) {
         this.companyName = companyName
     }
-    // public set Phone(phone: string) {
-    //     this.phone = phone
-    // }
+    public set Phone(phone: string) {
+        this.phone = phone
+    }
+}
+
+export class ShipperDetails {
+    private shipperID: number = 0
+    private companyName: string = ''
+    private phone: string = ''
+
+    public get ShipperID() {
+        return this.shipperID
+    }
+    public get CompanyName() {
+        return this.companyName
+    }
+    public get Phone() {
+        return this.phone
+    }
+
+    public set ShipperID(shipperID: number) {
+        this.shipperID = shipperID
+    }
+    public set CompanyName(companyName: string) {
+        this.companyName = companyName
+    }
+    public set Phone(phone: string) {
+        this.phone = phone
+    }
+
+    getDetails(): { [key: string]: number | string } {
+        return {
+            ShipperID: this.ShipperID,
+            CompanyName: this.CompanyName,
+            Phone: this.Phone
+        }
+    }
 }
