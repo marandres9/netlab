@@ -11,7 +11,7 @@ using System.Data.Entity.Validation;
 
 namespace TP07MVC.Logic
 {
-    public class TerritoriesLogic: BaseLogic, ICRUDLogic<TerritoryDto, string>
+    public class TerritoriesLogic: BaseLogic, ICRUDLogic<Territories, TerritoryDto, string>
     {
         private readonly string _tableName = "Territories";
         public TerritoryDto Add(TerritoryDto newEntity)
@@ -92,7 +92,17 @@ namespace TP07MVC.Logic
             };
         }
 
-        public List<TerritoryDto> GetAll()
+        public IEnumerable<TerritoryDto> GetList()
+        {
+            return _context.Territories.Select(t => new TerritoryDto
+            {
+                TerritoryID = t.TerritoryID,
+                TerritoryDescription = t.TerritoryDescription,
+                RegionID = t.RegionID
+            });
+        }
+
+        public List<TerritoryDto> GetList()
         {
             return _context.Territories.Select(t => new TerritoryDto
             {
@@ -102,7 +112,7 @@ namespace TP07MVC.Logic
             }).ToList();
         }
 
-        public List<TerritoryDto> GetAll(Func<Territories, bool> filter)
+        public List<TerritoryDto> GetList(Func<Territories, bool> filter)
         {
             return _context.Territories.Where(filter).Select(t => new TerritoryDto
             {
@@ -112,9 +122,9 @@ namespace TP07MVC.Logic
             }).ToList();
         }
 
-        public List<TerritoryDto> GetAll(string filterString)
+        public List<TerritoryDto> GetList(string filterString)
         {
-            return GetAll(t => t.TerritoryDescription.ToLower().Contains(filterString.ToLower()));
+            return GetList(t => t.TerritoryDescription.ToLower().Contains(filterString.ToLower()));
         }
 
         public TerritoryDto Update(TerritoryDto newEntity)

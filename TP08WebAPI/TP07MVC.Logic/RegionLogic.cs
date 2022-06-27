@@ -11,7 +11,7 @@ using System.Data.Entity.Validation;
 
 namespace TP07MVC.Logic
 {
-    public class RegionLogic: BaseLogic, ICRUDLogic<RegionDto, int>
+    public class RegionLogic: BaseLogic, ICRUDLogic<Region, RegionDto, int>
     {
         private readonly string _tableName = "Region";
         public RegionDto Add(RegionDto newEntity)
@@ -58,7 +58,7 @@ namespace TP07MVC.Logic
         {
             return new RegionDto(GetEntity(id));
         }
-        public List<RegionDto> GetAll()
+        public List<RegionDto> GetList()
         {
             return _context.Region.Select(r => new RegionDto
             {
@@ -67,7 +67,16 @@ namespace TP07MVC.Logic
             }).ToList();
         }
 
-        public List<RegionDto> GetAll(Func<Region, bool> filter)
+        public IEnumerable<RegionDto> GetList(Func<Region, bool> filter)
+        {
+            return _context.Region.Where(filter).Select(r => new RegionDto
+            {
+                RegionID = r.RegionID,
+                RegionDescription = r.RegionDescription,
+            });
+        }
+
+        public List<RegionDto> GetList(Func<Region, bool> filter)
         {
             return _context.Region.Where(filter).Select(r => new RegionDto
             {
@@ -76,9 +85,9 @@ namespace TP07MVC.Logic
             }).ToList();
         }
 
-        public List<RegionDto> GetAll(string filterString)
+        public List<RegionDto> GetList(string filterString)
         {
-            return GetAll(r => r.RegionDescription.ToLower().Contains(filterString.ToLower()));
+            return GetList(r => r.RegionDescription.ToLower().Contains(filterString.ToLower()));
         }
         private Region GetEntity(int id)
         {

@@ -12,7 +12,7 @@ using TP07MVC.Entity.DTO;
 
 namespace TP07MVC.Logic
 {
-    public class ShippersLogic: BaseLogic, ICRUDLogic<ShipperDto, int>
+    public class ShippersLogic: BaseLogic, ICRUDLogic<Shippers, ShipperDto, int>
     {
         private readonly string _tableName = "Shippers";
 
@@ -63,7 +63,18 @@ namespace TP07MVC.Logic
         {
             return new ShipperDto(GetEntity(id));
         }
-        public List<ShipperDto> GetAll()
+
+        public IEnumerable<ShipperDto> GetAll()
+        {
+            return _context.Shippers.Select(s => new ShipperDto
+            {
+                ShipperID = s.ShipperID,
+                CompanyName = s.CompanyName,
+                Phone = s.Phone
+            });
+        }
+
+        public List<ShipperDto> GetList()
         {
             return _context.Shippers.Select(s => new ShipperDto
             {
@@ -73,7 +84,7 @@ namespace TP07MVC.Logic
             }).ToList();
         }
 
-        public List<ShipperDto> GetAll(Func<Shippers, bool> filter)
+        public List<ShipperDto> GetList(Func<Shippers, bool> filter)
         {
             return _context.Shippers.Where(filter).Select(s => new ShipperDto
             {
@@ -83,11 +94,10 @@ namespace TP07MVC.Logic
             }).ToList();
         }
 
-        public List<ShipperDto> GetAll(string filterString)
+        public List<ShipperDto> GetList(string filterString)
         {
-            return GetAll(s => s.CompanyName.ToLower().Contains(filterString.ToLower()));
+            return GetList(s => s.CompanyName.ToLower().Contains(filterString.ToLower()));
         }
-
 
         private Shippers GetEntity(int id)
         {

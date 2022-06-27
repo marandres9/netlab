@@ -9,7 +9,7 @@ using System;
 
 namespace TP07MVC.Logic
 {
-    public class CategoriesLogic: BaseLogic, ICRUDLogic<CategoryDto, int>
+    public class CategoriesLogic: BaseLogic, ICRUDLogic<Categories, CategoryDto, int>
     {
         private readonly string _tableName = "Categories";
 
@@ -52,7 +52,7 @@ namespace TP07MVC.Logic
         {
             return new CategoryDto(GetEntity(id));
         }
-        public List<CategoryDto> GetAll()
+        public List<CategoryDto> GetList()
         {
             return _context.Categories.Select(c => new CategoryDto
             {
@@ -61,7 +61,18 @@ namespace TP07MVC.Logic
                 Description = c.Description
             }).ToList();
         }
-        public List<CategoryDto> GetAll(Func<Categories, bool> filter)
+
+        public IEnumerable<CategoryDto> GetList(Func<Categories, bool> filter)
+        {
+            return _context.Categories.Where(filter).Select(c => new CategoryDto
+            {
+                CategoryID = c.CategoryID,
+                CategoryName = c.CategoryName,
+                Description = c.Description
+            });
+        }
+
+        public List<CategoryDto> GetList(Func<Categories, bool> filter)
         {
             return _context.Categories.Where(filter).Select(c => new CategoryDto
             {
@@ -71,9 +82,9 @@ namespace TP07MVC.Logic
             }).ToList();
         }
 
-        public List<CategoryDto> GetAll(string filterString)
+        public List<CategoryDto> GetList(string filterString)
         {
-            return GetAll(c => c.CategoryName.ToLower().Contains(filterString.ToLower()));
+            return GetList(c => c.CategoryName.ToLower().Contains(filterString.ToLower()));
         }
 
         private Categories GetEntity(int id)

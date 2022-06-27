@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace TP07MVC.Logic
 {
-    public interface ICRUDLogic<TDto, TId>
+    public interface ICRUDLogic<T, TDto, TId>
     {
         TDto Add(TDto newEntity);
         void Delete(TId id);
         TDto Get(TId id);
-        List<TDto> GetAll();
-        List<TDto> GetAll(string filterString);
+        IEnumerable<TDto> GetAll();
+        List<TDto> GetList();
+        List<TDto> GetList(Func<T, bool> filter);
         bool Exists(TId id);
         TDto Update(TDto newEntity);
     }
