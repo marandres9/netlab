@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { Shipper } from '../../shared/models/Shipper'
+import { Shipper, ShipperDetails } from '../../shared/models/Shipper'
 
 @Injectable({
     providedIn: 'root',
@@ -15,7 +15,7 @@ export class HttpService {
     }
 
     getDetailsShippers(id: number) {
-      return this.http.get<Shipper>(`${this.url}/api/shippers/${id}`)
+        return this.http.get<ShipperDetails>(`${this.url}/api/shippers/${id}`)
     }
 
     postShipper(shipper: Shipper) {
