@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Cors;
 using TP07MVC.Common.Exceptions;
 using TP07MVC.Entity.DTO;
 using TP07MVC.Logic;
-using TP08WebAPI.WebAPI.Models;
 
 namespace TP08WebAPI.WebAPI.Controllers
 {
@@ -22,8 +16,7 @@ namespace TP08WebAPI.WebAPI.Controllers
         [Route("")]
         public IHttpActionResult GetAll()
         {
-            var shippers = _logic.GetAll();
-            var shippersList = shippers.Select(s => new ShipperModel { ShipperID = s.ShipperID, CompanyName = s.CompanyName }).ToList();
+            var shippersList = _logic.GetList();
             return Ok(shippersList);
         }
 
