@@ -1,0 +1,29 @@
+<div class="container">
+    <a routerLink="add" class="btn btn-success">Add+</a>
+    <table>
+        <thead>
+            <th>Company Name</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let shipper of this.shippers">
+                <td>
+                    {{ shipper.CompanyName }}
+                </td>
+                <td>
+                    <button
+                        class="btn btn-primary"
+                        (click)="this.getDetails(shipper.ShipperID)"
+                    >
+                        Details
+                    </button>
+                    <button
+                        class="btn btn-danger"
+                        (click)="this.delete(shipper.ShipperID)"
+                    >
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

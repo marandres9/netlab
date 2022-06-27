@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HomeModule } from './features/home/home.module'
 import { SharedModule } from './shared/shared.module'
 import { NotFoundModule } from './features/not-found/not-found.module'
-import { CrudModule } from './features/crud/crud.module'
+import { CrudModule } from './features/crud/crud.module';
 
 @NgModule({
     declarations: [AppComponent],
