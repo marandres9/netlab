@@ -5,6 +5,8 @@ import { AppComponent } from './app.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ModulesModule } from './modules/modules.module'
 import { HttpClientModule } from '@angular/common/http'
+import { SharedModule } from './shared/shared.module'
+import { ToolbarComponent } from './shared/components/toolbar/toolbar.component'
 
 @NgModule({
     declarations: [AppComponent],
@@ -14,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http'
         BrowserAnimationsModule,
         HttpClientModule,
         ModulesModule,
+        SharedModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
