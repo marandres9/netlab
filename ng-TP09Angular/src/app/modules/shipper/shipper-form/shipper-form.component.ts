@@ -1,9 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import {
+    Component,
+    EventEmitter,
+    OnInit,
+    Output,
+    ViewChild,
+} from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatExpansionPanel } from '@angular/material/expansion'
 import { Router } from '@angular/router'
 import { HttpService } from 'src/app/core/http/http.service'
 import { FormErrorService } from 'src/app/shared/services/form-error.service'
+import { Shipper } from '../models/Shipper'
+import { FormListenerService } from '../services/form-listener.service'
 
 @Component({
     selector: 'app-shipper-form',
@@ -12,7 +20,7 @@ import { FormErrorService } from 'src/app/shared/services/form-error.service'
 })
 export class ShipperFormComponent implements OnInit {
     @ViewChild(MatExpansionPanel) panel!: MatExpansionPanel
-    
+
     shipperForm: FormGroup = new FormGroup({
         CompanyName: new FormControl('', [
             Validators.required,
@@ -22,25 +30,23 @@ export class ShipperFormComponent implements OnInit {
     })
 
     constructor(
-        private http: HttpService,
-        private router: Router,
-        private formError: FormErrorService
+        private formError: FormErrorService,
+        private formListener: FormListenerService<Shipper>
     ) {}
 
     ngOnInit(): void {}
 
     togglePanel() {
         this.panel.toggle()
-    }    
+    }
 
     cancel() {
         this.togglePanel()
     }
-    
+
     onSubmit() {
-        this.http
-            .postShipper(this.shipperForm.value)
-            .subscribe(() => this.router.navigate(['/shippers']))
+        if(this.shipperForm.valid)
+            this.formListener.setFormValue(this.shipperForm.value)
     }
 
     get CompanyName() {
