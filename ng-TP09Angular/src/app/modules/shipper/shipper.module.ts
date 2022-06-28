@@ -10,7 +10,8 @@ import { ShipperDetailsComponent } from './shipper-details/shipper-details.compo
 import { MatTableModule } from '@angular/material/table'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatListModule } from '@angular/material/list'
-import { MatButtonModule } from '@angular/material/button'
+import { MatButtonModule } from '@angular/material/button';
+import { ShipperComponent } from './shipper.component'
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button'
         ShipperListComponent,
         ShipperFormComponent,
         ShipperDetailsComponent,
+        ShipperComponent,
     ],
     imports: [
         CommonModule,

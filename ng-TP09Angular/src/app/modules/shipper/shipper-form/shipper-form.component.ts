@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { MatExpansionPanel } from '@angular/material/expansion'
 import { Router } from '@angular/router'
 import { HttpService } from 'src/app/core/http/http.service'
 import { FormErrorService } from 'src/app/shared/services/form-error.service'
@@ -10,6 +11,8 @@ import { FormErrorService } from 'src/app/shared/services/form-error.service'
     styleUrls: ['./shipper-form.component.scss'],
 })
 export class ShipperFormComponent implements OnInit {
+    @ViewChild(MatExpansionPanel) panel!: MatExpansionPanel
+    
     shipperForm: FormGroup = new FormGroup({
         CompanyName: new FormControl('', [
             Validators.required,
@@ -26,9 +29,14 @@ export class ShipperFormComponent implements OnInit {
 
     ngOnInit(): void {}
 
+    togglePanel() {
+        this.panel.toggle()
+    }    
+
     cancel() {
-        this.router.navigate(['/shippers'])
+        this.togglePanel()
     }
+    
     onSubmit() {
         this.http
             .postShipper(this.shipperForm.value)

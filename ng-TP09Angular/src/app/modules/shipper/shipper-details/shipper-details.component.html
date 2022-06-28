@@ -1,27 +1,27 @@
 <mat-expansion-panel>
     <mat-expansion-panel-header>
         <mat-panel-title>
-            <div *ngIf="this.object; else titleHint">
-                <strong>{{ this.object?.CompanyName }}</strong>
+            <div *ngIf="this.shipper; else titleHint">
+                <strong>{{ this.shipper?.CompanyName }}</strong>
             </div>
             <ng-template #titleHint>
                 Details
             </ng-template>
         </mat-panel-title>
         <mat-panel-description>
-            <div *ngIf="this.object; else descHint">Details</div>
+            <div *ngIf="this.shipper; else descHint">Details</div>
             <ng-template #descHint>
                 Click on a shipper to view its details
             </ng-template>
         </mat-panel-description>
     </mat-expansion-panel-header>
-    <div class="d-flex justify-content-between">
+    <div *ngIf="this.shipper" class="d-flex justify-content-between">
         <mat-list>
-            <mat-list-item> ID: {{ object?.ShipperID }} </mat-list-item>
+            <mat-list-item> ID: {{ shipper?.ShipperID }} </mat-list-item>
             <mat-list-item>
-                Company Name: {{ object?.CompanyName }}
+                Company Name: {{ shipper?.CompanyName }}
             </mat-list-item>
-            <mat-list-item> Phone: {{ object?.Phone }} </mat-list-item>
+            <mat-list-item> Phone: {{ shipper?.Phone }} </mat-list-item>
         </mat-list>
         <div class="d-flex flex-column">
             <button class="btn btn-primary">Edit</button>

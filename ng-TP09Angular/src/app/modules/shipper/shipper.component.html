@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="m-5">
+        <app-shipper-list
+            [shippers]="this.shippers"
+            (detailsEvent)="onDetails($event)"
+        ></app-shipper-list>
+    </div>
+    <a (click)="onAdd()" class="btn btn-success">Add+</a>
+
+    <div class="mb-5">
+        <app-shipper-details
+            [shipper]="this.detailedShipper"
+        ></app-shipper-details>
+    </div>
+
+    <div class="mb-5">
+        <app-shipper-form></app-shipper-form>
+    </div>
+</div>

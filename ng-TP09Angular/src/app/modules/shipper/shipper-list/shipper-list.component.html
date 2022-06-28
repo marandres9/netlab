@@ -1,37 +1,25 @@
-<div class="container">
-    
-    
-    <a routerLink="add" class="btn btn-success">Add+</a>
+<table mat-table [dataSource]="this.shippers" multiTemplateDataRows>
+    <ng-container matColumnDef="CompanyName">
+        <th mat-header-cell *matHeaderCellDef>Company Name</th>
+        <td mat-cell *matCellDef="let shipper">
+            {{ shipper.CompanyName }}
+        </td>
+    </ng-container>
 
-    <table mat-table [dataSource]="this.shippers" multiTemplateDataRows>
-        <ng-container matColumnDef="CompanyName">
-            <th mat-header-cell *matHeaderCellDef>Company Name</th>
-            <td mat-cell *matCellDef="let shipper">
-                {{ shipper.CompanyName }}
-            </td>
-        </ng-container>
+    <ng-container matColumnDef="Actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let shipper">
+            <button
+                (click)="onDetails(shipper.ShipperID)"
+                class="btn btn-secondary"
+            >
+                Details
+            </button>
+            <button class="btn btn-primary">Edit</button>
+            <button class="btn btn-danger">Delete</button>
+        </td>
+    </ng-container>
 
-        <ng-container matColumnDef="Actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let shipper">
-                <button
-                    (click)="onDetails(shipper.ShipperID)"
-                    class="btn btn-secondary"
-                >
-                    Details
-                </button>
-                <button class="btn btn-primary">Edit</button>
-                <button class="btn btn-danger">Delete</button>
-            </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="this.displayedColumns"></tr>
-        <tr
-            mat-row
-            *matRowDef="let shipper; columns: this.displayedColumns"
-        ></tr>
-    </table>
-
-    <app-shipper-details [object]="this.detailedShipper"></app-shipper-details>
-
-</div>
+    <tr mat-header-row *matHeaderRowDef="this.displayedColumns"></tr>
+    <tr mat-row *matRowDef="let shipper; columns: this.displayedColumns"></tr>
+</table>

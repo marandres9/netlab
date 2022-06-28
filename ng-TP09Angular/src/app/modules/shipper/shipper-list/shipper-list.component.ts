@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core'
-import { Shipper, ShipperDetails } from '../models/Shipper'
-import { HttpService } from 'src/app/core/http/http.service'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Shipper } from '../models/Shipper'
 
 @Component({
     selector: 'app-shipper-list',
@@ -8,30 +7,17 @@ import { HttpService } from 'src/app/core/http/http.service'
     styleUrls: ['./shipper-list.component.scss'],
 })
 export class ShipperListComponent implements OnInit {
-    shippers: Shipper[] = []
+    @Input() shippers: Shipper[] = []
+    
+    @Output() detailsEvent = new EventEmitter<number>()
+    
     displayedColumns = ['CompanyName', 'Actions']
-    detailedShipper!: ShipperDetails
 
-    constructor(private http: HttpService) {}
+    constructor() {}
 
-    ngOnInit(): void {
-        this.getAll()
-    }
-
-    getAll() {
-        this.http
-            .getAllShippers()
-            .subscribe((shippers) => (this.shippers = shippers))
-    }
-
-    onDelete(id: number) {}
+    ngOnInit(): void {}
 
     onDetails(id: number) {
-        this.http.getDetailsShippers(id).subscribe((shipper) => {
-            this.detailedShipper = shipper
-        })
-        // if(!this.isExpanded()){
-        //     this.toggleExpansionPanel()
-        // }
+        this.detailsEvent.emit(id)
     }
 }
