@@ -4,13 +4,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using TP07MVC.Common.Exceptions;
 using TP07MVC.Entity.DTO;
 using TP07MVC.Logic;
 
 namespace TP08WebAPI.WebAPI.Controllers
 {
-    [RoutePrefix("api/region")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [RoutePrefix("api/regions")]
     public class RegionController: ApiController
     {
         private readonly RegionLogic _logic = new RegionLogic();
