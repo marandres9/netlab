@@ -1,0 +1,54 @@
+<table mat-table [dataSource]="this.regionList" class="mat-elevation-z8">
+    <ng-container matColumnDef="RegionID">
+        <th mat-header-cell *matHeaderCellDef>
+            Region ID
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.RegionID }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="RegionDescription">
+        <th mat-header-cell *matHeaderCellDef>
+            Region Description
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.RegionDescription }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Actions">
+        <th mat-header-cell *matHeaderCellDef class="align-center">Actions</th>
+        <td mat-cell *matCellDef="let element" class="align-center">
+            <button mat-icon-button>
+                <mat-icon
+                    (click)="onBtnEdit(element.RegionID)"
+                    appStopClickPropagation
+                >
+                    edit
+                </mat-icon>
+            </button>
+            <button mat-icon-button color="warn">
+                <mat-icon
+                    (click)="this.onBtnDelete(element.RegionID)"
+                    appStopClickPropagation
+                >
+                    delete
+                </mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Add">
+        <th mat-header-cell *matHeaderCellDef class="align-end">
+            <button mat-icon-button color="primary" (click)="onBtnAdd()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </th>
+        <td mat-cell *matCellDef></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+        mat-row
+        (click)="onRowClick(row.RegionID)"
+        *matRowDef="let row; columns: displayedColumns"
+        class=""
+    ></tr>
+</table>

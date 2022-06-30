@@ -80,7 +80,7 @@ export class ShipperComponent implements OnInit {
         if (this.detailedShipper && this.detailedShipper.ShipperID === id) {
             this.detailsComponent.togglePanel()
         } else {
-            this.http.getDetailsShippers(id).subscribe((shipper) => {
+            this.http.getDetailedShipper(id).subscribe((shipper) => {
                 this.detailedShipper = shipper
             })
         }

@@ -1,0 +1,71 @@
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <div *ngIf="this.detailedObject; else titleHint">
+                <strong>{{ this.detailedObject?.RegionDescription }}</strong>
+            </div>
+            <ng-template #titleHint> Details </ng-template>
+        </mat-panel-title>
+        <mat-panel-description *ngIf="!this.isExpanded">
+            <div *ngIf="this.detailedObject; else descHint">Details</div>
+            <ng-template #descHint> Click on a shipper to view its details </ng-template>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div *ngIf="this.detailedObject" class="d-flex justify-content-between">
+
+        <ul class="list-group">
+            <li class="list-group-item">
+                <div class="d-flex">
+                    <h5 class="mb-1">Region ID</h5>
+                </div>
+                <p class="mb-1">{{ this.detailedObject.RegionID }}</p>
+            </li>
+
+            <li class="list-group-item">
+                <div class="d-flex">
+                    <h5 class="mb-1">Region Description</h5>
+                </div>
+                <div class="mb-1">{{ this.detailedObject.RegionDescription }}</div>
+            </li>
+
+            <a
+                class="list-group-item list-group-item-action"
+                data-bs-toggle="collapse"
+                href="#collapseTerritories"
+                role="button"
+                aria-expanded="false"
+                aria-controls="collapseTerritories"
+            >
+                <div class="d-flex justify-content-between align-items-start">
+                    <h5 class="me-auto">Territories</h5>
+                    <span class="badge bg-primary rounded-pill">
+                        {{ this.detailedObject.Territories.length }}
+                    </span>
+                </div>
+
+                <div class="collapse" id="collapseTerritories">
+                    <mat-list>
+                        <mat-list-item
+                            *ngFor="let territoryName of this.detailedObject.Territories"
+                            style="font-size: 1em;"
+                        >
+                            {{ territoryName }}
+                        </mat-list-item>
+                    </mat-list>
+                    <!-- <ul class="list-group">
+                        <li
+                            class="list-group-item"
+                            *ngFor="let territoryName of this.detailedObject.Territories"
+                        >
+                            {{ territoryName }}
+                        </li>
+                    </ul> -->
+                </div>
+            </a>
+        </ul>
+        <div class="d-flex flex-column">
+            <button class="btn btn-primary">Edit</button>
+            <button class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+</mat-expansion-panel>

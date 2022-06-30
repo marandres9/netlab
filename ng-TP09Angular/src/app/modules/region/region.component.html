@@ -1,0 +1,25 @@
+<div class="container-md">
+    <div class="my-5">
+        <app-region-list
+            [regionList]="this.regionList"
+            (addEvent)="this.onBtnAdd()"
+            (editEvent)="this.onBtnEdit($event)"
+            (deleteEvent)="this.onDelete($event)"
+            (detailsEvent)="this.onDetails($event)"
+        ></app-region-list>
+    </div>
+
+    <mat-accordion [multi]="true">
+        <app-region-details [detailedObject]="this.detailedRegion"></app-region-details>
+
+        <mat-accordion>
+            <app-region-form #addingForm (addEvent)="onAdd($event)"></app-region-form>
+            <app-region-form
+                #editingForm
+                [editing]="true"
+                [objectToEdit]="this.editingRegion"
+                (editEvent)="onEdit($event)"
+            ></app-region-form>
+        </mat-accordion>
+    </mat-accordion>
+</div>

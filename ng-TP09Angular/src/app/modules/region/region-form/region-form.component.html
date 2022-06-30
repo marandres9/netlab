@@ -1,0 +1,58 @@
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+            <mat-panel-title>
+                <ng-container *ngIf="this.editing; else notEditingTitle">
+                    Edit Region
+                </ng-container>
+                <ng-template #notEditingTitle> Add Region </ng-template>
+            </mat-panel-title>
+            <mat-panel-description>
+                <ng-container *ngIf="!this.isExpanded">
+                    <ng-container *ngIf="this.editing; else notEditingDesc" >
+                        Edit an existing Region's details
+                    </ng-container>
+                    <ng-template #notEditingDesc>
+                        Create a new Region
+                    </ng-template>
+                </ng-container>
+            </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form
+        [formGroup]="this.form"
+        (ngSubmit)="onSubmit()"
+        *ngIf="(this.editing && this.objectToEdit) || !this.editing"
+    >
+        <div class="mb-3">
+            <mat-form-field>
+                <mat-label> Region ID </mat-label>
+                <input type="number" matInput formControlName="RegionID" />
+                <mat-error>
+                    {{ this.RegionDescriptionErrors }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="mb-3">
+            <mat-form-field>
+                <mat-label> Region Description </mat-label>
+                <input type="text" matInput formControlName="RegionDescription" />
+                <mat-error>
+                    {{ this.RegionDescriptionErrors }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="mb-3">
+            <button mat-raised-button type="button" (click)="this.togglePanel()">
+                Cancel
+            </button>
+            <button
+                mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="!this.form.valid || this.form.pristine"
+            >
+                Save
+            </button>
+        </div>
+    </form>
+</mat-expansion-panel>
