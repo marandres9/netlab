@@ -163,7 +163,7 @@ export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     get Description() {
-        return this.editEvent
+        return this.editing
             ? "Edit an existing Region's details"
             : 'Create a new Region'
     }

@@ -1,9 +1,11 @@
 import {
     AfterViewInit,
     Component,
+    EventEmitter,
     Input,
     OnChanges,
     OnInit,
+    Output,
     SimpleChanges,
     ViewChild,
 } from '@angular/core'
@@ -18,6 +20,9 @@ import { RegionDetails } from '../model/Region'
 export class RegionDetailsComponent implements OnInit, OnChanges, AfterViewInit {
     @Input() detailedObject!: RegionDetails | null
 
+    @Output() btnEditEvent = new EventEmitter<number>()
+    @Output() btnDeleteEvent = new EventEmitter<number>()
+    
     @ViewChild(MatExpansionPanel) panel!: MatExpansionPanel
 
     isExpanded = false
@@ -45,9 +50,9 @@ export class RegionDetailsComponent implements OnInit, OnChanges, AfterViewInit 
     }
 
     onBtnEdit() {
-
+        this.btnEditEvent.emit(this.detailedObject?.RegionID)
     }
     onBtnDelete() {
-        
+        this.btnDeleteEvent.emit(this.detailedObject?.RegionID)
     }
 }

@@ -1,14 +1,10 @@
 <mat-expansion-panel>
     <mat-expansion-panel-header>
         <mat-panel-title>
-            <div *ngIf="this.detailedObject; else titleHint">
-                <strong>{{ this.detailedObject?.RegionDescription }}</strong>
-            </div>
-            <ng-template #titleHint> Details </ng-template>
+            Details
         </mat-panel-title>
         <mat-panel-description *ngIf="!this.isExpanded">
-            <div *ngIf="this.detailedObject; else descHint">Details</div>
-            <ng-template #descHint> Click on a shipper to view its details </ng-template>
+            Click on a shipper to view its details 
         </mat-panel-description>
     </mat-expansion-panel-header>
     <div *ngIf="this.detailedObject" class="d-flex justify-content-between">
@@ -56,7 +52,7 @@
             </a>
         </ul>
         <div class="d-flex flex-column justify-content-start">
-            <button mat-icon-button color="primary" (click)="onBtnEdit()">
+            <button mat-icon-button (click)="onBtnEdit()">
                 <mat-icon>edit</mat-icon>
             </button>
             <button mat-icon-button color="warn" (click)="onBtnDelete()">

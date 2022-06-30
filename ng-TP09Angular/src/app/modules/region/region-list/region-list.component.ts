@@ -8,14 +8,14 @@ import { Region } from '../model/Region'
 })
 export class RegionListComponent implements OnInit {
     @Input() regionList: Region[] = []
-    add = 'add'
+    
     @Output() btnReloadEvent = new EventEmitter()
-    @Output() detailsEvent = new EventEmitter<number>()
+    @Output() btnDetailsEvent = new EventEmitter<number>()
     @Output() btnEditEvent = new EventEmitter<number>()
     @Output() btnDeleteEvent = new EventEmitter<number>()
     @Output() btnAddEvent = new EventEmitter()
 
-    displayedColumns = ['RegionID', 'RegionDescription', 'Actions', 'Add']
+    displayedColumns = ['RegionID', 'RegionDescription', 'ItemActions', 'TableActions']
 
     constructor() {}
 
@@ -36,7 +36,7 @@ export class RegionListComponent implements OnInit {
     onRowClick(id: number) {
         console.log('emit')
 
-        this.detailsEvent.emit(id)
+        this.btnDetailsEvent.emit(id)
     }
 
     onBtnDelete(id: number) {

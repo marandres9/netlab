@@ -6,12 +6,12 @@
             (btnReloadEvent)="this.onBtnReload()"
             (btnEditEvent)="this.onBtnEdit($event)"
             (btnDeleteEvent)="this.onDelete($event)"
-            (detailsEvent)="this.onDetails($event)"
+            (btnDetailsEvent)="this.onDetails($event)"
         ></app-region-list>
     </div>
 
     <mat-accordion [multi]="true">
-        <app-region-details [detailedObject]="this.detailedRegion"></app-region-details>
+        <app-region-details [detailedObject]="this.detailedRegion" (btnEditEvent)="this.onBtnEdit($event)" (btnDeleteEvent)="this.onDelete($event)"></app-region-details>
 
         <mat-accordion>
             <app-region-form #addingForm [invalidObject]="this.invalidNewRegion" (addEvent)="onAdd($event)"></app-region-form>

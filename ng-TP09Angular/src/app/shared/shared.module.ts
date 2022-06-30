@@ -15,9 +15,11 @@ import { MatListModule } from '@angular/material/list'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTreeModule } from '@angular/material/tree';
+import { ItemActionButtonsComponent } from './components/item-action-buttons/item-action-buttons.component';
+import { TableActionButtonsComponent } from './components/table-action-buttons/table-action-buttons.component';
 
 @NgModule({
-    declarations: [ToolbarComponent, StopClickPropagationDirective,],
+    declarations: [ToolbarComponent, StopClickPropagationDirective, ItemActionButtonsComponent, TableActionButtonsComponent,],
     imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, RouterModule],
     exports: [
         ToolbarComponent,
@@ -32,6 +34,8 @@ import { MatTreeModule } from '@angular/material/tree';
         MatIconModule,
         RouterModule,
         MatTreeModule,
+        ItemActionButtonsComponent,
+        TableActionButtonsComponent
     ],
 })
 export class SharedModule {}
