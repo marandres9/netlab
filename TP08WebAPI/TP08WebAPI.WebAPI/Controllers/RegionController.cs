@@ -102,10 +102,6 @@ namespace TP08WebAPI.WebAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch(InvalidForeignKeyException ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
     }
 }
