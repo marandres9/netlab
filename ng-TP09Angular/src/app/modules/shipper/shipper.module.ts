@@ -10,9 +10,10 @@ import { ShipperDetailsComponent } from './shipper-details/shipper-details.compo
 import { MatTableModule } from '@angular/material/table'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatListModule } from '@angular/material/list'
-import { MatButtonModule } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button'
 import { ShipperComponent } from './shipper.component'
-
+import { SharedModule } from 'src/app/shared/shared.module'
+import { MatIconModule } from '@angular/material/icon'
 
 @NgModule({
     declarations: [
@@ -30,7 +31,9 @@ import { ShipperComponent } from './shipper.component'
         MatTableModule,
         MatExpansionModule,
         MatListModule,
-        MatButtonModule,        
+        MatButtonModule,
+        SharedModule,
+        MatIconModule,
     ],
 })
 export class ShipperModule {}

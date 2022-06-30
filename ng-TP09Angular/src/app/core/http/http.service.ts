@@ -22,4 +22,12 @@ export class HttpService {
     postShipper(shipper: Shipper) {
         return this.http.post<Shipper>(environment.url + 'api/shippers/add', shipper)
     }
+
+    putShipper(edited: Shipper) {
+        return this.http.put<Shipper>(environment.url + 'api/shippers/edit', edited)
+    }
+
+    deleteShipper(id: number) {
+        return this.http.delete<number>(environment.url + `api/shippers/delete/${id}`)
+    }
 }

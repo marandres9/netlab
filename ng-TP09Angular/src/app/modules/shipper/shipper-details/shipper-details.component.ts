@@ -15,21 +15,21 @@ import { ShipperDetails } from '../models/Shipper'
     styleUrls: ['./shipper-details.component.scss'],
 })
 export class ShipperDetailsComponent implements OnInit, OnChanges {
-    @Input() shipper!: ShipperDetails
-    entries: [string, any][] = []
+    @Input() shipper!: ShipperDetails | null
 
     @ViewChild(MatExpansionPanel) panel!: MatExpansionPanel
-    
+
     constructor() {}
 
     ngOnInit(): void {}
 
     ngOnChanges(changes: SimpleChanges): void {
-        let obj = changes['shipper']
-        if (obj && obj.currentValue) {
-            if (this.shipper) {
-                this.panel.open()
-            }
-        }
+        if (this.shipper) {
+            this.panel.open()
+        } 
+    }
+
+    togglePanel() {
+        this.panel.toggle()
     }
 }

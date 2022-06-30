@@ -1,49 +1,23 @@
-<!-- <h1>Add shipper</h1> -->
-
-<!-- <form [formGroup]="this.shipperForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-        <mat-form-field>
-            <mat-label> Company Name </mat-label>
-            <input matInput formControlName="CompanyName" />
-            <mat-error>
-                {{ this.CompanyNameErrors }}
-            </mat-error>
-        </mat-form-field>
-    </div>
-
-    <div class="mb-3">
-        <mat-form-field>
-            <mat-label> Phone </mat-label>
-            <input matInput formControlName="Phone" />
-            <mat-error>
-                {{ this.PhoneErrors }}
-            </mat-error>
-        </mat-form-field>
-    </div>
-
-    <div class="mb-3">
-        <button
-        mat-raised-button
-        (click)="this.cancel()"
-        >
-        Cancel
-        </button>
-        <button
-            mat-raised-button
-            color="primary"
-            type="submit"
-            [disabled]="!this.shipperForm.valid"
-        >
-            Save
-        </button>
-    </div>
-</form> -->
-
 <mat-expansion-panel>
     <mat-expansion-panel-header>
-        <mat-panel-title> Add Shipper </mat-panel-title>
+        <mat-panel-title>
+            <ng-container *ngIf="this.editing; else notEditingTitle">
+                Edit Shipper
+            </ng-container>
+            <ng-template #notEditingTitle> Add Shipper </ng-template>
+        </mat-panel-title>
+        <mat-panel-description>
+            <ng-container *ngIf="this.editing; else notEditingDesc">
+                Edit an existing shipper's details
+            </ng-container>
+            <ng-template #notEditingDesc> Create a new shipper </ng-template>
+        </mat-panel-description>
     </mat-expansion-panel-header>
-    <form [formGroup]="this.shipperForm" (ngSubmit)="onSubmit()">
+    <form
+        [formGroup]="this.shipperForm"
+        (ngSubmit)="onSubmit()"
+        *ngIf="(this.editing && this.shipperToEdit) || !this.editing"
+    >
         <div class="mb-3">
             <mat-form-field>
                 <mat-label> Company Name </mat-label>
@@ -65,14 +39,14 @@
         </div>
 
         <div class="mb-3">
-            <button mat-raised-button type="button" (click)="this.cancel()">
+            <button mat-raised-button type="button" (click)="this.togglePanel()">
                 Cancel
             </button>
             <button
                 mat-raised-button
                 color="primary"
                 type="submit"
-                [disabled]="!this.shipperForm.valid"
+                [disabled]="!this.shipperForm.valid || this.shipperForm.pristine"
             >
                 Save
             </button>
