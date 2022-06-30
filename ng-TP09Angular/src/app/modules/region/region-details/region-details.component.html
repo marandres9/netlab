@@ -13,7 +13,7 @@
     </mat-expansion-panel-header>
     <div *ngIf="this.detailedObject" class="d-flex justify-content-between">
 
-        <ul class="list-group">
+        <ul class="list-group" style="min-width: 50%;">
             <li class="list-group-item">
                 <div class="d-flex">
                     <h5 class="mb-1">Region ID</h5>
@@ -52,20 +52,16 @@
                             {{ territoryName }}
                         </mat-list-item>
                     </mat-list>
-                    <!-- <ul class="list-group">
-                        <li
-                            class="list-group-item"
-                            *ngFor="let territoryName of this.detailedObject.Territories"
-                        >
-                            {{ territoryName }}
-                        </li>
-                    </ul> -->
                 </div>
             </a>
         </ul>
-        <div class="d-flex flex-column">
-            <button class="btn btn-primary">Edit</button>
-            <button class="btn btn-danger">Delete</button>
+        <div class="d-flex flex-column justify-content-start">
+            <button mat-icon-button color="primary" (click)="onBtnEdit()">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="onBtnDelete()">
+                <mat-icon>delete</mat-icon>
+            </button>
         </div>
     </div>
 </mat-expansion-panel>

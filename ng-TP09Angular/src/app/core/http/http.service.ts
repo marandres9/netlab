@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { catchError, of, throwError } from 'rxjs'
 import { Region, RegionDetails } from 'src/app/modules/region/model/Region'
 import { Shipper, ShipperDetails } from 'src/app/modules/shipper/models/Shipper'
 import { environment } from 'src/environments/environment'
@@ -30,15 +31,34 @@ export class HttpService {
         return this.http.get<Region[]>(environment.url + 'api/regions/')
     }
     getDetailedRegion(id: number) {
-        return this.http.get<RegionDetails>(environment.url + `api/regions/${id}`)
+        return this.http
+            .get<RegionDetails>(environment.url + `api/regions/${id}`)
+            .pipe(catchError(this.handleError))
     }
     postRegion(newRegion: Region) {
-        return this.http.post<Region>(environment.url + 'api/regions/add', newRegion)
+        return this.http
+            .post<Region>(environment.url + 'api/regions/add', newRegion)
+            .pipe(catchError(this.handleError))
     }
     putRegion(editedRegion: Region) {
-        return this.http.put<Region>(environment.url + 'api/regions/edit', editedRegion)
+        return this.http
+            .put<Region>(environment.url + 'api/regions/edit', editedRegion)
+            .pipe(catchError(this.handleError))
     }
     deleteRegion(id: number) {
-        return this.http.delete<number>(environment.url + `api/regions/delete/${id}`)
+        return this.http
+            .delete<number>(environment.url + `api/regions/delete/${id}`)
+            .pipe(catchError(this.handleError))
+    }
+
+    private handleError(error: HttpErrorResponse) {
+        switch (error.status) {
+            case 404:
+                return throwError(() => new Error('The requested object was not found.'))
+            default:
+                return throwError(
+                    () => new Error('Server denied request: ' + error.error.Message)
+                )
+        }
     }
 }

@@ -13,6 +13,7 @@ export class RegionComponent implements OnInit {
     regionList: Region[] = []
     // objectos que se pasan a los componentes de edición y detalles:
     detailedRegion: RegionDetails | null = null
+    invalidNewRegion: Region | null = null
     editingRegion: Region | null = null
 
     @ViewChild('addingForm') addingForm!: RegionFormComponent
@@ -27,31 +28,59 @@ export class RegionComponent implements OnInit {
 
     getList() {
         this.http.getAllRegions().subscribe((regions) => (this.regionList = regions))
+        this.updateDetailedRegion()
     }
 
     getDetails(id: number) {
-        this.http.getDetailedRegion(id).subscribe((region) => {
-            this.detailedRegion = region
+        this.http.getDetailedRegion(id).subscribe({
+            next: (region) => {
+                this.detailedRegion = region
+            },
+            error: (error) => {
+                console.log(error.message)
+                this.detailedRegion = null
+            },
         })
     }
 
     onAdd(newRegion: Region) {
-        this.http.postRegion(newRegion).subscribe(() => {
-            this.getList()
+        this.http.postRegion(newRegion).subscribe({
+            next: () => {
+                this.getList()
+                this.invalidNewRegion = null
+            },
+            error: (error) => {
+                console.log(error.message)
+                this.invalidNewRegion = newRegion
+            },
         })
     }
 
-    onEdit(editedRegion: Region) {
-        this.http.putRegion(editedRegion).subscribe((edited) => {
-            this.getList()
-            this.updateDetailedRegion(edited.RegionID, false)
+    onEdit(region: Region) {
+        this.http.putRegion(region).subscribe({
+            next: () => {
+                this.getList()
+                this.updateDetailedRegion()
+            },
+            error: (error) => {
+                console.log(error.message)
+                this.getList()
+                this.updateDetailedRegion()
+            },
         })
     }
 
     onDelete(id: number) {
-        this.http.deleteRegion(id).subscribe((id) => {
-            this.getList()
-            this.updateDetailedRegion(id, true)
+        this.http.deleteRegion(id).subscribe({
+            next: (deletedID) => {
+                this.getList()
+                this.updateDetailedRegion()
+            },
+            error: (error) => {
+                console.log(error.message)
+                this.getList()
+                this.updateDetailedRegion()
+            },
         })
     }
 
@@ -59,12 +88,16 @@ export class RegionComponent implements OnInit {
         if (this.detailedRegion && this.detailedRegion.RegionID === id) {
             this.detailsComponent.togglePanel()
         } else {
-          this.getDetails(id)
+            this.getDetails(id)
         }
     }
 
     onBtnAdd() {
         this.addingForm.togglePanel()
+    }
+
+    onBtnReload() {
+        this.getList()
     }
 
     onBtnEdit(id: number) {
@@ -75,7 +108,6 @@ export class RegionComponent implements OnInit {
         // sino busca el objeto seleccionado y abre el panel
         else {
             this.editingRegion = this.findRegion(id)
-            if (this.editingRegion) this.editingForm.expandPanel()
         }
     }
 
@@ -83,13 +115,9 @@ export class RegionComponent implements OnInit {
         return this.regionList.find((region) => region.RegionID === id) ?? null
     }
 
-    updateDetailedRegion(id: number, deleted: boolean) {
-        if (id === this.detailedRegion?.RegionID) {
-            if (deleted) {
-                this.detailedRegion = null
-            } else {
-              this.getDetails(id)
-            }
+    updateDetailedRegion() {
+        if (this.detailedRegion) {
+            this.getDetails(this.detailedRegion.RegionID)
         }
     }
 }

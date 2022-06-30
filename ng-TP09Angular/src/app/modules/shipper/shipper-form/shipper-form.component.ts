@@ -118,7 +118,7 @@ export class ShipperFormComponent implements OnInit, OnChanges {
     // checkeando cada error individualmente
     get CompanyNameErrors() {
         if (this.CompanyName.errors?.['required']) {
-            return this.formError.requiredMsg()
+            return this.formError.RequiredMsg()
         } else if (this.CompanyName.errors?.['maxlength']) {
             return this.formError.MaxLengthMsg(40)
         } else if (this.CompanyName.errors?.['whitespace']) {

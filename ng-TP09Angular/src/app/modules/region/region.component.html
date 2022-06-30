@@ -1,10 +1,11 @@
-<div class="container-md">
+<div class="container-md main-content">
     <div class="my-5">
         <app-region-list
             [regionList]="this.regionList"
-            (addEvent)="this.onBtnAdd()"
-            (editEvent)="this.onBtnEdit($event)"
-            (deleteEvent)="this.onDelete($event)"
+            (btnAddEvent)="this.onBtnAdd()"
+            (btnReloadEvent)="this.onBtnReload()"
+            (btnEditEvent)="this.onBtnEdit($event)"
+            (btnDeleteEvent)="this.onDelete($event)"
             (detailsEvent)="this.onDetails($event)"
         ></app-region-list>
     </div>
@@ -13,7 +14,7 @@
         <app-region-details [detailedObject]="this.detailedRegion"></app-region-details>
 
         <mat-accordion>
-            <app-region-form #addingForm (addEvent)="onAdd($event)"></app-region-form>
+            <app-region-form #addingForm [invalidObject]="this.invalidNewRegion" (addEvent)="onAdd($event)"></app-region-form>
             <app-region-form
                 #editingForm
                 [editing]="true"

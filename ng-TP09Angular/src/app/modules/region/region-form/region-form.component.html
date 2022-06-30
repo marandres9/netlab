@@ -1,19 +1,11 @@
 <mat-expansion-panel>
     <mat-expansion-panel-header>
             <mat-panel-title>
-                <ng-container *ngIf="this.editing; else notEditingTitle">
-                    Edit Region
-                </ng-container>
-                <ng-template #notEditingTitle> Add Region </ng-template>
+                {{this.Title}}
             </mat-panel-title>
-            <mat-panel-description>
+            <mat-panel-description class="d-flex justify-content-start">
                 <ng-container *ngIf="!this.isExpanded">
-                    <ng-container *ngIf="this.editing; else notEditingDesc" >
-                        Edit an existing Region's details
-                    </ng-container>
-                    <ng-template #notEditingDesc>
-                        Create a new Region
-                    </ng-template>
+                    {{this.Description}}
                 </ng-container>
             </mat-panel-description>
     </mat-expansion-panel-header>
@@ -23,11 +15,11 @@
         *ngIf="(this.editing && this.objectToEdit) || !this.editing"
     >
         <div class="mb-3">
-            <mat-form-field>
+            <mat-form-field id="idField">
                 <mat-label> Region ID </mat-label>
                 <input type="number" matInput formControlName="RegionID" />
                 <mat-error>
-                    {{ this.RegionDescriptionErrors }}
+                    {{ this.RegionIDErrors }}
                 </mat-error>
             </mat-form-field>
         </div>

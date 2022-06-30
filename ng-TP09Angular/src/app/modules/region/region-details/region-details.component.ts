@@ -29,6 +29,8 @@ export class RegionDetailsComponent implements OnInit, OnChanges, AfterViewInit 
     ngOnChanges(changes: SimpleChanges): void {
         if (this.detailedObject) {
             this.panel.open()
+        } else if(!changes['detailedObject'].isFirstChange()) {
+            this.panel.close()
         }
     }
 
@@ -40,5 +42,12 @@ export class RegionDetailsComponent implements OnInit, OnChanges, AfterViewInit 
 
     togglePanel() {
         this.panel.toggle()
+    }
+
+    onBtnEdit() {
+
+    }
+    onBtnDelete() {
+        
     }
 }

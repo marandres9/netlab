@@ -16,11 +16,13 @@ import {
     FormControl,
     FormGroup,
     ValidationErrors,
+    ValidatorFn,
     Validators,
 } from '@angular/forms'
 import { MatExpansionPanel } from '@angular/material/expansion'
 import { Region } from '../model/Region'
 import { FormErrorService } from 'src/app/shared/services/form-error.service'
+import { MatFormField, MatFormFieldControl } from '@angular/material/form-field'
 
 @Component({
     selector: 'app-region-form',
@@ -30,6 +32,7 @@ import { FormErrorService } from 'src/app/shared/services/form-error.service'
 export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
     @ViewChild(MatExpansionPanel) panel!: MatExpansionPanel
 
+    @Input() invalidObject: Region | null = null
     @Input() objectToEdit: Region | null = null
     @Input() editing: boolean = false
 
@@ -38,8 +41,10 @@ export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
 
     isExpanded: boolean = false
 
+    @ViewChild('idField') _idField!: MatFormField
+
     form = this.fb.group({
-        RegionID: [, [Validators.required, Validators.min(0)]],
+        RegionID: ['', [Validators.required, Validators.min(0)]],
         RegionDescription: [
             '',
             [Validators.required, Validators.maxLength(50), this.noWhitespaceValidator],
@@ -48,12 +53,25 @@ export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
 
     constructor(private fb: FormBuilder, private formError: FormErrorService) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (this.objectToEdit) {
-            this.RegionID.setValue(this.objectToEdit.RegionID)
-            this.RegionDescription.setValue(this.objectToEdit.RegionDescription)
+            this.form.setValue({
+                RegionID: this.objectToEdit.RegionID,
+                RegionDescription: this.objectToEdit.RegionDescription.trim(),
+            })
+            this.RegionID.disable()
+            this.openPanel()
+        }
+        if (this.invalidObject) {
+            this.form.setValue({
+                RegionID: this.invalidObject.RegionID,
+                RegionDescription: this.invalidObject.RegionDescription,
+            })
+            this.RegionID.setErrors({repeatedID: true})
+            this.openPanel()
         }
     }
 
@@ -63,7 +81,7 @@ export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
         })
     }
 
-    // custom validator
+    // custom validators
     private noWhitespaceValidator(control: AbstractControl): ValidationErrors | null {
         const isWhitespace = (control.value || '').trim().length === 0
         return isWhitespace ? { whitespace: true } : null
@@ -85,7 +103,7 @@ export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
         this.panel.toggle()
     }
 
-    expandPanel() {
+    openPanel() {
         this.panel.open()
     }
 
@@ -96,11 +114,12 @@ export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
      */
     onSubmit() {
         if (this.form.valid) {
-            if (this.editing) {
-                this.editEvent.emit(this.form.value)
+            if (this.objectToEdit) {
+                this.editEvent.emit(this.form.getRawValue())                
                 this.objectToEdit = null
             } else {
                 this.addEvent.emit(this.form.value)
+                console.log(this.form.value);
                 this.resetFormAndValidation(this.form)
             }
             this.togglePanel()
@@ -115,9 +134,21 @@ export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
         return this.form.get('RegionDescription') as FormControl
     }
 
+    get RegionIDErrors() {
+        if (this.RegionID.errors?.['required']) {
+            return this.formError.RequiredMsg()
+        } else if (this.RegionID.errors?.['min']) {
+            return this.formError.MinMsg(0)
+        } else if (this.RegionID.errors?.['repeatedID']) {
+            return this.formError.RepeatedID()
+        } else {
+            return ''
+        }
+    }
+
     get RegionDescriptionErrors() {
         if (this.RegionDescription.errors?.['required']) {
-            return this.formError.requiredMsg()
+            return this.formError.RequiredMsg()
         } else if (this.RegionDescription.errors?.['maxlength']) {
             return this.formError.MaxLengthMsg(50)
         } else if (this.RegionDescription.errors?.['whitespace']) {
@@ -125,5 +156,15 @@ export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
         } else {
             return ''
         }
+    }
+
+    get Title() {
+        return this.editing ? 'Edit Region' : 'Add Region'
+    }
+
+    get Description() {
+        return this.editEvent
+            ? "Edit an existing Region's details"
+            : 'Create a new Region'
     }
 }

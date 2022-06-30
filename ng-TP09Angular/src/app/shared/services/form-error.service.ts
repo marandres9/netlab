@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core'
 export class FormErrorService {
     constructor() {}
 
-    requiredMsg() {
+    RequiredMsg() {
       return 'Field is required'
     }
 
@@ -14,14 +14,16 @@ export class FormErrorService {
       return `Field must be less than ${max} characters`
     }
 
+    MinMsg(min: number) {
+      return `Fiel value must be greater than ${min}`
+    }
+    
     WhitespaceMsg() {
       return 'Field contains only whitespaces'
     }
+
+    RepeatedID() {
+      return 'ID already exists'
+    }
 }
 
-enum FormErrors {
-    REQUIRED,
-    MAXLENGTH,
-    MAX,
-    MIN,
-}

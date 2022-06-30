@@ -8,11 +8,12 @@ import { Region } from '../model/Region'
 })
 export class RegionListComponent implements OnInit {
     @Input() regionList: Region[] = []
-
+    add = 'add'
+    @Output() btnReloadEvent = new EventEmitter()
     @Output() detailsEvent = new EventEmitter<number>()
-    @Output() editEvent = new EventEmitter<number>()
-    @Output() deleteEvent = new EventEmitter<number>()
-    @Output() addEvent = new EventEmitter()
+    @Output() btnEditEvent = new EventEmitter<number>()
+    @Output() btnDeleteEvent = new EventEmitter<number>()
+    @Output() btnAddEvent = new EventEmitter()
 
     displayedColumns = ['RegionID', 'RegionDescription', 'Actions', 'Add']
 
@@ -21,11 +22,15 @@ export class RegionListComponent implements OnInit {
     ngOnInit(): void {}
 
     onBtnAdd() {
-        this.addEvent.emit()
+        this.btnAddEvent.emit()
+    }
+
+    onBtnReload() {
+        this.btnReloadEvent.emit()
     }
 
     onBtnEdit(id: number) {
-        this.editEvent.emit(id)
+        this.btnEditEvent.emit(id)
     }
 
     onRowClick(id: number) {
@@ -35,6 +40,6 @@ export class RegionListComponent implements OnInit {
     }
 
     onBtnDelete(id: number) {
-        this.deleteEvent.emit(id)
+        this.btnDeleteEvent.emit(id)
     }
 }
