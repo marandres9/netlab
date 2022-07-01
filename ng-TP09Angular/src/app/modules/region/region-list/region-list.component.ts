@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { Region } from '../model/Region'
 
 @Component({
@@ -32,8 +32,6 @@ export class RegionListComponent {
     }
 
     onRowClick(id: number) {
-        console.log('emit')
-
         this.btnDetailsEvent.emit(id)
     }
 

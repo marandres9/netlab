@@ -4,25 +4,15 @@ import {
     EventEmitter,
     Input,
     OnChanges,
-    OnInit,
     Output,
     SimpleChanges,
     ViewChild,
 } from '@angular/core'
 
-import {
-    AbstractControl,
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    ValidationErrors,
-    ValidatorFn,
-    Validators,
-} from '@angular/forms'
+import { FormBuilder, FormControl, Validators } from '@angular/forms'
 import { MatExpansionPanel } from '@angular/material/expansion'
 import { Region } from '../model/Region'
 import { FormHelperService } from 'src/app/core/services/form-helper.service'
-import { MatFormField, MatFormFieldControl } from '@angular/material/form-field'
 
 @Component({
     selector: 'app-region-form',
@@ -43,8 +33,6 @@ export class RegionFormComponent implements OnChanges, AfterViewInit {
     @Output() editEvent = new EventEmitter<Region>()
 
     isExpanded: boolean = false
-
-    @ViewChild('idField') _idField!: MatFormField
 
     form = this.fb.group({
         RegionID: ['', [Validators.required, Validators.min(0)]],
@@ -100,7 +88,7 @@ export class RegionFormComponent implements OnChanges, AfterViewInit {
         }
     }
 
-    /** Mediante la prop. 'isExpanded' se notifia a la vista para mostrar (o no)
+    /** Mediante la prop. 'isExpanded' se notifica a la vista para mostrar (o no)
      * la descripción del panel. */
     ngAfterViewInit(): void {
         this.panel.expandedChange.subscribe((expanded) => {
