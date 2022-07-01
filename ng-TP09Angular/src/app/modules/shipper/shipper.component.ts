@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
 import { HttpService } from 'src/app/core/http/http.service'
+import { DeleteDialogComponent } from 'src/app/shared/components/delete-dialog/delete-dialog.component'
+import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component'
 import { Shipper } from './models/Shipper'
 import { ShipperDetails } from './models/ShipperDetails'
 import { ShipperDetailsComponent } from './shipper-details/shipper-details.component'
@@ -21,7 +24,7 @@ export class ShipperComponent implements OnInit {
     @ViewChild(ShipperDetailsComponent) detailsComponent!: ShipperDetailsComponent
     @ViewChild('editingForm') editingForm!: ShipperFormComponent
 
-    constructor(private http: HttpService) {}
+    constructor(private http: HttpService, public matDialog: MatDialog) {}
 
     ngOnInit(): void {
         this.getList()
@@ -38,8 +41,21 @@ export class ShipperComponent implements OnInit {
                 this.detailedShipper = shipper
             },
             error: (error) => {
-                console.log(error.message)
+                this.openErrorDialog(error.message)
                 this.detailedShipper = null
+                this.getList()
+            },
+        })
+    }
+
+    getDetailsNoErrorDialog(id: number) {
+        this.http.getDetailedShipper(id).subscribe({
+            next: (shipper) => {
+                this.detailedShipper = shipper
+            },
+            error: (error) => {
+                this.detailedShipper = null
+                this.getList()
             },
         })
     }
@@ -58,7 +74,7 @@ export class ShipperComponent implements OnInit {
                 this.invalidNewShipper = null
             },
             error: (error) => {
-                console.log(error.message)
+                this.openErrorDialog(error.message)
                 this.invalidNewShipper = newShipper
             },
         })
@@ -76,7 +92,7 @@ export class ShipperComponent implements OnInit {
                 this.updateDetailedShipper()
             },
             error: (error) => {
-                console.log(error.message)
+                this.openErrorDialog(error.message)
                 this.getList()
                 this.updateDetailedShipper()
             },
@@ -87,16 +103,20 @@ export class ShipperComponent implements OnInit {
      * y notifica al componente shipper-list para que el mismo se actualice.
      */
     onDelete(id: number) {
-        this.http.deleteShipper(id).subscribe({
-            next: (deletedID) => {
-                this.getList()
-                this.updateDetailedShipper()
-            },
-            error: (error) => {
-                console.log(error.message)
-                this.getList()
-                this.updateDetailedShipper()
-            },
+        this.openDeleteConfirmDialog(this.findShipper(id)!).subscribe((result) => {
+            if (result) {
+                this.http.deleteShipper(id).subscribe({
+                    next: (deletedID) => {
+                        this.getList()
+                        this.updateDetailedShipper()
+                    },
+                    error: (error) => {
+                        this.openErrorDialog(error.message)
+                        this.getList()
+                        this.updateDetailedShipper()
+                    },
+                })
+            }
         })
     }
 
@@ -125,8 +145,7 @@ export class ShipperComponent implements OnInit {
         // si el objeto ya se está mostrando invierte el estado del panel
         if (this.editingShipper?.ShipperID === id) {
             this.editingForm.togglePanel()
-        }
-        else {
+        } else {
             this.editingShipper = this.findShipper(id)
         }
     }
@@ -146,7 +165,23 @@ export class ShipperComponent implements OnInit {
      */
     updateDetailedShipper() {
         if (this.detailedShipper) {
-            this.getDetails(this.detailedShipper.ShipperID)
+            this.getDetailsNoErrorDialog(this.detailedShipper.ShipperID)
         }
+    }
+
+    openDeleteConfirmDialog(shipper: Shipper) {
+        const dialogRef = this.matDialog.open(DeleteDialogComponent, {
+            width: '50em',
+            data: { id: shipper.ShipperID, name: shipper.CompanyName, type: 'shipper' },
+        })
+
+        return dialogRef.afterClosed()
+    }
+
+    openErrorDialog(msg: string) {
+        const dialogRef = this.matDialog.open(ErrorDialogComponent, {
+            width: '50em',
+            data: { msg: msg },
+        })
     }
 }

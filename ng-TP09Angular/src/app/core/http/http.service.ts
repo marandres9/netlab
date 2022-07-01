@@ -17,16 +17,24 @@ export class HttpService {
         return this.http.get<Shipper[]>(environment.url + 'api/shippers/')
     }
     getDetailedShipper(id: number) {
-        return this.http.get<ShipperDetails>(environment.url + `api/shippers/${id}`)
+        return this.http
+            .get<ShipperDetails>(environment.url + `api/shippers/${id}`)
+            .pipe(catchError(this.handleError))
     }
     postShipper(shipper: Shipper) {
-        return this.http.post<Shipper>(environment.url + 'api/shippers/add', shipper)
+        return this.http
+            .post<Shipper>(environment.url + 'api/shippers/add', shipper)
+            .pipe(catchError(this.handleError))
     }
     putShipper(edited: Shipper) {
-        return this.http.put<Shipper>(environment.url + 'api/shippers/edit', edited)
+        return this.http
+            .put<Shipper>(environment.url + 'api/shippers/edit', edited)
+            .pipe(catchError(this.handleError))
     }
     deleteShipper(id: number) {
-        return this.http.delete<number>(environment.url + `api/shippers/delete/${id}`)
+        return this.http
+            .delete<number>(environment.url + `api/shippers/delete/${id}`)
+            .pipe(catchError(this.handleError))
     }
 
     getAllRegions() {

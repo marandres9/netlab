@@ -18,6 +18,9 @@ import { MatTreeModule } from '@angular/material/tree'
 import { ItemActionButtonsComponent } from './components/item-action-buttons/item-action-buttons.component'
 import { TableActionButtonsComponent } from './components/table-action-buttons/table-action-buttons.component'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component'
+import { MatDialogModule } from '@angular/material/dialog'
+import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component'
 
 @NgModule({
     declarations: [
@@ -25,6 +28,8 @@ import { MatTooltipModule } from '@angular/material/tooltip'
         StopClickPropagationDirective,
         ItemActionButtonsComponent,
         TableActionButtonsComponent,
+        DeleteDialogComponent,
+        ErrorDialogComponent,
     ],
     imports: [
         CommonModule,
@@ -33,6 +38,8 @@ import { MatTooltipModule } from '@angular/material/tooltip'
         MatIconModule,
         RouterModule,
         MatTooltipModule,
+        MatDialogModule,
+        MatListModule,
     ],
     exports: [
         ToolbarComponent,
@@ -49,6 +56,9 @@ import { MatTooltipModule } from '@angular/material/tooltip'
         MatTreeModule,
         ItemActionButtonsComponent,
         TableActionButtonsComponent,
+        MatDialogModule,
+        DeleteDialogComponent,
+        ErrorDialogComponent
     ],
 })
 export class SharedModule {}

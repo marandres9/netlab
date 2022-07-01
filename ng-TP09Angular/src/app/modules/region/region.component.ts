@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
 import { HttpService } from 'src/app/core/http/http.service'
+import { DeleteDialogComponent } from 'src/app/shared/components/delete-dialog/delete-dialog.component'
+import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component'
 import { Region } from './model/Region'
 import { RegionDetails } from './model/RegionDetails'
 import { RegionDetailsComponent } from './region-details/region-details.component'
@@ -21,7 +24,7 @@ export class RegionComponent implements OnInit {
     @ViewChild(RegionDetailsComponent) detailsComponent!: RegionDetailsComponent
     @ViewChild('editingForm') editingForm!: RegionFormComponent
 
-    constructor(private http: HttpService) {}
+    constructor(private http: HttpService, public matDialog: MatDialog) {}
 
     ngOnInit(): void {
         this.getList()
@@ -38,8 +41,20 @@ export class RegionComponent implements OnInit {
                 this.detailedRegion = region
             },
             error: (error) => {
-                console.log(error.message)
+                this.openErrorDialog(error.message)
                 this.detailedRegion = null
+                this.getList()
+            },
+        })
+    }
+    getDetailsNoErrorDialog(id: number) {
+        this.http.getDetailedRegion(id).subscribe({
+            next: (region) => {
+                this.detailedRegion = region
+            },
+            error: (error) => {
+                this.detailedRegion = null
+                this.getList()
             },
         })
     }
@@ -51,7 +66,7 @@ export class RegionComponent implements OnInit {
                 this.invalidNewRegion = null
             },
             error: (error) => {
-                console.log(error.message)
+                this.openErrorDialog(error.message)
                 this.invalidNewRegion = newRegion
             },
         })
@@ -64,7 +79,7 @@ export class RegionComponent implements OnInit {
                 this.updateDetailedRegion()
             },
             error: (error) => {
-                console.log(error.message)
+                this.openErrorDialog(error.message)
                 this.getList()
                 this.updateDetailedRegion()
             },
@@ -72,17 +87,20 @@ export class RegionComponent implements OnInit {
     }
 
     onDelete(id: number) {
-        this.http.deleteRegion(id).subscribe({
-            next: (deletedID) => {
-                this.getList()
-                this.updateDetailedRegion()
-            },
-            error: (error) => {
-                // !!! mostrar modal con msg
-                console.log(error.message)
-                this.getList()
-                this.updateDetailedRegion()
-            },
+        this.openDeleteConfirmDialog(this.findRegion(id)!).subscribe((result) => {
+            if (result) {
+                this.http.deleteRegion(id).subscribe({
+                    next: (deletedID) => {
+                        this.getList()
+                        this.updateDetailedRegion()
+                    },
+                    error: (error) => {
+                        this.openErrorDialog(error.message)
+                        this.getList()
+                        this.updateDetailedRegion()
+                    },
+                })
+            }
         })
     }
 
@@ -106,8 +124,7 @@ export class RegionComponent implements OnInit {
         // si el objeto ya se está mostrando invierte el estado del panel
         if (this.editingRegion?.RegionID === id) {
             this.editingForm.togglePanel()
-        }
-        else {
+        } else {
             this.editingRegion = this.findRegion(id)
         }
     }
@@ -118,7 +135,23 @@ export class RegionComponent implements OnInit {
 
     updateDetailedRegion() {
         if (this.detailedRegion) {
-            this.getDetails(this.detailedRegion.RegionID)
+            this.getDetailsNoErrorDialog(this.detailedRegion.RegionID)
         }
+    }
+
+    openDeleteConfirmDialog(region: Region) {
+        const dialogRef = this.matDialog.open(DeleteDialogComponent, {
+            width: '50em',
+            data: { id: region.RegionID, name: region.RegionDescription, type: 'region' },
+        })
+
+        return dialogRef.afterClosed()
+    }
+
+    openErrorDialog(msg: string) {
+        const dialogRef = this.matDialog.open(ErrorDialogComponent, {
+            width: '50em',
+            data: { msg: msg },
+        })
     }
 }
