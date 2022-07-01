@@ -14,13 +14,26 @@ import { MatExpansionModule } from '@angular/material/expansion'
 import { MatListModule } from '@angular/material/list'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
-import { MatTreeModule } from '@angular/material/tree';
-import { ItemActionButtonsComponent } from './components/item-action-buttons/item-action-buttons.component';
-import { TableActionButtonsComponent } from './components/table-action-buttons/table-action-buttons.component';
+import { MatTreeModule } from '@angular/material/tree'
+import { ItemActionButtonsComponent } from './components/item-action-buttons/item-action-buttons.component'
+import { TableActionButtonsComponent } from './components/table-action-buttons/table-action-buttons.component'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 @NgModule({
-    declarations: [ToolbarComponent, StopClickPropagationDirective, ItemActionButtonsComponent, TableActionButtonsComponent,],
-    imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, RouterModule],
+    declarations: [
+        ToolbarComponent,
+        StopClickPropagationDirective,
+        ItemActionButtonsComponent,
+        TableActionButtonsComponent,
+    ],
+    imports: [
+        CommonModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        RouterModule,
+        MatTooltipModule,
+    ],
     exports: [
         ToolbarComponent,
         StopClickPropagationDirective,
@@ -35,7 +48,7 @@ import { TableActionButtonsComponent } from './components/table-action-buttons/t
         RouterModule,
         MatTreeModule,
         ItemActionButtonsComponent,
-        TableActionButtonsComponent
+        TableActionButtonsComponent,
     ],
 })
 export class SharedModule {}

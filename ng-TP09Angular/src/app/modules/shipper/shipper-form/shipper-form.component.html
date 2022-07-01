@@ -14,38 +14,47 @@
         (ngSubmit)="onSubmit()"
         *ngIf="(this.editing && this.shipperToEdit) || !this.editing"
     >
-        <div class="mb-3">
-            <mat-form-field>
-                <mat-label> Company Name </mat-label>
-                <input matInput formControlName="CompanyName" />
-                <mat-error>
-                    {{ this.CompanyNameErrors }}
-                </mat-error>
-            </mat-form-field>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label> Company Name </mat-label>
+                    <input matInput formControlName="CompanyName" />
+                    <mat-error>
+                        {{ this.CompanyNameErrors }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label> Phone </mat-label>
+                    <input matInput formControlName="Phone" />
+                    <mat-error>
+                        {{ this.PhoneErrors }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
         </div>
 
-        <div class="mb-3">
-            <mat-form-field>
-                <mat-label> Phone </mat-label>
-                <input matInput formControlName="Phone" />
-                <mat-error>
-                    {{ this.PhoneErrors }}
-                </mat-error>
-            </mat-form-field>
-        </div>
-
-        <div class="mb-3">
-            <button mat-raised-button type="button" (click)="this.togglePanel()">
-                Cancel
-            </button>
-            <button
-                mat-raised-button
-                color="primary"
-                type="submit"
-                [disabled]="!this.form.valid || this.form.pristine"
-            >
-                Save
-            </button>
+        <div class="row mb-3">
+            <div class="col-4 d-flex">
+                <button
+                    mat-icon-button
+                    type="button"
+                    (click)="this.togglePanel()"
+                    class="me-2"
+                >
+                    <mat-icon>cancel</mat-icon>
+                </button>
+                <button
+                    mat-icon-button
+                    color="primary"
+                    type="submit"
+                    [disabled]="!this.form.valid || this.form.pristine"
+                    class="me-2"
+                >
+                    <mat-icon>save</mat-icon>
+                </button>
+            </div>
         </div>
     </form>
 </mat-expansion-panel>

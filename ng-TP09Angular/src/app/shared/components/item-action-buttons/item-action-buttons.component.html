@@ -1,5 +1,11 @@
-<div [ngClass]="{'d-flex flex-column': this.column}">
-    <button mat-icon-button (click)="onBtnEdit(this.itemID)" appStopClickPropagation>
+<div [ngClass]="{ 'd-flex flex-column': this.column }">
+    <button
+        mat-icon-button
+        (click)="onBtnEdit(this.itemID)"
+        appStopClickPropagation
+        matTooltip="Edit"
+        [matTooltipPosition]="this.column ? 'before' : 'below'"
+    >
         <mat-icon> edit </mat-icon>
     </button>
     <button
@@ -7,6 +13,8 @@
         color="warn"
         (click)="this.onBtnDelete(this.itemID)"
         appStopClickPropagation
+        matTooltip="Delete"
+        [matTooltipPosition]="this.column ? 'before' : 'below'"
     >
         <mat-icon> delete </mat-icon>
     </button>
