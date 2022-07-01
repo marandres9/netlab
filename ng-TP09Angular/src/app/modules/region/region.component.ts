@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { HttpService } from 'src/app/core/http/http.service'
-import { Region, RegionDetails } from './model/Region'
+import { Region } from './model/Region'
+import { RegionDetails } from './model/RegionDetails'
 import { RegionDetailsComponent } from './region-details/region-details.component'
 import { RegionFormComponent } from './region-form/region-form.component'
 
@@ -56,8 +57,8 @@ export class RegionComponent implements OnInit {
         })
     }
 
-    onEdit(region: Region) {
-        this.http.putRegion(region).subscribe({
+    onEdit(editedRegion: Region) {
+        this.http.putRegion(editedRegion).subscribe({
             next: () => {
                 this.getList()
                 this.updateDetailedRegion()
@@ -77,6 +78,7 @@ export class RegionComponent implements OnInit {
                 this.updateDetailedRegion()
             },
             error: (error) => {
+                // !!! mostrar modal con msg
                 console.log(error.message)
                 this.getList()
                 this.updateDetailedRegion()
@@ -105,7 +107,6 @@ export class RegionComponent implements OnInit {
         if (this.editingRegion?.RegionID === id) {
             this.editingForm.togglePanel()
         }
-        // sino busca el objeto seleccionado y abre el panel
         else {
             this.editingRegion = this.findRegion(id)
         }

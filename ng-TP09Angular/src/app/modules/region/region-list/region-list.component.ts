@@ -6,7 +6,7 @@ import { Region } from '../model/Region'
     templateUrl: './region-list.component.html',
     styleUrls: ['./region-list.component.scss'],
 })
-export class RegionListComponent implements OnInit {
+export class RegionListComponent {
     @Input() regionList: Region[] = []
     
     @Output() btnReloadEvent = new EventEmitter()
@@ -18,8 +18,6 @@ export class RegionListComponent implements OnInit {
     displayedColumns = ['RegionID', 'RegionDescription', 'ItemActions', 'TableActions']
 
     constructor() {}
-
-    ngOnInit(): void {}
 
     onBtnAdd() {
         this.btnAddEvent.emit()

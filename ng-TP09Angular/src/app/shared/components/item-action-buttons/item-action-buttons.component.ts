@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 })
 export class ItemActionButtonsComponent implements OnInit {
     @Input() itemID!: number
+    @Input() column = false
 
     @Output() btnEditEvent = new EventEmitter<number>()
     @Output() btnDeleteEvent = new EventEmitter<number>()

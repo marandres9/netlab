@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { HttpService } from 'src/app/core/http/http.service'
-import { Shipper, ShipperDetails } from './models/Shipper'
-import { TableNotifierService } from './services/table-notifier.service'
+import { Shipper } from './models/Shipper'
+import { ShipperDetails } from './models/ShipperDetails'
 import { ShipperDetailsComponent } from './shipper-details/shipper-details.component'
 import { ShipperFormComponent } from './shipper-form/shipper-form.component'
 
@@ -14,13 +14,14 @@ export class ShipperComponent implements OnInit {
     shipperList: Shipper[] = []
     // objectos que se pasan a los componentes de edición y detalles:
     detailedShipper: ShipperDetails | null = null
+    invalidNewShipper: Shipper | null = null
     editingShipper: Shipper | null = null
 
     @ViewChild('addingForm') addingForm!: ShipperFormComponent
     @ViewChild(ShipperDetailsComponent) detailsComponent!: ShipperDetailsComponent
     @ViewChild('editingForm') editingForm!: ShipperFormComponent
 
-    constructor(private http: HttpService, private formListener: TableNotifierService) {}
+    constructor(private http: HttpService) {}
 
     ngOnInit(): void {
         this.getList()
@@ -28,6 +29,19 @@ export class ShipperComponent implements OnInit {
 
     getList() {
         this.http.getAllShippers().subscribe((shippers) => (this.shipperList = shippers))
+        this.updateDetailedShipper()
+    }
+
+    getDetails(id: number) {
+        this.http.getDetailedShipper(id).subscribe({
+            next: (shipper) => {
+                this.detailedShipper = shipper
+            },
+            error: (error) => {
+                console.log(error.message)
+                this.detailedShipper = null
+            },
+        })
     }
 
     /** Hace un POST con el nuevo objeto. En este caso se deve volver a pedir la lista ya
@@ -38,8 +52,15 @@ export class ShipperComponent implements OnInit {
      * cambios de Angular y la tabla se actualiza sola.
      */
     onAdd(newShipper: Shipper) {
-        this.http.postShipper(newShipper).subscribe((addedShipper) => {
-            this.getList()
+        this.http.postShipper(newShipper).subscribe({
+            next: () => {
+                this.getList()
+                this.invalidNewShipper = null
+            },
+            error: (error) => {
+                console.log(error.message)
+                this.invalidNewShipper = newShipper
+            },
         })
     }
 
@@ -49,13 +70,16 @@ export class ShipperComponent implements OnInit {
      * De esta manera no hace falta volver a pedir la lista actualizada al servidor
      */
     onEdit(editedShipper: Shipper) {
-        this.http.putShipper(editedShipper).subscribe((edited) => {
-            let index = this.shipperList.findIndex(
-                (shipper) => shipper.ShipperID == edited.ShipperID
-            )
-            this.shipperList[index] = edited
-            this.formListener.notifyTable(true)
-            this.updateDetailedShipper(edited.ShipperID)
+        this.http.putShipper(editedShipper).subscribe({
+            next: () => {
+                this.getList()
+                this.updateDetailedShipper()
+            },
+            error: (error) => {
+                console.log(error.message)
+                this.getList()
+                this.updateDetailedShipper()
+            },
         })
     }
 
@@ -63,13 +87,16 @@ export class ShipperComponent implements OnInit {
      * y notifica al componente shipper-list para que el mismo se actualice.
      */
     onDelete(id: number) {
-        this.http.deleteShipper(id).subscribe((deletedID) => {
-            let index = this.shipperList.findIndex(
-                (shipper) => shipper.ShipperID === deletedID
-            )
-            this.shipperList.splice(index, 1)
-            this.formListener.notifyTable(true)
-            this.updateDetailedShipper(id)
+        this.http.deleteShipper(id).subscribe({
+            next: (deletedID) => {
+                this.getList()
+                this.updateDetailedShipper()
+            },
+            error: (error) => {
+                console.log(error.message)
+                this.getList()
+                this.updateDetailedShipper()
+            },
         })
     }
 
@@ -80,14 +107,16 @@ export class ShipperComponent implements OnInit {
         if (this.detailedShipper && this.detailedShipper.ShipperID === id) {
             this.detailsComponent.togglePanel()
         } else {
-            this.http.getDetailedShipper(id).subscribe((shipper) => {
-                this.detailedShipper = shipper
-            })
+            this.getDetails(id)
         }
     }
 
     onBtnAdd() {
         this.addingForm.togglePanel()
+    }
+
+    onBtnReload() {
+        this.getList()
     }
 
     /**Encuentra el objecto y lo muestra en el formulario de edicion. Abre el panel
@@ -97,10 +126,8 @@ export class ShipperComponent implements OnInit {
         if (this.editingShipper?.ShipperID === id) {
             this.editingForm.togglePanel()
         }
-        // sino busca el objeto seleccionado y abre el panel
         else {
             this.editingShipper = this.findShipper(id)
-            if (this.editingShipper) this.editingForm.openPanel()
         }
     }
 
@@ -117,8 +144,9 @@ export class ShipperComponent implements OnInit {
      * detallado se actualiza.
      * @param id ID del objeto actualizado
      */
-    updateDetailedShipper(id: number) {
-        if (id === this.detailedShipper?.ShipperID)
-            this.detailedShipper = this.findShipper(id)
+    updateDetailedShipper() {
+        if (this.detailedShipper) {
+            this.getDetails(this.detailedShipper.ShipperID)
+        }
     }
 }

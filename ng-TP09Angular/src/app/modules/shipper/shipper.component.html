@@ -1,28 +1,31 @@
 <div class="container">
     <div class="my-5">
         <app-shipper-list
-            [shippers]="this.shipperList"
-            (detailsEvent)="onDetails($event)"
-            (editEvent)="onBtnEdit($event)"
-            (deleteEvent)="onDelete($event)"
-            (addEvent)="onBtnAdd()"
+            [shipperList]="this.shipperList"
+            (btnAddEvent)="onBtnAdd()"
+            (btnReloadEvent)="this.onBtnReload()"
+            (btnEditEvent)="onBtnEdit($event)"
+            (btnDeleteEvent)="onDelete($event)"
+            (btnDetailsEvent)="onDetails($event)"
         >
         </app-shipper-list>
     </div>
-        <mat-accordion [multi]="true">
-            <app-shipper-details
-                [shipper]="this.detailedShipper"
-            ></app-shipper-details>
-            <mat-accordion>
-                <!-- Adding form -->
-                <app-shipper-form #addingForm (addEvent)="onAdd($event)"></app-shipper-form>
-                <!-- Editing form -->
-                <app-shipper-form
-                    #editingForm
-                    [editing]="true"
-                    [shipperToEdit]="this.editingShipper"
-                    (editEvent)="onEdit($event)"
-                ></app-shipper-form>
-            </mat-accordion>
+    <mat-accordion [multi]="true">
+        <app-shipper-details
+            [detailedShipper]="this.detailedShipper"
+            (btnEditEvent)="this.onBtnEdit($event)"
+            (btnDeleteEvent)="this.onDelete($event)"
+        ></app-shipper-details>
+        <mat-accordion>
+            <!-- Adding form -->
+            <app-shipper-form #addingForm (addEvent)="onAdd($event)"></app-shipper-form>
+            <!-- Editing form -->
+            <app-shipper-form
+                #editingForm
+                [editing]="true"
+                [shipperToEdit]="this.editingShipper"
+                (editEvent)="onEdit($event)"
+            ></app-shipper-form>
         </mat-accordion>
+    </mat-accordion>
 </div>

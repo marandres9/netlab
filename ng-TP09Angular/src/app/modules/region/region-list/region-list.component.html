@@ -17,33 +17,15 @@
                 (btnEditEvent)="this.onBtnEdit($event)"
                 (btnDeleteEvent)="this.onBtnDelete($event)"
             ></app-item-action-buttons>
-            <!-- <button
-                mat-icon-button
-                (click)="onBtnEdit(region.RegionID)"
-                appStopClickPropagation
-            >
-                <mat-icon> edit </mat-icon>
-            </button>
-            <button
-                mat-icon-button
-                color="warn"
-                (click)="this.onBtnDelete(region.RegionID)"
-                appStopClickPropagation
-            >
-                <mat-icon> delete </mat-icon>
-            </button> -->
         </td>
     </ng-container>
 
     <ng-container matColumnDef="TableActions">
         <th mat-header-cell *matHeaderCellDef class="align-end">
-            <app-table-action-buttons (btnAddEvent)="this.onBtnAdd()" (btnReloadEvent)="this.onBtnReload()"></app-table-action-buttons>
-            <!-- <button mat-icon-button color="primary" (click)="onBtnReload()">
-                <mat-icon>sync</mat-icon>
-            </button>
-            <button mat-icon-button color="primary" (click)="onBtnAdd()">
-                <mat-icon>{{ add }}</mat-icon>
-            </button> -->
+            <app-table-action-buttons
+                (btnAddEvent)="this.onBtnAdd()"
+                (btnReloadEvent)="this.onBtnReload()"
+            ></app-table-action-buttons>
         </th>
         <td mat-cell *matCellDef></td>
     </ng-container>

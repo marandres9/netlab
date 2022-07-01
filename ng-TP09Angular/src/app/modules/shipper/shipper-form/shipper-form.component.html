@@ -1,20 +1,16 @@
 <mat-expansion-panel>
     <mat-expansion-panel-header>
         <mat-panel-title>
-            <ng-container *ngIf="this.editing; else notEditingTitle">
-                Edit Shipper
-            </ng-container>
-            <ng-template #notEditingTitle> Add Shipper </ng-template>
+            {{ this.Title }}
         </mat-panel-title>
         <mat-panel-description>
-            <ng-container *ngIf="this.editing; else notEditingDesc">
-                Edit an existing shipper's details
+            <ng-container *ngIf="!this.isExpanded">
+                {{ this.Description }}
             </ng-container>
-            <ng-template #notEditingDesc> Create a new shipper </ng-template>
         </mat-panel-description>
     </mat-expansion-panel-header>
     <form
-        [formGroup]="this.shipperForm"
+        [formGroup]="this.form"
         (ngSubmit)="onSubmit()"
         *ngIf="(this.editing && this.shipperToEdit) || !this.editing"
     >
@@ -46,7 +42,7 @@
                 mat-raised-button
                 color="primary"
                 type="submit"
-                [disabled]="!this.shipperForm.valid || this.shipperForm.pristine"
+                [disabled]="!this.form.valid || this.form.pristine"
             >
                 Save
             </button>

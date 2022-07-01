@@ -1,11 +1,13 @@
-<button mat-icon-button (click)="onBtnEdit(this.itemID)" appStopClickPropagation>
-    <mat-icon> edit </mat-icon>
-</button>
-<button
-    mat-icon-button
-    color="warn"
-    (click)="this.onBtnDelete(this.itemID)"
-    appStopClickPropagation
->
-    <mat-icon> delete </mat-icon>
-</button>
+<div [ngClass]="{'d-flex flex-column': this.column}">
+    <button mat-icon-button (click)="onBtnEdit(this.itemID)" appStopClickPropagation>
+        <mat-icon> edit </mat-icon>
+    </button>
+    <button
+        mat-icon-button
+        color="warn"
+        (click)="this.onBtnDelete(this.itemID)"
+        appStopClickPropagation
+    >
+        <mat-icon> delete </mat-icon>
+    </button>
+</div>

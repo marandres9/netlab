@@ -1,4 +1,4 @@
-export class Shipper {
+export class ShipperDetails {
     ShipperID: number = 0
     CompanyName: string = ''
     Phone: string = ''

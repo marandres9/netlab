@@ -1,31 +1,36 @@
 <mat-expansion-panel>
     <mat-expansion-panel-header>
-        <mat-panel-title>
-            <div *ngIf="this.shipper; else titleHint">
-                <strong>{{ this.shipper?.CompanyName }}</strong>
-            </div>
-            <ng-template #titleHint>
-                Details
-            </ng-template>
-        </mat-panel-title>
+        <mat-panel-title> Details </mat-panel-title>
         <mat-panel-description>
-            <div *ngIf="this.shipper; else descHint">Details</div>
-            <ng-template #descHint>
-                Click on a shipper to view its details
-            </ng-template>
+            <div *ngIf="!this.isExpanded">Click on a shipper to view its details</div>
         </mat-panel-description>
     </mat-expansion-panel-header>
-    <div *ngIf="this.shipper" class="d-flex justify-content-between">
-        <mat-list>
-            <mat-list-item> ID: {{ shipper?.ShipperID }} </mat-list-item>
-            <mat-list-item>
-                Company Name: {{ shipper?.CompanyName }}
-            </mat-list-item>
-            <mat-list-item> Phone: {{ shipper?.Phone }} </mat-list-item>
-        </mat-list>
-        <div class="d-flex flex-column">
-            <button class="btn btn-primary">Edit</button>
-            <button class="btn btn-danger">Delete</button>
-        </div>
+    <div *ngIf="this.detailedShipper" class="d-flex justify-content-between">
+        <ul class="list-group" style="min-width: 50%">
+            <li class="list-group-item">
+                <div class="d-flex">
+                    <h5 class="mb-1">Shipper ID</h5>
+                </div>
+                <p class="mb-1">{{ this.detailedShipper.ShipperID }}</p>
+            </li>
+            <li class="list-group-item">
+                <div class="d-flex">
+                    <h5 class="mb-1">Company Name</h5>
+                </div>
+                <div class="mb-1">{{ this.detailedShipper.CompanyName }}</div>
+            </li>
+            <li class="list-group-item">
+                <div class="d-flex">
+                    <h5 class="mb-1">Phone</h5>
+                </div>
+                <div class="mb-1">{{ this.detailedShipper.Phone }}</div>
+            </li>
+        </ul>
+        <app-item-action-buttons
+            [itemID]="this.detailedShipper.ShipperID"
+            [column]="true"
+            (btnEditEvent)="this.onBtnEdit($event)"
+            (btnDeleteEvent)="this.onBtnDelete($event)"
+        ></app-item-action-buttons>
     </div>
 </mat-expansion-panel>

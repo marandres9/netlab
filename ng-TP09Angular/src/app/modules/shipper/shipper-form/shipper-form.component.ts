@@ -1,5 +1,6 @@
 // whitespace valdator: https://stackoverflow.com/questions/39236992/how-to-validate-white-spaces-empty-spaces-angular-2
 import {
+    AfterViewInit,
     Component,
     EventEmitter,
     Input,
@@ -25,7 +26,7 @@ import { Shipper } from '../models/Shipper'
     templateUrl: './shipper-form.component.html',
     styleUrls: ['./shipper-form.component.scss'],
 })
-export class ShipperFormComponent implements OnInit, OnChanges {
+export class ShipperFormComponent implements OnChanges, AfterViewInit {
     @ViewChild(MatExpansionPanel) panel!: MatExpansionPanel
 
     @Input() shipperToEdit: Shipper | null = null
@@ -34,7 +35,9 @@ export class ShipperFormComponent implements OnInit, OnChanges {
     @Output() addEvent = new EventEmitter<Shipper>()
     @Output() editEvent = new EventEmitter<Shipper>()
 
-    shipperForm: FormGroup = new FormGroup({
+    isExpanded: boolean = false
+
+    form: FormGroup = new FormGroup({
         ShipperID: new FormControl(0),
         CompanyName: new FormControl('', [
             Validators.required,
@@ -46,48 +49,26 @@ export class ShipperFormComponent implements OnInit, OnChanges {
 
     constructor(private formError: FormErrorService) {}
 
-    ngOnInit(): void {}
-
     ngOnChanges(changes: SimpleChanges): void {
-        if (this.shipperToEdit) {
+        if (this.shipperToEdit && this.editing) {
             this.ShipperID.setValue(this.shipperToEdit.ShipperID)
             this.CompanyName.setValue(this.shipperToEdit.CompanyName)
             this.Phone.setValue(this.shipperToEdit.Phone)
+            
+            this.openPanel()
         }
+    }
+
+    ngAfterViewInit(): void {
+        this.panel.expandedChange.subscribe((expanded) => {
+            this.isExpanded = expanded
+        })
     }
 
     // custom validator
-    private noWhitespaceValidator(
-        control: AbstractControl
-    ): ValidationErrors | null {
+    private noWhitespaceValidator(control: AbstractControl): ValidationErrors | null {
         const isWhitespace = (control.value || '').trim().length === 0
         return isWhitespace ? { whitespace: true } : null
-    }
-
-    togglePanel() {
-        this.panel.toggle()
-    }
-
-    openPanel() {
-        this.panel.open()
-    }
-
-    /** Método para enviar el formulario. Diferencia si está editando o creando un nuevo objeto.
-     * 
-     * Si está editando emite el valor del objeto editado y asigna 'null'
-     * a shipperToEdit, para que se deje de mostrar el formulario de edición
-     */
-    onSubmit() {
-        if (this.shipperForm.valid) {
-            if (this.editing) {
-                this.editEvent.emit(this.shipperForm.value)
-                this.shipperToEdit = null
-            } else {
-                this.addEvent.emit(this.shipperForm.value)
-                this.resetFormAndValidation(this.shipperForm)
-            }
-            this.togglePanel()
-        }
     }
 
     /** Limpia el formulario y reinica los Validators de cada uno de sus controles
@@ -102,15 +83,41 @@ export class ShipperFormComponent implements OnInit, OnChanges {
         form.reset()
     }
 
+    togglePanel() {
+        this.panel.toggle()
+    }
+
+    openPanel() {
+        this.panel.open()
+    }
+
+    /** Método para enviar el formulario. Diferencia si está editando o creando un nuevo objeto.
+     *
+     * Si está editando emite el valor del objeto editado y asigna 'null'
+     * a shipperToEdit, para que se deje de mostrar el formulario de edición
+     */
+    onSubmit() {
+        if (this.form.valid) {
+            if (this.editing) {
+                this.editEvent.emit(this.form.value)
+                this.shipperToEdit = null
+            } else {
+                this.addEvent.emit(this.form.value)
+                this.resetFormAndValidation(this.form)
+            }
+            this.togglePanel()
+        }
+    }
+
     // Getters para los controles del formulario
     get ShipperID() {
-        return this.shipperForm.get('ShipperID') as FormControl
+        return this.form.get('ShipperID') as FormControl
     }
     get CompanyName() {
-        return this.shipperForm.get('CompanyName') as FormControl
+        return this.form.get('CompanyName') as FormControl
     }
     get Phone() {
-        return this.shipperForm.get('Phone') as FormControl
+        return this.form.get('Phone') as FormControl
     }
 
     // Métodos para mostrar los posibles errores que pueda tener cada control de acuerdo
@@ -133,5 +140,15 @@ export class ShipperFormComponent implements OnInit, OnChanges {
         } else {
             return ''
         }
+    }
+
+    get Title() {
+        return this.editing ? 'Edit Shipper' : 'Add Shipper'
+    }
+
+    get Description() {
+        return this.editing
+            ? "Edit an existing Shipper's details"
+            : 'Create a new Shipper'
     }
 }

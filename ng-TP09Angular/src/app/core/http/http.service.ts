@@ -1,8 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { catchError, of, throwError } from 'rxjs'
-import { Region, RegionDetails } from 'src/app/modules/region/model/Region'
-import { Shipper, ShipperDetails } from 'src/app/modules/shipper/models/Shipper'
+import { Region } from 'src/app/modules/region/model/Region'
+import { RegionDetails } from 'src/app/modules/region/model/RegionDetails'
+import { Shipper } from 'src/app/modules/shipper/models/Shipper'
+import { ShipperDetails } from 'src/app/modules/shipper/models/ShipperDetails'
 import { environment } from 'src/environments/environment'
 
 @Injectable({

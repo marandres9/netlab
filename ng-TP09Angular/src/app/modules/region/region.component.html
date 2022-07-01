@@ -11,10 +11,18 @@
     </div>
 
     <mat-accordion [multi]="true">
-        <app-region-details [detailedObject]="this.detailedRegion" (btnEditEvent)="this.onBtnEdit($event)" (btnDeleteEvent)="this.onDelete($event)"></app-region-details>
+        <app-region-details
+            [detailedRegion]="this.detailedRegion"
+            (btnEditEvent)="this.onBtnEdit($event)"
+            (btnDeleteEvent)="this.onDelete($event)"
+        ></app-region-details>
 
         <mat-accordion>
-            <app-region-form #addingForm [invalidObject]="this.invalidNewRegion" (addEvent)="onAdd($event)"></app-region-form>
+            <app-region-form
+                #addingForm
+                [invalidObject]="this.invalidNewRegion"
+                (addEvent)="onAdd($event)"
+            ></app-region-form>
             <app-region-form
                 #editingForm
                 [editing]="true"

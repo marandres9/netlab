@@ -29,11 +29,14 @@ import { MatFormField, MatFormFieldControl } from '@angular/material/form-field'
     templateUrl: './region-form.component.html',
     styleUrls: ['./region-form.component.scss'],
 })
-export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
+export class RegionFormComponent implements OnChanges, AfterViewInit {
     @ViewChild(MatExpansionPanel) panel!: MatExpansionPanel
 
+    /** Se recibe si se intento crear un objeto invalido */
     @Input() invalidObject: Region | null = null
+
     @Input() objectToEdit: Region | null = null
+    /** Indica para que se usa el componente */
     @Input() editing: boolean = false
 
     @Output() addEvent = new EventEmitter<Region>()
@@ -53,11 +56,9 @@ export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
 
     constructor(private fb: FormBuilder, private formError: FormErrorService) {}
 
-    ngOnInit(): void {
-    }
-
     ngOnChanges(changes: SimpleChanges): void {
-        if (this.objectToEdit) {
+        // Si recibe un objeto para editar prepara el formulario de edición
+        if (this.objectToEdit && this.editing) {
             this.form.setValue({
                 RegionID: this.objectToEdit.RegionID,
                 RegionDescription: this.objectToEdit.RegionDescription.trim(),
@@ -65,7 +66,20 @@ export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
             this.RegionID.disable()
             this.openPanel()
         }
-        if (this.invalidObject) {
+        /**
+         * Si se intentó enviar un objeto invalido, se reibe un invalidObject y se cargan 
+         * los datos en el formulario y se da aviso del error. Solo es necesario para
+         * la tabla Region porque no tiene ID autoincremental y es posible que el usuario
+         * ingrese un ID repetido.
+         * 
+         * Para cualquier otra entidad con ID autoincremental, los validadores del 
+         * formulario deberian asegurar que el objeto a crear sea válido.
+         * 
+         * El error de ID repetido se settea manualmente ya que este componente no tiene
+         * acceso a la lista de entidades, por lo que no puedo crear un validador que 
+         * verifique que el ID no sea repetido
+         */
+        if (this.invalidObject && !this.editing) {
             this.form.setValue({
                 RegionID: this.invalidObject.RegionID,
                 RegionDescription: this.invalidObject.RegionDescription,
@@ -75,6 +89,8 @@ export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
         }
     }
 
+    /** Mediante la prop. 'isExpanded' se notifia a la vista para mostrar (o no)
+     * la descripción del panel. */
     ngAfterViewInit(): void {
         this.panel.expandedChange.subscribe((expanded) => {
             this.isExpanded = expanded
@@ -82,11 +98,13 @@ export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     // custom validators
+    // !!! exportar a servicio shared
     private noWhitespaceValidator(control: AbstractControl): ValidationErrors | null {
         const isWhitespace = (control.value || '').trim().length === 0
         return isWhitespace ? { whitespace: true } : null
     }
 
+    // !!! exportar a servicio shared
     /** Limpia el formulario y reinica los Validators de cada uno de sus controles
      * una vez enviado el formulario
      * @param form formulario a limpiar
@@ -110,7 +128,7 @@ export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
     /** Método para enviar el formulario. Diferencia si está editando o creando un nuevo objeto.
      *
      * Si está editando emite el valor del objeto editado y asigna 'null'
-     * a shipperToEdit, para que se deje de mostrar el formulario de edición
+     * a shipperToEdit, para que se deje de mostrar el contenido del formulario de edición
      */
     onSubmit() {
         if (this.form.valid) {
@@ -119,7 +137,6 @@ export class RegionFormComponent implements OnInit, OnChanges, AfterViewInit {
                 this.objectToEdit = null
             } else {
                 this.addEvent.emit(this.form.value)
-                console.log(this.form.value);
                 this.resetFormAndValidation(this.form)
             }
             this.togglePanel()
