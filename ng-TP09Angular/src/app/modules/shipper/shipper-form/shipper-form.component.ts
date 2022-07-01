@@ -18,7 +18,7 @@ import {
     Validators,
 } from '@angular/forms'
 import { MatExpansionPanel } from '@angular/material/expansion'
-import { FormErrorService } from 'src/app/shared/services/form-error.service'
+import { FormHelperService } from 'src/app/core/services/form-helper.service'
 import { Shipper } from '../models/Shipper'
 
 @Component({
@@ -42,12 +42,12 @@ export class ShipperFormComponent implements OnChanges, AfterViewInit {
         CompanyName: new FormControl('', [
             Validators.required,
             Validators.maxLength(40),
-            this.noWhitespaceValidator,
+            this.formHelper.noWhitespaceValidator,
         ]),
         Phone: new FormControl('', Validators.maxLength(24)),
     })
 
-    constructor(private formError: FormErrorService) {}
+    constructor(private formHelper: FormHelperService) {}
 
     ngOnChanges(changes: SimpleChanges): void {
         if (this.shipperToEdit && this.editing) {
@@ -65,23 +65,6 @@ export class ShipperFormComponent implements OnChanges, AfterViewInit {
         })
     }
 
-    // custom validator
-    private noWhitespaceValidator(control: AbstractControl): ValidationErrors | null {
-        const isWhitespace = (control.value || '').trim().length === 0
-        return isWhitespace ? { whitespace: true } : null
-    }
-
-    /** Limpia el formulario y reinica los Validators de cada uno de sus controles
-     * una vez enviado el formulario
-     * @param form formulario a limpiar
-     */
-    resetFormAndValidation(form: FormGroup) {
-        for (let control of Object.values(form.controls)) {
-            control.clearValidators()
-            control.updateValueAndValidity()
-        }
-        form.reset()
-    }
 
     togglePanel() {
         this.panel.toggle()
@@ -103,7 +86,7 @@ export class ShipperFormComponent implements OnChanges, AfterViewInit {
                 this.shipperToEdit = null
             } else {
                 this.addEvent.emit(this.form.value)
-                this.resetFormAndValidation(this.form)
+                this.formHelper.resetFormAndValidation(this.form)
             }
             this.togglePanel()
         }
@@ -124,22 +107,10 @@ export class ShipperFormComponent implements OnChanges, AfterViewInit {
     // a sus validadores. Como cada 'mat-error' solo puede mostrar un error a la vez voy
     // checkeando cada error individualmente
     get CompanyNameErrors() {
-        if (this.CompanyName.errors?.['required']) {
-            return this.formError.RequiredMsg()
-        } else if (this.CompanyName.errors?.['maxlength']) {
-            return this.formError.MaxLengthMsg(40)
-        } else if (this.CompanyName.errors?.['whitespace']) {
-            return this.formError.WhitespaceMsg()
-        } else {
-            return ''
-        }
+        return this.formHelper.getErrorMsg(this.CompanyName.errors, {maxlength: 40})
     }
     get PhoneErrors() {
-        if (this.Phone.errors?.['maxlength']) {
-            return this.formError.MaxLengthMsg(24)
-        } else {
-            return ''
-        }
+        return this.formHelper.getErrorMsg(this.Phone.errors, {maxlength: 24})
     }
 
     get Title() {

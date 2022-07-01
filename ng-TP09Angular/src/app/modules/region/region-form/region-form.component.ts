@@ -21,7 +21,7 @@ import {
 } from '@angular/forms'
 import { MatExpansionPanel } from '@angular/material/expansion'
 import { Region } from '../model/Region'
-import { FormErrorService } from 'src/app/shared/services/form-error.service'
+import { FormHelperService } from 'src/app/core/services/form-helper.service'
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field'
 
 @Component({
@@ -50,11 +50,22 @@ export class RegionFormComponent implements OnChanges, AfterViewInit {
         RegionID: ['', [Validators.required, Validators.min(0)]],
         RegionDescription: [
             '',
-            [Validators.required, Validators.maxLength(50), this.noWhitespaceValidator],
+            [
+                Validators.required,
+                Validators.maxLength(50),
+                this.formHelper.noWhitespaceValidator,
+            ],
         ],
     })
 
-    constructor(private fb: FormBuilder, private formError: FormErrorService) {}
+    constructor(
+        private fb: FormBuilder,
+        /** El servicio FormHelper provee Validators personalizados, un método para
+         * resetear los campos y Validators del formulario y métodos para obtener
+         * los mensajes de error que puede tener cada campo
+         */
+        private formHelper: FormHelperService
+    ) {}
 
     ngOnChanges(changes: SimpleChanges): void {
         // Si recibe un objeto para editar prepara el formulario de edición
@@ -67,16 +78,16 @@ export class RegionFormComponent implements OnChanges, AfterViewInit {
             this.openPanel()
         }
         /**
-         * Si se intentó enviar un objeto invalido, se reibe un invalidObject y se cargan 
+         * Si se intentó enviar un objeto invalido, se reibe un invalidObject y se cargan
          * los datos en el formulario y se da aviso del error. Solo es necesario para
          * la tabla Region porque no tiene ID autoincremental y es posible que el usuario
          * ingrese un ID repetido.
-         * 
-         * Para cualquier otra entidad con ID autoincremental, los validadores del 
+         *
+         * Para cualquier otra entidad con ID autoincremental, los validadores del
          * formulario deberian asegurar que el objeto a crear sea válido.
-         * 
+         *
          * El error de ID repetido se settea manualmente ya que este componente no tiene
-         * acceso a la lista de entidades, por lo que no puedo crear un validador que 
+         * acceso a la lista de entidades, por lo que no puedo crear un validador que
          * verifique que el ID no sea repetido
          */
         if (this.invalidObject && !this.editing) {
@@ -84,7 +95,7 @@ export class RegionFormComponent implements OnChanges, AfterViewInit {
                 RegionID: this.invalidObject.RegionID,
                 RegionDescription: this.invalidObject.RegionDescription,
             })
-            this.RegionID.setErrors({repeatedID: true})
+            this.RegionID.setErrors({ repeatedID: true })
             this.openPanel()
         }
     }
@@ -95,26 +106,6 @@ export class RegionFormComponent implements OnChanges, AfterViewInit {
         this.panel.expandedChange.subscribe((expanded) => {
             this.isExpanded = expanded
         })
-    }
-
-    // custom validators
-    // !!! exportar a servicio shared
-    private noWhitespaceValidator(control: AbstractControl): ValidationErrors | null {
-        const isWhitespace = (control.value || '').trim().length === 0
-        return isWhitespace ? { whitespace: true } : null
-    }
-
-    // !!! exportar a servicio shared
-    /** Limpia el formulario y reinica los Validators de cada uno de sus controles
-     * una vez enviado el formulario
-     * @param form formulario a limpiar
-     */
-    resetFormAndValidation(form: FormGroup) {
-        for (let control of Object.values(form.controls)) {
-            control.clearValidators()
-            control.updateValueAndValidity()
-        }
-        form.reset()
     }
 
     togglePanel() {
@@ -133,11 +124,11 @@ export class RegionFormComponent implements OnChanges, AfterViewInit {
     onSubmit() {
         if (this.form.valid) {
             if (this.objectToEdit) {
-                this.editEvent.emit(this.form.getRawValue())                
+                this.editEvent.emit(this.form.getRawValue())
                 this.objectToEdit = null
             } else {
                 this.addEvent.emit(this.form.value)
-                this.resetFormAndValidation(this.form)
+                this.formHelper.resetFormAndValidation(this.form)
             }
             this.togglePanel()
         }
@@ -151,37 +142,23 @@ export class RegionFormComponent implements OnChanges, AfterViewInit {
         return this.form.get('RegionDescription') as FormControl
     }
 
+    // Getters para los errores de cada formControl
     get RegionIDErrors() {
-        if (this.RegionID.errors?.['required']) {
-            return this.formError.RequiredMsg()
-        } else if (this.RegionID.errors?.['min']) {
-            return this.formError.MinMsg(0)
-        } else if (this.RegionID.errors?.['repeatedID']) {
-            return this.formError.RepeatedID()
-        } else {
-            return ''
-        }
+        return this.formHelper.getErrorMsg(this.RegionID.errors, { min: 0 })
     }
 
     get RegionDescriptionErrors() {
-        if (this.RegionDescription.errors?.['required']) {
-            return this.formError.RequiredMsg()
-        } else if (this.RegionDescription.errors?.['maxlength']) {
-            return this.formError.MaxLengthMsg(50)
-        } else if (this.RegionDescription.errors?.['whitespace']) {
-            return this.formError.WhitespaceMsg()
-        } else {
-            return ''
-        }
+        return this.formHelper.getErrorMsg(this.RegionDescription.errors, {
+            maxlength: 50,
+        })
     }
 
+    // Getters para mostrar texto en la vista
     get Title() {
         return this.editing ? 'Edit Region' : 'Add Region'
     }
 
     get Description() {
-        return this.editing
-            ? "Edit an existing Region's details"
-            : 'Create a new Region'
+        return this.editing ? "Edit an existing Region's details" : 'Create a new Region'
     }
 }
