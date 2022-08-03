@@ -10,7 +10,12 @@ namespace TP08WebAPI.WebAPI.Controllers
     [RoutePrefix("api/shippers")]
     public class ShippersController: ApiController
     {
-        private readonly ShippersLogic _logic = new ShippersLogic();
+        private readonly IShippersLogic _logic;
+
+        public ShippersController(IShippersLogic logic)
+        {
+            _logic = logic;
+        }
 
         [HttpGet]
         [Route("")]

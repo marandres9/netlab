@@ -18,6 +18,8 @@ namespace TP08WebAPI.WebAPI
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            IoCConfig.Configure();
         }
     }
 }

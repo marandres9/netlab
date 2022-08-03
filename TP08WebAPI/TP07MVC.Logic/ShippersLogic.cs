@@ -12,12 +12,10 @@ using TP07MVC.Entity.DTO;
 
 namespace TP07MVC.Logic
 {
-    public class ShippersLogic: BaseLogic, ICRUDLogic<Shippers, ShipperDto, int>
+    public class ShippersLogic: BaseLogic, IShippersLogic
     {
         private readonly string _tableName = "Shippers";
 
-        public ShippersLogic()
-        { }
         public ShippersLogic(NorthwindContext context) : base(context)
         { }
 
@@ -64,6 +62,7 @@ namespace TP07MVC.Logic
             return new ShipperDto(GetEntity(id));
         }
 
+        // !!!NOT USED
         public IEnumerable<ShipperDto> GetAll()
         {
             return _context.Shippers.Select(s => new ShipperDto

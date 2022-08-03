@@ -19,7 +19,12 @@ namespace TP08WebAPI.WebAPI.Controllers
     [RoutePrefix("api/categories")]
     public class CategoriesController: ApiController
     {
-        private readonly CategoriesLogic _logic = new CategoriesLogic();
+        private readonly ICategoriesLogic _logic;
+
+        public CategoriesController(ICategoriesLogic logic)
+        {
+            _logic = logic;
+        }
 
         [HttpGet]
         [Route("")]

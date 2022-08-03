@@ -6,12 +6,16 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using TP07MVC.Entity.DTO;
 using System;
+using TP07MVC.Data;
 
 namespace TP07MVC.Logic
 {
-    public class CategoriesLogic: BaseLogic, ICRUDLogic<Categories, CategoryDto, int>
+    public class CategoriesLogic: BaseLogic, ICategoriesLogic
     {
         private readonly string _tableName = "Categories";
+
+        public CategoriesLogic(NorthwindContext context): base(context)
+        {}
 
         public CategoryDto Add(CategoryDto newEntity)
         {
